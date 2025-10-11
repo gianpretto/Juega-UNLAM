@@ -1,0 +1,23 @@
+<div>
+    <img src="assets/images/imagen1.jpg" alt="Imagen del juego" class="w-full border-round shadow-2 mb-4" style="object-fit: cover; height: 300px; width: 100%;" />
+    <p-carousel 
+    [value]="imagenes" 
+    [numVisible]="3" 
+    [numScroll]="1" 
+    [responsiveOptions]="responsiveOptions"
+    circular="true"
+    autoplayInterval="3000">
+
+    <ng-template let-imagen pTemplate="item">
+    <div class="p-2">
+        <img 
+            [src]="imagen" 
+            alt="Imagen del juego" 
+            class="w-full border-round shadow-2" 
+            style="object-fit: cover; height: 150px; width: 100%;" />
+    </div>
+</ng-template>
+
+</p-carousel>
+
+</div>
