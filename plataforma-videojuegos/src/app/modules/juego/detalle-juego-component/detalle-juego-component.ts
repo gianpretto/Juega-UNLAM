@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 
 @Component({
@@ -9,6 +9,12 @@ import { CarouselModule } from 'primeng/carousel';
   styleUrls: ['./detalle-juego-component.css']
 })
 export class DetalleJuegoComponent {
+
+  imagenActual = signal('');
+
+  imagenAMostrar = computed(() =>{
+    return this.imagenActual() || this.imagenes[0];
+  })
 
   imagenes: string[] = [
     'assets/images/imagen1.jpg',
@@ -35,4 +41,8 @@ export class DetalleJuegoComponent {
       numScroll: 1
     }
   ];
+
+  cambiarImagen(imagen: string) {
+    this.imagenActual.set(imagen);
+  }
 }
