@@ -74,6 +74,8 @@
               "buildTarget": "plataforma-videojuegos:build:development"
             }
           },
+
+       
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
