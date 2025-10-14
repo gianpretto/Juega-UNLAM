@@ -1,0 +1,22 @@
+<p-table [value]="juegos" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-juegos>
+        <tr>
+            <td>{{ juegos.id }}</td>
+            <td>{{ juegos.name }}</td>
+            <td>
+                <img [src]="juegos.background_image"
+                     [alt]="juegos.name"
+                     style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
+            </td>
+            <td>{{ juegos.released }}</td>
+        </tr>
+    </ng-template>
+</p-table>
