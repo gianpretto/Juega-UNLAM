@@ -5,6 +5,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CardModule } from 'primeng/card';
 
+
 @Component({
   selector: 'app-usuario-perfil',
   standalone: true,

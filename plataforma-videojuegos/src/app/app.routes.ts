@@ -4,6 +4,8 @@ import { JuegoComponent } from './modules/juego/juego-component/juego-component'
 import { RegistroComponent } from './modules/registro/registro.component';
 import { IniciarSesionComponent } from './modules/iniciar-sesion/iniciar-sesion.component';
 import { UsuarioPerfilComponent } from './modules/usuario-perfil/usuario-perfil.component';
+import { WishlistComponent } from './modules/wishlist/wishlist.component';
+
 
 
 
@@ -13,6 +15,7 @@ export const routes: Routes = [
     { path: 'juego', component : JuegoComponent },
     {path: 'iniciar-sesion', component: IniciarSesionComponent},
     {path: 'usuario-perfil',component: UsuarioPerfilComponent},
+    {path: 'wishlist', component: WishlistComponent},
     { path: '**', redirectTo: '' } 
 ];
 
