@@ -1,5 +1,6 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
+import { Juego } from '../../interfaces/juego.interface';
 
 @Component({
   selector: 'app-detalle-juego-component',
@@ -8,21 +9,24 @@ import { CarouselModule } from 'primeng/carousel';
   templateUrl: './detalle-juego-component.html',
   styleUrls: ['./detalle-juego-component.css']
 })
-export class DetalleJuegoComponent {
+export class DetalleJuegoComponent implements OnInit {
 
   imagenActual = signal('');
-
+  @Input() juego!: Juego;
+  imagenes: string[] = [];
+  
+  ngOnInit(): void {
+    if(this.juego){
+    this.imagenes = this.juego.imagenes;
+    }
+  }
   imagenAMostrar = computed(() =>{
     return this.imagenActual() || this.imagenes[0];
   })
 
-  imagenes: string[] = [
-    'assets/images/imagen1.jpg',
-    'assets/images/imagen2.jpg',
-    'assets/images/imagen3.jpg',
-    'assets/images/imagen4.jpg',
-    'assets/images/imagen5.jpg',
-  ];
+  cambiarImagen(imagen: string) {
+    this.imagenActual.set(imagen);
+  }
 
   responsiveOptions = [
     {
@@ -42,7 +46,4 @@ export class DetalleJuegoComponent {
     }
   ];
 
-  cambiarImagen(imagen: string) {
-    this.imagenActual.set(imagen);
-  }
 }

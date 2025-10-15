@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/home-component/home-component';
-import { JuegoComponent } from './modules/juego/juego-component/juego-component';
+import { JuegoComponent } from './modules/juego/pages/juego-component/juego-component';
 
 export const routes: Routes = [
     {
@@ -8,7 +8,7 @@ export const routes: Routes = [
         component : HomeComponent
     },
     {
-        path: 'juego',
+        path: 'juego/:id',
         component : JuegoComponent
     },
     {
