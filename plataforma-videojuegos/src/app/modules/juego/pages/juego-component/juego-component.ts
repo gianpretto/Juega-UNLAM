@@ -12,10 +12,10 @@ import { Juego } from '../../interfaces/juego.interface';
   templateUrl: './juego-component.html',
   styleUrl: './juego-component.css'
 })
-export class JuegoComponent implements OnInit {
+export class JuegoComponentDetalle implements OnInit {
     idJuego!: number;
     juego!: Juego;
-    
+
     juegoService = inject(JuegoService);
     route = inject(ActivatedRoute)
 
@@ -23,7 +23,7 @@ export class JuegoComponent implements OnInit {
       this.idJuego = Number(this.route.snapshot.paramMap.get('id'));
       this.listarJuego(this.idJuego)
     }
-    
+
 
 
     listarJuego(id: number){

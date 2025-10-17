@@ -1,9 +1,15 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/home-component/home-component';
-import { JuegoComponent } from './modules/juego/pages/juego-component/juego-component';
+
+import { JuegoComponentDetalle } from './modules/juego/pages/juego-component/juego-component';
 import { ListJuegosComponent } from './modules/juegos/pages/list-juegos/list-juegos';
 import { CatalogoJuegosComponent } from './modules/juegos/pages/catalogo-juegos/catalogo-juegos';
 import { MiBibliotecaComponent } from './modules/juegos/pages/mi-biblioteca/mi-biblioteca';
+import { JuegoComponent } from './modules/juego/juego-component/juego-component';
+import { RegistroComponent } from './modules/registro/registro.component';
+import { IniciarSesionComponent } from './modules/iniciar-sesion/iniciar-sesion.component';
+import { UsuarioPerfilComponent } from './modules/usuario-perfil/usuario-perfil.component';
+import { WishlistComponent } from './modules/wishlist/wishlist.component';
 
 export const routes: Routes = [
     {
@@ -12,7 +18,7 @@ export const routes: Routes = [
     },
     {
         path: 'juego/:id',
-        component : JuegoComponent
+        component : JuegoComponentDetalle
     },
     {
         path: '**',
@@ -38,6 +44,16 @@ export const routes: Routes = [
     {
       path: '**',
       redirectTo: 'catalogo'
-    }
+    },
+    { path: '', component : HomeComponent },
+    { path: 'registro', component: RegistroComponent },
+    { path: 'juego', component : JuegoComponent },
+    {path: 'iniciar-sesion', component: IniciarSesionComponent},
+    {path: 'usuario-perfil',component: UsuarioPerfilComponent},
+    {path: 'wishlist', component: WishlistComponent},
+    { path: '**', redirectTo: ''}
   ]
+
+
+
 

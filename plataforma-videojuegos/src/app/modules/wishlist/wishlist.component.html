@@ -1,0 +1,47 @@
+<div class="wishlist-container">
+
+    
+<h1 >Tu lista de deseados</h1>
+
+<p-dataview #dv [value]="products()" layout="list">
+  <ng-template #list let-items>
+    <div class="flex flex-col gap-4 p-4">
+      <div *ngFor="let item of items" class="product-card">
+
+        <!-- Imagen a la izquierda -->
+        <div class="product-img">
+          <img
+            [src]="getImageUrl(item.image)"
+            [alt]="item.name"
+          />
+        </div>
+
+        <!-- Información a la derecha -->
+        <div class="product-info">
+          <div class="product-category">{{ item.category }}</div>
+          <div class="product-name">{{ item.name }}</div>
+
+          <div class="product-details">
+            <div class="product-price">{{ '$' + item.price }}</div>
+            <div class="product-rating">
+              <span>{{ item.rating }}</span>
+              <i class="pi pi-star-fill"></i>
+            </div>
+          </div>
+
+          <div class="product-buttons">
+            <p-button icon="pi pi-heart" [outlined]="true" size="small"></p-button>
+            <p-button
+              icon="pi pi-shopping-cart"
+              label="Buy"
+              [disabled]="item.inventoryStatus === 'OUTOFSTOCK'"
+              size="small"
+            ></p-button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+</p-dataview>
+</div>
