@@ -1,2 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeicons/primeicons.css";
+
+
+/* Importar PrimeIcons - Necesario para que se muestren los iconos */
+@import 'primeicons/primeicons.css';
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #000000;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+html {
+    background: #000000;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #66c0f4;
+}
