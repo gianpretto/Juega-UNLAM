@@ -1,22 +1,116 @@
-<p-table [value]="juegos" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template #header>
-        <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Quantity</th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-juegos>
-        <tr>
-            <td>{{ juegos.id }}</td>
-            <td>{{ juegos.name }}</td>
-            <td>
-                <img [src]="juegos.background_image"
-                     [alt]="juegos.name"
-                     style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
-            </td>
-            <td>{{ juegos.released }}</td>
-        </tr>
-    </ng-template>
-</p-table>
+<div class="game-library">
+    <div class="library-header">
+        <div class="title-container">
+            <h1 class="library-title">Biblioteca de Juegos</h1>
+        </div>
+        <div class="library-stats">
+            <span class="stat-badge">
+                <i class="pi pi-trophy"></i>
+                {{juegos.length}} Juegos
+            </span>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <span class="p-input-icon-left search-wrapper">
+            <i class="pi pi-search"></i>
+            <input
+                pInputText
+                type="text"
+                placeholder="Buscar en tu biblioteca..."
+                class="search-input"
+                #searchInput
+                (input)="filterGames(searchInput.value)"
+            />
+        </span>
+    </div>
+
+    <div class="loading-overlay" *ngIf="loading">
+        <i class="pi pi-spin pi-spinner"></i>
+        <p>Cargando biblioteca...</p>
+    </div>
+
+    <div class="games-grid" *ngIf="!loading">
+        <div class="game-card" *ngFor="let juego of filteredJuegos">
+            <div class="game-image-container">
+                <img
+                    [src]="juego.background_image || 'assets/placeholder.png'"
+                    [alt]="juego.name"
+                    class="game-image"
+                />
+                <div class="game-overlay">
+                    <div class="overlay-actions">
+                        <button
+                            pButton
+                            type="button"
+                            class="p-button-rounded p-button-info p-button-lg action-button"
+                            pTooltip="Ver detalles"
+                            tooltipPosition="top"
+                        >
+                            <i class="pi pi-eye"></i>
+                        </button>
+                        <button
+                            pButton
+                            type="button"
+                            class="p-button-rounded p-button-danger p-button-lg action-button"
+                            pTooltip="Agregar a favoritos"
+                            tooltipPosition="top"
+                        >
+                            <i class="pi pi-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-info">
+                <h3 class="game-title" [pTooltip]="juego.name" tooltipPosition="top">
+                    {{juego.name}}
+                </h3>
+
+                <p class="game-release-date">
+                    <i class="pi pi-calendar"></i>
+                    {{juego.released | date:'dd/MM/yyyy'}}
+                </p>
+
+                <!-- Géneros usando la función getGenreNames() -->
+                <div class="game-genres-text">
+                    <i class="pi pi-tag"></i>
+                    <span>{{getGenreNames(juego)}}</span>
+                </div>
+
+                <!-- Plataformas como iconos -->
+                <div class="game-platforms" *ngIf="juego.parent_platforms && juego.parent_platforms.length > 0">
+                    <span
+                        class="platform-icon"
+                        *ngFor="let parentPlatform of juego.parent_platforms?.slice(0, 4)"
+                        [pTooltip]="parentPlatform.platform.name"
+                        tooltipPosition="top"
+                    >
+                        <i [class]="getPlatformIcon(parentPlatform.platform.name)"></i>
+                        <span class="platform-name">{{ parentPlatform.platform.name }}</span>
+                    </span>
+                </div>
+                <!-- Mensaje de debug si no hay plataformas -->
+                <div class="debug-info" *ngIf="!juego.parent_platforms || juego.parent_platforms.length === 0">
+                    <small style="color: yellow;">No hay plataformas disponibles</small>
+                </div>
+
+                <!-- Géneros como tags individuales (alternativa visual) -->
+                <div class="game-genres">
+                    <span
+                        class="genre-tag"
+                        *ngFor="let genre of juego.genres?.slice(0, 3)"
+                    >
+                        {{genre.name}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && filteredJuegos.length === 0">
+        <i class="pi pi-inbox"></i>
+        <h3>No se encontraron juegos</h3>
+        <p>Intenta con otra búsqueda</p>
+    </div>
+</div>

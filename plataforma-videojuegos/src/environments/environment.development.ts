@@ -1,5 +1,5 @@
 export const environment = {
 
   apiUrl: 'https://api.rawg.io/api/',
-  rawgApiKey: '518ee05553b6484c84d4f6e9519e7b92'
+  rawgApiKey: '8b9b1e5d7c064041ab1b99c6d79b0975'
 };
