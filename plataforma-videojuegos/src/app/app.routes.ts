@@ -2,10 +2,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/home-component/home-component';
 
 import { JuegoComponentDetalle } from './modules/juego/pages/juego-component/juego-component';
-import { ListJuegosComponent } from './modules/juegos/pages/list-juegos/list-juegos';
-import { CatalogoJuegosComponent } from './modules/juegos/pages/catalogo-juegos/catalogo-juegos';
-import { MiBibliotecaComponent } from './modules/juegos/pages/mi-biblioteca/mi-biblioteca';
-import { JuegoComponent } from './modules/juego/juego-component/juego-component';
+import { CatalogoJuegosComponent } from './modules/biblioteca/pages/catalogo-juegos/catalogo-juegos';
+import { MiBibliotecaComponent } from './modules/biblioteca/pages/mi-biblioteca/mi-biblioteca';
 import { RegistroComponent } from './modules/registro/registro.component';
 import { IniciarSesionComponent } from './modules/iniciar-sesion/iniciar-sesion.component';
 import { UsuarioPerfilComponent } from './modules/usuario-perfil/usuario-perfil.component';
@@ -13,16 +11,12 @@ import { WishlistComponent } from './modules/wishlist/wishlist.component';
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'home',
         component : HomeComponent
     },
     {
         path: 'juego/:id',
         component : JuegoComponentDetalle
-    },
-    {
-        path: '**',
-        redirectTo: ''
     },
     {
         path: '',
@@ -38,20 +32,26 @@ export const routes: Routes = [
       component: MiBibliotecaComponent
     },
     {
-      path: 'biblioteca',
-      component: ListJuegosComponent
+      path: 'registro',
+      component: RegistroComponent
     },
     {
-      path: '**',
-      redirectTo: 'catalogo'
+      path: 'iniciar-sesion',
+      component: IniciarSesionComponent
     },
-    { path: '', component : HomeComponent },
-    { path: 'registro', component: RegistroComponent },
-    { path: 'juego', component : JuegoComponent },
-    {path: 'iniciar-sesion', component: IniciarSesionComponent},
-    {path: 'usuario-perfil',component: UsuarioPerfilComponent},
-    {path: 'wishlist', component: WishlistComponent},
-    { path: '**', redirectTo: ''}
+    {
+      path: 'usuario-perfil',
+      component: UsuarioPerfilComponent
+    },
+    {
+      path: 'wishlist',
+      component: WishlistComponent
+    },
+    {
+        path: '**',
+        redirectTo: ''
+    },
+
   ]
 
 

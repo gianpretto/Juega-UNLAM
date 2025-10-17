@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { environment } from "../../../../environments/environment.development";
 import { HttpClient } from "@angular/common/http";
 import { map, Observable } from "rxjs";
-import { Juego } from "../../../modules/juegos/interfaces/juego.interface";
+import { Juego } from "../../../modules/biblioteca/interfaces/juego.interface";
 
 
 @Injectable({

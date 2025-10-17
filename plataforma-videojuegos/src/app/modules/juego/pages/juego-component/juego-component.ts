@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { DetalleJuegoComponent } from '../detalle-juego-component/detalle-juego-component';
 import { OpcionesComponent } from '../opciones-component/opciones-component';
 import { ValoracionesComponent } from '../valoraciones-component/valoraciones-component';
-import { JuegoService } from '../../../../core/services/juego/juego.service';
+import { JuegoService } from '../../../../core/services/juego.service';
 import { ActivatedRoute } from '@angular/router';
 import { Juego } from '../../interfaces/juego.interface';
 

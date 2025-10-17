@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Juego } from "../../interfaces/juego.interface";
 import { GameFilter } from "../../interfaces/game-filter.interface";
-import { BibliotecaService } from "../../../../services/biblioteca.service";
+import { BibliotecaService } from "../../../../core/services/biblioteca.service";
 
 // Componentes hijos reutilizables
 import { GameSearchComponent } from "../../components/game-search/game-search.component";

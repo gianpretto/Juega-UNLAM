@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, of, delay, map } from 'rxjs';
-import { Juego } from '../shared/models';
-import { Juego as JuegoRawg } from '../modules/juegos/interfaces/juego.interface';
-import { environment } from '../../environments/environment';
+import { Juego } from '../../shared/models';
+import { Juego as JuegoRawg } from '../../modules/biblioteca/interfaces/juego.interface';
+import { environment } from '../../../environments/environment';
 
 /**
  * Servicio para manejar la biblioteca de juegos del usuario
@@ -14,6 +14,8 @@ import { environment } from '../../environments/environment';
  * - Manejo de errores centralizado
  * - Tipado fuerte con TypeScript
  */
+
+
 @Injectable({
   providedIn: 'root'
 })

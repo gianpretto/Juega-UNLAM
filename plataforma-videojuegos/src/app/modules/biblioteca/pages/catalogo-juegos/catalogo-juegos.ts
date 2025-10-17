@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { Juego } from "../../interfaces/juego.interface";
 import { GameFilter } from "../../interfaces/game-filter.interface";
 import { JuegoService } from "../../../../api/api-rawg/juego/juego.service";
-import { BibliotecaService } from "../../../../services/biblioteca.service";
+import { BibliotecaService } from "../../../../core/services/biblioteca.service";
 
 // Componentes hijos
 import { GameSearchComponent } from "../../components/game-search/game-search.component";
