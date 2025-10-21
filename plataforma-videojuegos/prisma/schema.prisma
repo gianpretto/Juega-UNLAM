@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql" // Cambia a "postgresql" o "sqlite" según tu base de datos
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// MODELO: Desarrollador
+// ========================================
+model Desarrollador {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @db.VarChar(100)
+  descripcion String?  @db.Text
+
+  // Relación: Un desarrollador puede tener muchos juegos
+  juegos      Juego[]
+
+  @@map("desarrollador") // Nombre de la tabla en la base de datos
+}
+
+// ========================================
+// MODELO: Plataforma
+// ========================================
+model Plataforma {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @db.VarChar(50)
+  descripcion String?  @db.Text
+
+  // Relación muchos a muchos con Juego (a través de JuegoPlataforma)
+  juegoPlataformas JuegoPlataforma[]
+
+  @@map("plataforma")
+}
+
+// ========================================
+// MODELO: Genero
+// ========================================
+model Genero {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @db.VarChar(50)
+  descripcion String?  @db.Text
+  fkIdJuego   Int      // Foreign Key a Juego
+
+  // Relación: Un género pertenece a un juego
+  juego       Juego    @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_genero_juego")
+
+  @@map("genero")
+  @@index([fkIdJuego], map: "idx_genero_juego") // Índice para mejorar rendimiento
+}
+
+// ========================================
+// MODELO: Imagen
+// ========================================
+model Imagen {
+  id      Int    @id @default(autoincrement())
+  url     String @db.VarChar(500)
+  idJuego Int    // Foreign Key a Juego
+
+  // Relación: Una imagen pertenece a un juego
+  juego   Juego  @relation(fields: [idJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_imagen_juego")
+
+  @@map("imagen")
+  @@index([idJuego], map: "idx_imagen_juego")
+}
+
+// ========================================
+// MODELO: Juego (Tabla principal)
+// ========================================
+model Juego {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @db.VarChar(150)
+  precio      Decimal  @db.Decimal(10, 2) // Ejemplo: 59.99
+  descripcion String   @db.Text
+  codigoGen   Int      // Código generado automáticamente o custom
+  fkIdDesa    Int      // Foreign Key a Desarrollador
+
+  // Relación: Un juego pertenece a un desarrollador
+  desarrollador Desarrollador @relation(fields: [fkIdDesa], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_juego_desarrollador")
+
+  // Relación: Un juego puede tener muchos géneros
+  generos       Genero[]
+
+  // Relación: Un juego puede tener muchas imágenes
+  imagenes      Imagen[]
+
+  // Relación muchos a muchos con Plataforma (a través de JuegoPlataforma)
+  juegoPlataformas JuegoPlataforma[]
+
+  @@map("juego")
+  @@index([fkIdDesa], map: "idx_juego_desarrollador")
+}
+
+// ========================================
+// MODELO: JuegoPlataforma (Tabla intermedia)
+// Representa la relación muchos a muchos entre Juego y Plataforma
+// ========================================
+model JuegoPlataforma {
+  id             Int        @id @default(autoincrement())
+  fkIdJuego      Int        // Foreign Key a Juego
+  fkIdPlataforma Int        // Foreign Key a Plataforma
+
+  // Relaciones
+  juego          Juego      @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_juego_plataforma_juego")
+  plataforma     Plataforma @relation(fields: [fkIdPlataforma], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_juego_plataforma_plataforma")
+
+  @@map("juego_plataforma")
+  @@unique([fkIdJuego, fkIdPlataforma], map: "unique_juego_plataforma") // Evita duplicados
+  @@index([fkIdJuego], map: "idx_juego_plataforma_juego")
+  @@index([fkIdPlataforma], map: "idx_juego_plataforma_plataforma")
+}
