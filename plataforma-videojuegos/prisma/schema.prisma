@@ -1,4 +1,5 @@
-// This is your Prisma schema file,
+// This is your Prisma schema file
+// Generado desde el DER - Juega UNLAM
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -11,106 +12,234 @@ datasource db {
 }
 
 // ========================================
-// MODELO: Desarrollador
+// MODELO: TIPO_USUARIO
+// Tipos de usuario: ADMIN, CLIENTE
+// ========================================
+model TipoUsuario {
+  id          Int       @id @default(autoincrement()) @map("LONG ID")
+  descripcion String    @db.VarChar(50) @map("STRING DESCRIPCION")
+
+  // Relación: Un tipo puede tener muchos usuarios
+  usuarios    Usuario[]
+
+  @@map("TIPO_USUARIO")
+}
+
+// ========================================
+// MODELO: USUARIO
+// ========================================
+model Usuario {
+  id              Int       @id @default(autoincrement()) @map("LONG ID")
+  nombre          String    @db.VarChar(100) @map("STRING NOMBRE")
+  password        String    @db.VarChar(255) @map("STRING PASSWORD")
+  apellido        String    @db.VarChar(100) @map("STRING APELLIDO")
+  direccion       String    @db.VarChar(255) @map("STRING DIRECCION")
+  email           String    @unique @db.VarChar(150) @map("STRING EMAIL")
+  fkIdTipoUsuario Int       @map("FK_ID_TIPO_USUARIO")
+
+  // Relaciones
+  tipoUsuario TipoUsuario @relation(fields: [fkIdTipoUsuario], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_tipo")
+  carritos    Carrito[]
+  reviews     Review[]
+  compras     UsuarioJuego[]
+
+  @@map("USUARIO")
+  @@index([fkIdTipoUsuario], map: "idx_usuario_tipo")
+}
+
+// ========================================
+// MODELO: DESARROLLADOR
 // ========================================
 model Desarrollador {
-  id          Int      @id @default(autoincrement())
-  nombre      String   @db.VarChar(100)
-  descripcion String?  @db.Text
+  id          Int       @id @default(autoincrement()) @map("LONG ID")
+  nombre      String    @db.VarChar(100) @map("STRING NOMBRE")
+  descripcion String    @db.Text @map("STRING DESCRIPCION")
 
   // Relación: Un desarrollador puede tener muchos juegos
   juegos      Juego[]
 
-  @@map("desarrollador") // Nombre de la tabla en la base de datos
+  @@map("DESARROLLADOR")
 }
 
 // ========================================
-// MODELO: Plataforma
+// MODELO: PLATAFORMA
 // ========================================
 model Plataforma {
-  id          Int      @id @default(autoincrement())
-  nombre      String   @db.VarChar(50)
-  descripcion String?  @db.Text
+  id          Int       @id @default(autoincrement()) @map("LONG ID")
+  nombre      String    @db.VarChar(50) @map("STRING NOMBRE")
+  descripcion String    @db.Text @map("STRING DESCRIPCION")
 
   // Relación muchos a muchos con Juego (a través de JuegoPlataforma)
   juegoPlataformas JuegoPlataforma[]
 
-  @@map("plataforma")
+  @@map("PLATAFORMA")
 }
 
 // ========================================
-// MODELO: Genero
+// MODELO: GENERO
 // ========================================
 model Genero {
-  id          Int      @id @default(autoincrement())
-  nombre      String   @db.VarChar(50)
-  descripcion String?  @db.Text
-  fkIdJuego   Int      // Foreign Key a Juego
+  id          Int       @id @default(autoincrement()) @map("LONG ID")
+  nombre      String    @db.VarChar(50) @map("STRING NOMBRE")
+  descripcion String    @db.Text @map("STRING DESCRIPCION")
 
-  // Relación: Un género pertenece a un juego
-  juego       Juego    @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_genero_juego")
+  // Relación muchos a muchos con Juego (a través de JuegoGenero)
+  juegoGeneros JuegoGenero[]
 
-  @@map("genero")
-  @@index([fkIdJuego], map: "idx_genero_juego") // Índice para mejorar rendimiento
+  @@map("GENERO")
 }
 
 // ========================================
-// MODELO: Imagen
-// ========================================
-model Imagen {
-  id      Int    @id @default(autoincrement())
-  url     String @db.VarChar(500)
-  idJuego Int    // Foreign Key a Juego
-
-  // Relación: Una imagen pertenece a un juego
-  juego   Juego  @relation(fields: [idJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_imagen_juego")
-
-  @@map("imagen")
-  @@index([idJuego], map: "idx_imagen_juego")
-}
-
-// ========================================
-// MODELO: Juego (Tabla principal)
+// MODELO: JUEGO
+// Tabla principal de juegos
 // ========================================
 model Juego {
-  id          Int      @id @default(autoincrement())
-  nombre      String   @db.VarChar(150)
-  precio      Decimal  @db.Decimal(10, 2) // Ejemplo: 59.99
-  descripcion String   @db.Text
-  codigoGen   Int      // Código generado automáticamente o custom
-  fkIdDesa    Int      // Foreign Key a Desarrollador
+  id          Int       @id @default(autoincrement()) @map("LONG ID")
+  nombre      String    @db.VarChar(150) @map("STRING NOMBRE")
+  precio      Decimal   @db.Decimal(10, 2) @map("DOUBLE PRECIO")
+  descripcion String    @db.Text @map("STRING DESCRIPCION")
+  fkIdDesa    Int       @map("LONG FK_ID_DESA")
 
   // Relación: Un juego pertenece a un desarrollador
   desarrollador Desarrollador @relation(fields: [fkIdDesa], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_juego_desarrollador")
 
-  // Relación: Un juego puede tener muchos géneros
-  generos       Genero[]
-
-  // Relación: Un juego puede tener muchas imágenes
-  imagenes      Imagen[]
-
-  // Relación muchos a muchos con Plataforma (a través de JuegoPlataforma)
+  // Relaciones
   juegoPlataformas JuegoPlataforma[]
+  juegoGeneros     JuegoGenero[]
+  imagenes         Imagen[]
+  reviews          Review[]
+  carritosJuegos   CarritoJuego[]
+  compras          UsuarioJuego[]
 
-  @@map("juego")
+  @@map("JUEGO")
   @@index([fkIdDesa], map: "idx_juego_desarrollador")
 }
 
 // ========================================
-// MODELO: JuegoPlataforma (Tabla intermedia)
-// Representa la relación muchos a muchos entre Juego y Plataforma
+// MODELO: JUEGO_PLATAFORMA
+// Tabla intermedia - Relación N:M entre Juego y Plataforma
 // ========================================
 model JuegoPlataforma {
-  id             Int        @id @default(autoincrement())
-  fkIdJuego      Int        // Foreign Key a Juego
-  fkIdPlataforma Int        // Foreign Key a Plataforma
+  id             Int        @id @default(autoincrement()) @map("LONG ID")
+  fkIdJuego      Int        @map("LONG FK_ID_JUEGO")
+  fkIdPlataforma Int        @map("LONG FK_ID_PLATAFORMA")
 
   // Relaciones
   juego          Juego      @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_juego_plataforma_juego")
   plataforma     Plataforma @relation(fields: [fkIdPlataforma], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_juego_plataforma_plataforma")
 
-  @@map("juego_plataforma")
-  @@unique([fkIdJuego, fkIdPlataforma], map: "unique_juego_plataforma") // Evita duplicados
-  @@index([fkIdJuego], map: "idx_juego_plataforma_juego")
-  @@index([fkIdPlataforma], map: "idx_juego_plataforma_plataforma")
+  @@map("JUEGO_PLATAFORMA")
+  @@unique([fkIdJuego, fkIdPlataforma], map: "unique_juego_plataforma")
+  @@index([fkIdJuego], map: "idx_juego_plat_juego")
+  @@index([fkIdPlataforma], map: "idx_juego_plat_plataforma")
+}
+
+// ========================================
+// MODELO: JUEGO_GENERO
+// Tabla intermedia - Relación N:M entre Juego y Genero
+// ========================================
+model JuegoGenero {
+  id         Int     @id @default(autoincrement()) @map("ID DETALLE")
+  fkIdJuego  Int     @map("FK_ID_JUEGO")
+  fkIdGenero Int     @map("FK_ID_GENERO")
+
+  // Relaciones
+  juego      Juego   @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_juego_genero_juego")
+  genero     Genero  @relation(fields: [fkIdGenero], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_juego_genero_genero")
+
+  @@map("JUEGO_GENERO")
+  @@unique([fkIdJuego, fkIdGenero], map: "unique_juego_genero")
+  @@index([fkIdJuego], map: "idx_juego_gen_juego")
+  @@index([fkIdGenero], map: "idx_juego_gen_genero")
+}
+
+// ========================================
+// MODELO: IMAGEN
+// Imágenes asociadas a juegos
+// ========================================
+model Imagen {
+  numeroId  Int     @id @default(autoincrement()) @map("NUMBER ID")
+  url       String  @db.VarChar(500) @map("STRING URL")
+  fkIdJuego Int     @map("FK_ID_JUEGOI")
+
+  // Relación: Una imagen pertenece a un juego
+  juego     Juego   @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_imagen_juego")
+
+  @@map("IMAGEN")
+  @@index([fkIdJuego], map: "idx_imagen_juego")
+}
+
+// ========================================
+// MODELO: REVIEW
+// Reseñas/valoraciones de juegos por usuarios
+// ========================================
+model Review {
+  id          Int      @id @default(autoincrement()) @map("LONG ID")
+  descripcion String   @db.Text @map("STRING DESCRIPCION")
+  fkIdUsuario Int      @map("LONG FK_ID_USUARIO")
+  fkIdJuego   Int      @map("LONG FK_ID_JUEGO")
+
+  // Relaciones
+  usuario     Usuario  @relation(fields: [fkIdUsuario], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_review_usuario")
+  juego       Juego    @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_review_juego")
+
+  @@map("REVIEW")
+  @@index([fkIdUsuario], map: "idx_review_usuario")
+  @@index([fkIdJuego], map: "idx_review_juego")
+}
+
+// ========================================
+// MODELO: CARRITO
+// Carrito de compras de cada usuario
+// ========================================
+model Carrito {
+  id          Int      @id @default(autoincrement()) @map("ID DETALLE")
+  fkIdUsuario Int      @map("FK_ID_USUARIO")
+
+  // Relaciones
+  usuario     Usuario  @relation(fields: [fkIdUsuario], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_carrito_usuario")
+  juegos      CarritoJuego[]
+
+  @@map("CARRITO")
+  @@index([fkIdUsuario], map: "idx_carrito_usuario")
+}
+
+// ========================================
+// MODELO: CARRITO_JUEGO
+// Tabla intermedia - Juegos dentro del carrito
+// ========================================
+model CarritoJuego {
+  id          Int      @id @default(autoincrement()) @map("ID DETALLE")
+  fkIdCarrito Int      @map("FK_ID_CARRITO")
+  fkIdJuego   Int      @map("FK_ID_JUEGO")
+
+  // Relaciones
+  carrito     Carrito  @relation(fields: [fkIdCarrito], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_carrito_juego_carrito")
+  juego       Juego    @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_carrito_juego_juego")
+
+  @@map("CARRITO_JUEGO")
+  @@unique([fkIdCarrito, fkIdJuego], map: "unique_carrito_juego")
+  @@index([fkIdCarrito], map: "idx_carrito_juego_carrito")
+  @@index([fkIdJuego], map: "idx_carrito_juego_juego")
+}
+
+// ========================================
+// MODELO: USUARIO_JUEGO
+// Tabla intermedia - Juegos comprados por usuarios
+// Representa el historial de compras
+// ========================================
+model UsuarioJuego {
+  id          Int      @id @default(autoincrement()) @map("LONG ID")
+  detalle     String   @db.Text @map("STRING DETALLE")
+  fechaCompra DateTime @default(now()) @map("DATE FECHA") @db.DateTime
+  fkIdUsuario Int      @map("FK_ID_USUARIO")
+  fkIdJuego   Int      @map("FK_ID_JUEGOI")
+
+  // Relaciones
+  usuario     Usuario  @relation(fields: [fkIdUsuario], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_usuario_juego_usuario")
+  juego       Juego    @relation(fields: [fkIdJuego], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "fk_usuario_juego_juego")
+
+  @@map("USUARIO_JUEGO")
+  @@index([fkIdUsuario], map: "idx_usuario_juego_usuario")
+  @@index([fkIdJuego], map: "idx_usuario_juego_juego")
 }
