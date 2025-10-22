@@ -1,0 +1,1 @@
+{"version":3,"file":"juego.service.d.ts","sourceRoot":"","sources":["../../src/services/juego.service.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAC,eAAe,EAAC,MAAM,mCAAmC,CAAC;AAEvE,qBAAa,YAAY;IACT,OAAO,CAAC,eAAe;gBAAf,eAAe,EAAE,eAAe;IAE7C,aAAa;;;;;;;SAEnB;IAEM,iBAAiB,GAAS,IAAG,MAAM;;;;;;;cAEzC;CACJ"}

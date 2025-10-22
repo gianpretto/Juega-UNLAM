@@ -1,0 +1,123 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tipo_Usuario {
+  id          Int       @id @default(autoincrement())
+  descripcion String
+
+  usuarios    Usuario[]
+}
+
+model Usuario {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  password     String
+  nombre       String
+  apellido     String
+  direccion    String?
+  saldo        Float     @default(0)
+  tipoUsuario  Tipo_Usuario @relation(fields: [tipoUsuarioId], references: [id])
+  tipoUsuarioId Int
+
+  reviews      Review[]
+  compras      Compra[]
+  wishlists    Wishlist[]
+  carritos     Carrito[]
+}
+
+model Review {
+  id          Int      @id @default(autoincrement())
+  descripcion String
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  juego       Juego    @relation(fields: [juegoId], references: [id])
+  juegoId     Int
+}
+
+model Compra {
+  id        Int      @id @default(autoincrement())
+  detalle   String
+  fecha     DateTime @default(now())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  juego     Juego    @relation(fields: [juegoId], references: [id])
+  juegoId   Int
+}
+
+model Wishlist {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  juego     Juego    @relation(fields: [juegoId], references: [id])
+  juegoId   Int
+}
+
+model Carrito {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  juegos    Carrito_Juego[]
+}
+
+model Carrito_Juego {
+  id        Int      @id @default(autoincrement())
+  carrito   Carrito  @relation(fields: [carritoId], references: [id])
+  carritoId Int
+  juego     Juego    @relation(fields: [juegoId], references: [id])
+  juegoId   Int
+}
+
+model Juego {
+  id             Int              @id @default(autoincrement())
+  nombre         String
+  precio         Float
+  descripcion    String
+  genero         Genero           @relation(fields: [generoId], references: [id])
+  generoId       Int
+  desarrollador  Desarrollador    @relation(fields: [desarrolladorId], references: [id])
+  desarrolladorId Int
+
+  reviews        Review[]
+  compras        Compra[]
+  wishlists      Wishlist[]
+  carritos       Carrito_Juego[]
+  plataformas    Juego_Plataforma[]
+}
+
+model Desarrollador {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  juegos Juego[]
+}
+
+model Genero {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  juegos Juego[]
+}
+
+model Juego_Plataforma {
+  id            Int         @id @default(autoincrement())
+  juego         Juego       @relation(fields: [juegoId], references: [id])
+  juegoId       Int
+  plataforma    Plataforma  @relation(fields: [plataformaId], references: [id])
+  plataformaId  Int
+}
+
+model Plataforma {
+  id     Int     @id @default(autoincrement())
+  nombre String
+  juegos Juego_Plataforma[]
+}
