@@ -1,0 +1,50 @@
+<!-- Botón flotante -->
+<button
+  class="btn btn-success position-fixed bottom-0 end-0 m-4 rounded-circle shadow-lg"
+  data-bs-toggle="modal"
+  data-bs-target="#modalCarrito"
+  style="width:60px; height:60px; font-size:1.6rem;"
+>
+  🛒
+  <span
+    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+    *ngIf="juegos.length > 0"
+  >
+    {{ juegos.length }}
+  </span>
+</button>
+
+<!-- Modal del carrito -->
+<div class="modal fade" id="modalCarrito" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title">Tu carrito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body bg-light">
+        <ul class="list-group mb-3">
+          <li
+            *ngFor="let juego of juegos; let i = index"
+            class="list-group-item d-flex justify-content-between align-items-center"
+          >
+            <div>
+              <strong>{{ juego.nombre }}</strong><br />
+              <small class="text-muted">${{ juego.precio }}</small>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" (click)="eliminar(juego)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </li>
+        </ul>
+        <p class="fw-bold text-end fs-5">Total: ${{ total }}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-success">Comprar</button>
+      </div>
+    </div>
+  </div>
+</div>

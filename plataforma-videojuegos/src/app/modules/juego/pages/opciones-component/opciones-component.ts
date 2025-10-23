@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '../../../../shared/models/juego.model';
 import { CurrencyPipe } from '@angular/common';
+import { CarritoService } from '../../../../core/services/carrito.service';
 
 @Component({
   selector: 'app-opciones-component',
@@ -13,4 +14,9 @@ export class OpcionesComponent {
 
   @Input() juego!: Juego;
 
+  constructor(private carritoService: CarritoService){}
+  
+  agregarAlCarrito() {
+    this.carritoService.agregarJuego(this.juego);
+  }
 }

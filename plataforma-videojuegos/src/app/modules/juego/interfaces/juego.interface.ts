@@ -1,4 +1,4 @@
-export type Juego = {
+export type JuegoDetalle = {
     id: number;
     nombre: string;
     precio: number;

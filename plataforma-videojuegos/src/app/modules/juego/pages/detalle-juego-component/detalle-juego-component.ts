@@ -1,6 +1,6 @@
 import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '../../../../shared/models/juego.model';
 
 @Component({
   selector: 'app-detalle-juego-component',

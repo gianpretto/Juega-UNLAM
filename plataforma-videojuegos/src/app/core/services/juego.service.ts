@@ -12,6 +12,9 @@ export class JuegoService {
       nombre: 'Hollow Knight: Silksong',
       descripcion: "Conviértete en la princesa guerrera¡Encarnando a la letal cazadora Hornet, explora un reino de gobernado por la seda y el canto! Tras ser capturada y llevada a un mundo desconocido, prepárate para luchar contra poderosos enemigos y resolver misterios mientras asciendes en un peregrinaje mortal hasta la cima del reino <br>Hollow Knight: Silksong es la épica secuela del premiado videojuego de acción y aventura Hollow Knight. Viaja a tierras totalmente nuevas, descubre nuevos poderes, combate contras vastas hordas de bichos y bestias y revela secretos ligados a tu naturaleza y a tu pasado.",
       precio: 19.99,
+      // Propiedades que faltaban (pueden ser valores fijos por ahora)
+      codigoGen: 101,
+      fkIdDesa: 1,
       imagenes: [
       'assets/images/imagen1.jpg',
       'assets/images/imagen2.jpg',

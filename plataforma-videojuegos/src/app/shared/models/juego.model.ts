@@ -1,6 +1,7 @@
 import { Desarrollador } from './desarrollador.model';
 import { Plataforma } from './plataforma.model';
 import { Genero } from './genero.model';
+import { Review } from '../../modules/juego/interfaces/juego.interface';
 
 /**
  * Modelo principal que representa un Juego
@@ -18,5 +19,6 @@ export interface Juego {
   desarrollador?: Desarrollador;
   plataformas?: Plataforma[];
   generos?: Genero[];
-  imagenes?: string[]; // URLs de imágenes del juego
+  imagenes: string[]; // URLs de imágenes del juego
+  reviews?: Review[];
 }

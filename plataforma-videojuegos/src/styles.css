@@ -3,6 +3,7 @@
 
 /* Importar PrimeIcons - Necesario para que se muestren los iconos */
 @import 'primeicons/primeicons.css';
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* Reset y estilos base */
 * {

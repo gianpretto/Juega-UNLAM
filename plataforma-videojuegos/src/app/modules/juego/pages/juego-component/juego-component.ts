@@ -4,11 +4,12 @@ import { OpcionesComponent } from '../opciones-component/opciones-component';
 import { ValoracionesComponent } from '../valoraciones-component/valoraciones-component';
 import { JuegoService } from '../../../../core/services/juego.service';
 import { ActivatedRoute } from '@angular/router';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '../../../../shared/models/juego.model';
+import { CarritoComponent } from '../../../carrito-component/carrito-component';
 
 @Component({
   selector: 'app-juego-component',
-  imports: [DetalleJuegoComponent, OpcionesComponent,ValoracionesComponent],
+  imports: [DetalleJuegoComponent, OpcionesComponent,ValoracionesComponent, CarritoComponent],
   templateUrl: './juego-component.html',
   styleUrl: './juego-component.css'
 })
@@ -23,8 +24,6 @@ export class JuegoComponentDetalle implements OnInit {
       this.idJuego = Number(this.route.snapshot.paramMap.get('id'));
       this.listarJuego(this.idJuego)
     }
-
-
 
     listarJuego(id: number){
         this.juego = this.juegoService.getJuegoById(id);
