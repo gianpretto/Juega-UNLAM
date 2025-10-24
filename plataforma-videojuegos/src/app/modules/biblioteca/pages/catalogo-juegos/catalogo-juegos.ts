@@ -9,6 +9,7 @@ import { BibliotecaService } from "../../../../core/services/biblioteca.service"
 import { GameSearchComponent } from "../../components/game-search/game-search.component";
 import { GameFiltersComponent } from "../../components/game-filters/game-filters.component";
 import { GameGridComponent } from "../../components/game-grid/game-grid.component";
+import { CarritoComponent } from "../../../carrito-component/carrito-component";
 
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
@@ -32,7 +33,8 @@ import { GameGridComponent } from "../../components/game-grid/game-grid.componen
     CommonModule,
     GameSearchComponent,
     GameFiltersComponent,
-    GameGridComponent
+    GameGridComponent,
+    CarritoComponent
   ],
   templateUrl: './catalogo-juegos.html',
   styleUrls: ['./catalogo-juegos.css']

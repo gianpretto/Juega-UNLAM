@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Juego } from '../../shared/models/juego.model';
 import { BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +12,41 @@ export class CarritoService {
   private juegos: Juego[] = [];
   private carritoSubject = new BehaviorSubject<Juego[]>([]);
   carrito$ = this.carritoSubject.asObservable();
+  private esNavegador: boolean;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.esNavegador = isPlatformBrowser(this.platformId);
+
+    if (this.esNavegador) {  // 👈 solo en navegador
+      const carritoGuardado = localStorage.getItem('carrito');
+      if (carritoGuardado) {
+        this.juegos = JSON.parse(carritoGuardado);
+        this.carritoSubject.next(this.juegos);
+      }
+    }
+  }
+
+  private guardarEnLocalStorage() {
+    localStorage.setItem('carrito', JSON.stringify(this.juegos));
+  }
 
   agregarJuego(juego: Juego) {
-    this.juegos.push(juego);
-    this.carritoSubject.next(this.juegos);
+    // Verifica si ya existe en el carrito
+    const yaExiste = this.juegos.some(j => j === juego);
+
+    if (!yaExiste) {
+      this.juegos.push(juego);
+      this.carritoSubject.next([...this.juegos]);
+      this.guardarEnLocalStorage();
+    } else {
+      console.warn(`El juego "${juego.nombre}" ya está en el carrito.`);
+    }
   }
 
   eliminarJuego(juego: Juego) {
-    console.log('Eliminando id:', juego);
-    console.log('Antes:', this.juegos);
     this.juegos = this.juegos.filter(j => j !== juego);
-    console.log('Después:', this.juegos);
     this.carritoSubject.next([...this.juegos]);
+    this.guardarEnLocalStorage();
   }
 
   obtenerTotal(): number {
@@ -31,5 +56,6 @@ export class CarritoService {
   vaciarCarrito() {
     this.juegos = [];
     this.carritoSubject.next([]);
+    this.guardarEnLocalStorage();
   }
 }
