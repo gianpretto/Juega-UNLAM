@@ -1,0 +1,110 @@
+.search-container {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.search-wrapper {
+    width: 100%;
+    position: relative;
+    display: block;
+}
+
+/* Icono de búsqueda */
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 1.1rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Input de búsqueda */
+.search-input {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 3rem;
+    font-size: 1rem;
+    border: 2px solid #2c2c2c;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    color: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.search-input::placeholder {
+    color: #6c757d;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25),
+                0 4px 12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #1f1f1f 0%, #121212 100%);
+}
+
+.search-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Botón de limpiar */
+.clear-button {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+    z-index: 1;
+}
+
+.clear-button:hover {
+    color: #ff4757;
+    background: rgba(255, 71, 87, 0.1);
+}
+
+.clear-button:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.clear-button i {
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-input {
+        font-size: 0.95rem;
+        padding: 0.65rem 2.5rem 0.65rem 2.5rem;
+    }
+
+    .search-icon {
+        font-size: 1rem;
+        left: 0.75rem;
+    }
+
+    .clear-button {
+        right: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-container {
+        margin-bottom: 1rem;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+        padding: 0.6rem 2.5rem 0.6rem 2.5rem;
+    }
+}

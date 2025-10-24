@@ -1,0 +1,18 @@
+
+<div class="container bg-dark rounded p-4">
+  <h2 class="text-start mb-4">{{juego.nombre}}</h2>
+  <div class="row justify-content-center align-items-start">
+    <div class="col-md-7 d-flex justify-content-center">
+      <app-detalle-juego-component [juego] = "juego"></app-detalle-juego-component>
+    </div>
+
+    <div class="col-md-5 d-flex justify-content-center">
+      <app-opciones-component [juego] = "juego"></app-opciones-component>
+    </div>
+  </div>
+</div>
+
+<div class="container bg-dark rounded p-4 mt-5">
+  <h3><span>Valoraciones y reseñas de {{juego.nombre}}</span></h3>
+  <app-valoraciones-component [juego] = "juego"></app-valoraciones-component>
+</div>
