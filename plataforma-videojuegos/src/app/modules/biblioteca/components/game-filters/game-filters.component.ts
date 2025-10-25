@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameFilter } from '../../interfaces/game-filter.interface';
+import { FilterOption } from '../../interfaces/filter-options.interface';
 
 /**
  * Componente presentacional para los filtros de juegos
@@ -15,7 +16,7 @@ import { GameFilter } from '../../interfaces/game-filter.interface';
   templateUrl: './game-filters.component.html',
   styleUrl: './game-filters.component.css'
 })
-export class GameFiltersComponent {
+export class GameFiltersComponent implements OnChanges {
   /**
    * Filtros actuales recibidos del componente padre
    */
@@ -24,6 +25,26 @@ export class GameFiltersComponent {
     genero: '',
     plataforma: ''
   };
+
+  @Input() selectedOptions: FilterOption[] = [];
+
+  /**
+   * También aceptamos 'defaultOptions' desde el padre (selectedOptions)
+   * y las mapeamos a los filtros internos para que los <select> muestren
+   * el valor recibido al inicializar el componente.
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+  if (changes['selectedOptions'] && Array.isArray(this.selectedOptions)) {
+    const sortOpt = this.selectedOptions.find(o => o.name === 'sort');
+    const genreOpt = this.selectedOptions.find(o => o.name === 'genre');
+    const platformOpt = this.selectedOptions.find(o => o.name === 'platform');
+
+    this.filters.sortBy = sortOpt?.value || '';
+    this.filters.genero = genreOpt?.value || '';
+    this.filters.plataforma = platformOpt?.value || '';
+  }
+}
+
 
   /**
    * Opciones disponibles para el dropdown de ordenamiento

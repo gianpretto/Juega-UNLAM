@@ -9,6 +9,7 @@ import { BibliotecaService } from "../../../../core/services/biblioteca.service"
 import { GameSearchComponent } from "../../components/game-search/game-search.component";
 import { GameFiltersComponent } from "../../components/game-filters/game-filters.component";
 import { GameGridComponent } from "../../components/game-grid/game-grid.component";
+import { FilterOption } from "../../interfaces/filter-options.interface";
 
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
@@ -48,6 +49,8 @@ export class CatalogoJuegosComponent implements OnInit {
 
   /** Lista filtrada que se muestra en el grid */
   filteredJuegos: Juego[] = [];
+
+  selectedOptions: FilterOption[] = [];
 
   /** Estado de carga */
   loading: boolean = true;
@@ -116,14 +119,14 @@ export class CatalogoJuegosComponent implements OnInit {
   ngOnInit(): void {
     console.log("🎮 Catálogo de Juegos inicializado");
 	this.cargarJuegos();
-    const selectedOptions = this.juegoService.getSessionFilteredGames();
-	const hasActiveFilters = selectedOptions.some(opt => opt.value !== '');
+    this.selectedOptions = this.juegoService.getSessionFilteredGames();
+	const hasActiveFilters = this.selectedOptions.some(opt => opt.value !== '');
 
 	if(hasActiveFilters){
-	this.searchTerm = selectedOptions.find(o => o.name === "term")?.value || '';
-	this.selectedGenre = selectedOptions.find(o => o.name === "genre")?.value || '';
-	this.selectedPlatform = selectedOptions.find(o => o.name === "platform")?.value || '';
-	this.selectedSort = selectedOptions.find(o => o.name === "sort")?.value || '';
+	this.searchTerm = this.selectedOptions.find(o => o.name === "term")?.value || '';
+	this.selectedGenre = this.selectedOptions.find(o => o.name === "genre")?.value || '';
+	this.selectedPlatform = this.selectedOptions.find(o => o.name === "platform")?.value || '';
+	this.selectedSort = this.selectedOptions.find(o => o.name === "sort")?.value || '';
 	this.applyFilters();
 	}
   }

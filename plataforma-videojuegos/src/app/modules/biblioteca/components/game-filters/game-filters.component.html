@@ -35,7 +35,7 @@
                     (change)="onSortChange(filters.sortBy)"
                     [disabled]="disabled"
                 >
-                    <option value="">Selecciona ordenamiento</option>
+                    <option *ngIf="!filters.sortBy" value="">Selecciona ordenamiento</option>
                     <option *ngFor="let option of sortOptions" [value]="option.value">
                         {{ option.label }}
                     </option>
@@ -58,7 +58,7 @@
                     (change)="onGenreChange(filters.genero)"
                     [disabled]="disabled"
                 >
-                    <option value="">Todos los géneros</option>
+                    <option *ngIf="!filters.genero" value="">Todos los géneros</option>
                     <option *ngFor="let option of genreOptions" [value]="option.value">
                         {{ option.label }}
                     </option>
@@ -81,7 +81,7 @@
                     (change)="onPlatformChange(filters.plataforma)"
                     [disabled]="disabled"
                 >
-                    <option value="">Todas las plataformas</option>
+                    <option *ngIf="!filters.plataforma" value="">Todas las plataformas</option>
                     <option *ngFor="let option of platformOptions" [value]="option.value">
                         {{ option.label }}
                     </option>
