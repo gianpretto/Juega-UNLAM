@@ -115,7 +115,17 @@ export class CatalogoJuegosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("🎮 Catálogo de Juegos inicializado");
-    this.cargarJuegos();
+	this.cargarJuegos();
+    const selectedOptions = this.juegoService.getSessionFilteredGames();
+	const hasActiveFilters = selectedOptions.some(opt => opt.value !== '');
+
+	if(hasActiveFilters){
+	this.searchTerm = selectedOptions.find(o => o.name === "term")?.value || '';
+	this.selectedGenre = selectedOptions.find(o => o.name === "genre")?.value || '';
+	this.selectedPlatform = selectedOptions.find(o => o.name === "platform")?.value || '';
+	this.selectedSort = selectedOptions.find(o => o.name === "sort")?.value || '';
+	this.applyFilters();
+	}
   }
 
   // ========================================
@@ -234,6 +244,7 @@ export class CatalogoJuegosComponent implements OnInit {
    */
   clearFilters(): void {
     console.log('🗑️ Limpiar filtros');
+	this.juegoService.clearFilters();
     this.searchTerm = '';
     this.selectedGenre = '';
     this.selectedPlatform = '';
@@ -307,6 +318,7 @@ export class CatalogoJuegosComponent implements OnInit {
     // 1. Aplicar búsqueda por texto
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
+	  this.juegoService.saveTermInSession(term);
       result = result.filter(juego =>
         juego.name.toLowerCase().includes(term)
       );
@@ -314,6 +326,7 @@ export class CatalogoJuegosComponent implements OnInit {
 
     // 2. Filtrar por género
     if (this.selectedGenre) {
+		this.juegoService.saveGenreInSession(this.selectedGenre);
       result = result.filter(juego =>
         juego.genres?.some(g => g.name === this.selectedGenre)
       );
@@ -321,6 +334,7 @@ export class CatalogoJuegosComponent implements OnInit {
 
     // 3. Filtrar por plataforma
     if (this.selectedPlatform) {
+		this.juegoService.savePlatformInSession(this.selectedPlatform);
       result = result.filter(juego =>
         juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
       );
@@ -328,6 +342,7 @@ export class CatalogoJuegosComponent implements OnInit {
 
     // 4. Aplicar ordenamiento
     if (this.selectedSort) {
+		this.juegoService.saveSortInSession(this.selectedSort);
       result = this.sortGames(result, this.selectedSort);
     }
 
