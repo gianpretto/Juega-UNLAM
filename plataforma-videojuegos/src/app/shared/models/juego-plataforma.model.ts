@@ -1,8 +1,10 @@
-/**
- * Modelo que representa la relación muchos a muchos entre Juego y Plataforma
- */
+import type { Juego } from "./juego.model";
+import type { Plataforma } from "./plataforma.model";
+
 export interface JuegoPlataforma {
   id: number;
-  fkIdJuego: number; // Foreign Key a Juego
-  fkIdPlataforma: number; // Foreign Key a Plataforma
+  juegoId: number;
+  juego?: Juego;
+  plataformaId: number;
+  plataforma?: Plataforma;
 }

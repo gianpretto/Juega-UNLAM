@@ -1,22 +1,23 @@
-import { Desarrollador } from './desarrollador.model';
-import { Plataforma } from './plataforma.model';
-import { Genero } from './genero.model';
+import type {Genero} from './genero.model';
+import type {Desarrollador} from './desarrollador.model';
+import type {Review} from './review.model';
+import type {UsuarioJuego} from './usuario-juego.model';
+import type {Wishlist} from './wishlist.model';
+import type {CarritoJuego} from './carrito-juego.model';
+import type {JuegoPlataforma} from './juego-plataforma.model';
 
-/**
- * Modelo principal que representa un Juego
- * Incluye las relaciones con otras entidades
- */
 export interface Juego {
   id: number;
   nombre: string;
   precio: number;
   descripcion: string;
-  codigoGen: number;
-  fkIdDesa: number; // Foreign Key a Desarrollador
-
-  // Propiedades opcionales para las relaciones populadas (cuando el backend las incluya)
+  generoId: number;
+  genero?: Genero;
+  desarrolladorId: number;
   desarrollador?: Desarrollador;
-  plataformas?: Plataforma[];
-  generos?: Genero[];
-  imagenes?: string[]; // URLs de imágenes del juego
+  reviews?: Review[];
+  usuarioJuegos?: UsuarioJuego[];
+  wishlists?: Wishlist[];
+  carritos?: CarritoJuego[];
+  plataformas?: JuegoPlataforma[];
 }

@@ -1,9 +1,7 @@
-/**
- * Modelo que representa un Género de videojuego
- */
+import type { Juego } from './juego.model';
+
 export interface Genero {
   id: number;
   nombre: string;
-  descripcion: string;
-  fkIdJuego: number; // Foreign Key a Juego
+  juegos?: Juego[];
 }

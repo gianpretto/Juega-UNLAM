@@ -1,8 +1,7 @@
-/**
- * Modelo que representa un Desarrollador de videojuegos
- */
+import type {Juego} from './juego.model';
+
 export interface Desarrollador {
   id: number;
   nombre: string;
-  descripcion: string;
+  juegos?: Juego[];
 }

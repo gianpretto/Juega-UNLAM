@@ -1,8 +1,7 @@
-/**
- * Modelo que representa una Plataforma (PC, PlayStation, Xbox, etc.)
- */
+import type { JuegoPlataforma } from "./juego-plataforma.model";
+
 export interface Plataforma {
   id: number;
   nombre: string;
-  descripcion: string;
+  juegos?: JuegoPlataforma[];
 }
