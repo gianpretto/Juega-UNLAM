@@ -1,41 +1,68 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+import { Juego } from '../../shared/models';
 
+/**
+ * Servicio para gestionar juegos desde la API REST
+ * 
+ * Endpoints disponibles:
+ * - GET /juegos - Lista todos los juegos
+ * - GET /juegos/:id - Obtiene un juego por ID
+ * - DELETE /juegos/:id - Elimina un juego (admin)
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class JuegoService {
-  
-  getJuegoById(id: number) {
-    //por ahora hardcodeado
-    return {
-      id: id,
-      nombre: 'Hollow Knight: Silksong',
-      descripcion: "Conviértete en la princesa guerrera¡Encarnando a la letal cazadora Hornet, explora un reino de gobernado por la seda y el canto! Tras ser capturada y llevada a un mundo desconocido, prepárate para luchar contra poderosos enemigos y resolver misterios mientras asciendes en un peregrinaje mortal hasta la cima del reino <br>Hollow Knight: Silksong es la épica secuela del premiado videojuego de acción y aventura Hollow Knight. Viaja a tierras totalmente nuevas, descubre nuevos poderes, combate contras vastas hordas de bichos y bestias y revela secretos ligados a tu naturaleza y a tu pasado.",
-      precio: 19.99,
-      imagenes: [
-      'assets/images/imagen1.jpg',
-      'assets/images/imagen2.jpg',
-      'assets/images/imagen3.jpg',
-      'assets/images/imagen4.jpg',
-      'assets/images/imagen5.jpg',
-      ],
-      reviews: [
-        {
-          id: 1,
-          descripcion: 'Tras pasarme el juego al 100% no puedo recomendar más este juego. Voy a intentar ser lo más neutral posible para analizar el juego pero hay experiencias que las he vivido de una manera y para cada uno será distinto.',
-          valoracion: 'Muy positiva'
-        },
-        {
-          id: 2,
-          descripcion: 'Más grande, fluído, bonito y exigente que el original Hollow Knight. El rey de los Metroidvania por excelencia. Obra maestra que eleva a team Cherry al Panteón del género',
-          valoracion: 'Muy positiva'
-        },
-        {
-          id: 3,
-          descripcion: 'Habiéndome jugado por completo el primer juego, afirmo que silksong es mucho mas difícil (sobretodo en el acto 3 donde la dificultad se eleva muchísimo) haciéndose injusta en algunas ocasiones, pero eso no lo hace un mal juego, lo hace desafiante lo cual lo veo como un punto bueno. en los otros apartados tanto en el diseño artístico como en la música, sigue estando a la altura del primer hollow knight, e incluso mejor.',
-          valoracion: 'Extremadamente positiva'
-        }
-      ]
-    };
+  private base = `${environment.apiUrl}juegos`;
+
+  constructor(private http: HttpClient) {}
+
+  /**
+   * Obtiene todos los juegos disponibles en el catálogo
+   * El backend debe incluir las relaciones: genero, desarrollador, plataformas
+   */
+  getJuegos(): Observable<Juego[]> {
+    return this.http.get<Juego[]>(this.base).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Obtiene un juego específico por su ID
+   * El backend debe incluir las relaciones completas
+   */
+  getJuegoPorId(id: number): Observable<Juego> {
+    return this.http.get<Juego>(`${this.base}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Elimina un juego del catálogo (solo admin)
+   * TODO: Agregar verificación de permisos de administrador
+   */
+  eliminarJuego(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Manejo centralizado de errores HTTP
+   */
+  private handleError(error: any): Observable<never> {
+    console.error('Error en JuegoService:', error);
+    let errorMessage = 'Error al procesar la solicitud de juegos.';
+    
+    if (error.status === 404) {
+      errorMessage = 'Juego no encontrado.';
+    } else if (error.status === 0) {
+      errorMessage = 'No se pudo conectar con el servidor. Verifica que el backend esté corriendo.';
+    }
+    
+    return throwError(() => new Error(errorMessage));
   }
 }

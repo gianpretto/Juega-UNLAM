@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Juego } from "../../interfaces/juego.interface";
 import { GameFilter } from "../../interfaces/game-filter.interface";
-import { JuegoService } from "../../../../api/api-rawg/juego/juego.service";
+import { JuegoService } from "../../../../core/services/juego.service";
 import { BibliotecaService } from "../../../../core/services/biblioteca.service";
 
 // Componentes hijos
@@ -11,10 +11,10 @@ import { GameFiltersComponent } from "../../components/game-filters/game-filters
 import { GameGridComponent } from "../../components/game-grid/game-grid.component";
 
 /**
- * SMART COMPONENT - Catálogo de Juegos RAWG
+ * SMART COMPONENT - Catálogo de Juegos
  *
  * RESPONSABILIDADES:
- * - Obtener datos del servicio RAWG
+ * - Obtener datos del servicio de juegos (API propia)
  * - Gestionar estado (loading, error)
  * - Aplicar lógica de filtros y búsqueda
  * - Coordinar componentes hijos
@@ -22,7 +22,7 @@ import { GameGridComponent } from "../../components/game-grid/game-grid.componen
  *
  * NO hace:
  * - Renderizar tarjetas directamente
- * - Manejar UI de filtros (por ahora sin componente de filtros)
+ * - Manejar UI de filtros
  * - Estilos visuales complejos
  */
 @Component({
@@ -83,8 +83,8 @@ export class CatalogoJuegosComponent implements OnInit {
   sortOptions: { label: string; value: string }[] = [
     { label: 'Nombre A-Z', value: 'name-asc' },
     { label: 'Nombre Z-A', value: 'name-desc' },
-    { label: 'Más recientes', value: 'date-desc' },
-    { label: 'Más antiguos', value: 'date-asc' }
+    { label: 'Precio: menor a mayor', value: 'price-asc' },
+    { label: 'Precio: mayor a menor', value: 'price-desc' }
   ];
 
   /** Opciones para el dropdown de géneros (se llena dinámicamente) */
@@ -155,7 +155,9 @@ export class CatalogoJuegosComponent implements OnInit {
     // Extraer géneros únicos
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
-      juego.genres?.forEach(genre => genresSet.add(genre.name));
+      if (juego.genero?.nombre) {
+        genresSet.add(juego.genero.nombre);
+      }
     });
     this.availableGenres = Array.from(genresSet).sort();
     this.genreOptions = this.availableGenres.map(genre => ({
@@ -166,7 +168,11 @@ export class CatalogoJuegosComponent implements OnInit {
     // Extraer plataformas únicas
     const platformsSet = new Set<string>();
     this.juegos.forEach(juego => {
-      juego.parent_platforms?.forEach(pp => platformsSet.add(pp.platform.name));
+      juego.plataformas?.forEach(jp => {
+        if (jp.plataforma?.nombre) {
+          platformsSet.add(jp.plataforma.nombre);
+        }
+      });
     });
     this.availablePlatforms = Array.from(platformsSet).sort();
     this.platformOptions = this.availablePlatforms.map(platform => ({
@@ -214,7 +220,7 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego seleccionado
    */
   viewDetails(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.name);
+    console.log('👁️ Ver detalles de:', juego.nombre);
     // TODO: Navegar a página de detalles
     // this.router.navigate(['/juegos', juego.id]);
   }
@@ -224,9 +230,9 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego a agregar
    */
   addToLibrary(juego: Juego): void {
-    console.log('➕ Agregar a biblioteca:', juego.name);
+    console.log('➕ Agregar a biblioteca:', juego.nombre);
     // TODO: Implementar lógica con BibliotecaService
-    alert(`"${juego.name}" se agregará a tu biblioteca (pendiente de implementar)`);
+    alert(`"${juego.nombre}" se agregará a tu biblioteca (pendiente de implementar)`);
   }
 
   /**
@@ -251,7 +257,7 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego seleccionado
    */
   handleGameClick(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.name);
+    console.log('👁️ Ver detalles de:', juego.nombre);
     // TODO: Navegar a página de detalles
     // this.router.navigate(['/juegos', juego.id]);
   }
@@ -261,11 +267,11 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego a agregar
    */
   handleAddToBiblio(juego: Juego): void {
-    console.log('➕ Agregar a biblioteca:', juego.name);
+    console.log('➕ Agregar a biblioteca:', juego.nombre);
 
     this.bibliotecaService.agregarJuego(juego).subscribe({
       next: () => {
-        alert(`✅ "${juego.name}" se agregó a tu biblioteca!`);
+        alert(`✅ "${juego.nombre}" se agregó a tu biblioteca!`);
       },
       error: (error: any) => {
         console.error('Error al agregar:', error);
@@ -279,9 +285,9 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego a marcar/desmarcar
    */
   handleToggleFavorite(juego: Juego): void {
-    console.log('❤️ Toggle favorito:', juego.name);
+    console.log('❤️ Toggle favorito:', juego.nombre);
     // TODO: Implementar lógica de favoritos
-    alert(`"${juego.name}" favorito toggled (pendiente de implementar)`);
+    alert(`"${juego.nombre}" favorito toggled (pendiente de implementar)`);
   }
 
   /**
@@ -308,21 +314,23 @@ export class CatalogoJuegosComponent implements OnInit {
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       result = result.filter(juego =>
-        juego.name.toLowerCase().includes(term)
+        juego.nombre.toLowerCase().includes(term) ||
+        juego.descripcion?.toLowerCase().includes(term) ||
+        juego.desarrollador?.nombre.toLowerCase().includes(term)
       );
     }
 
     // 2. Filtrar por género
     if (this.selectedGenre) {
       result = result.filter(juego =>
-        juego.genres?.some(g => g.name === this.selectedGenre)
+        juego.genero?.nombre === this.selectedGenre
       );
     }
 
     // 3. Filtrar por plataforma
     if (this.selectedPlatform) {
       result = result.filter(juego =>
-        juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
+        juego.plataformas?.some(jp => jp.plataforma?.nombre === this.selectedPlatform)
       );
     }
 
@@ -347,24 +355,16 @@ export class CatalogoJuegosComponent implements OnInit {
 
     switch (sortType) {
       case 'name-asc':
-        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+        return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       case 'name-desc':
-        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+        return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
 
-      case 'date-desc':
-        return sorted.sort((a, b) => {
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateB - dateA; // Más reciente primero
-        });
+      case 'price-asc':
+        return sorted.sort((a, b) => a.precio - b.precio);
 
-      case 'date-asc':
-        return sorted.sort((a, b) => {
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateA - dateB; // Más antiguo primero
-        });
+      case 'price-desc':
+        return sorted.sort((a, b) => b.precio - a.precio);
 
       default:
         return sorted;

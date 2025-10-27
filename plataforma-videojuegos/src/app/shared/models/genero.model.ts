@@ -1,7 +1,7 @@
-import type { Juego } from './juego.model';
+import type { JuegoGenero } from './juego-genero.model';
 
 export interface Genero {
   id: number;
   nombre: string;
-  juegos?: Juego[];
+  juegoGeneros?: JuegoGenero[];
 }

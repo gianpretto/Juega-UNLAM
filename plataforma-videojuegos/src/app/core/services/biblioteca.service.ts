@@ -1,12 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError, of, delay, map } from 'rxjs';
-import { Juego } from '../../shared/models';
-import { Juego as JuegoRawg } from '../../modules/biblioteca/interfaces/juego.interface';
+import { Observable, catchError, throwError, map } from 'rxjs';
+import { Juego, UsuarioJuego } from '../../shared/models';
 import { environment } from '../../../environments/environment';
+import { UsuarioJuegoService } from './usuario-juego.service';
 
 /**
  * Servicio para manejar la biblioteca de juegos del usuario
+ * 
+ * La biblioteca del usuario se gestiona mediante la tabla Usuario_Juego
+ * que vincula usuarios con sus juegos adquiridos.
  *
  * Buenas prácticas aplicadas:
  * - @Injectable con providedIn: 'root' para singleton
@@ -15,150 +18,125 @@ import { environment } from '../../../environments/environment';
  * - Tipado fuerte con TypeScript
  */
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class BibliotecaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = `${environment.apiUrl}/biblioteca`;
-
-  // Almacenamiento temporal en memoria (simulando backend)
-  // TODO: Reemplazar con llamadas reales a la API cuando esté disponible
-  private juegosGuardados: JuegoRawg[] = [];
-  private favoritosIds: Set<number> = new Set();
+  private readonly usuarioJuegoService = inject(UsuarioJuegoService);
+  
+  // TODO: Obtener el ID del usuario desde un servicio de autenticación
+  private readonly usuarioId = 1; // Hardcodeado temporalmente
 
   /**
-   * Obtiene todos los juegos de la biblioteca del usuario
-   * NOTA: Por ahora retorna datos de localStorage/memoria
-   * TODO: Reemplazar con llamada HTTP real cuando el backend esté listo
+   * Obtiene todos los juegos de la biblioteca del usuario actual
+   * Consulta la tabla Usuario_Juego y retorna los juegos vinculados
    */
-  obtenerJuegos(): Observable<JuegoRawg[]> {
-    // Simulación de carga desde localStorage
-    const stored = localStorage.getItem('biblioteca_juegos');
-    if (stored) {
-      this.juegosGuardados = JSON.parse(stored);
-    }
-
-    // Simular delay de red
-    return of(this.juegosGuardados).pipe(
-      delay(300),
+  obtenerJuegos(): Observable<Juego[]> {
+    return this.usuarioJuegoService.obtenerJuegosDeUsuario(this.usuarioId).pipe(
+      map((usuarioJuegos: UsuarioJuego[]) => {
+        // Extraer solo los juegos de la relación Usuario_Juego
+        return usuarioJuegos
+          .map(uj => uj.juego)
+          .filter((juego): juego is Juego => juego !== undefined);
+      }),
       catchError(this.handleError)
     );
   }
 
   /**
-   * Agrega un juego a la biblioteca
+   * Agrega un juego a la biblioteca del usuario actual
+   * Crea un registro en Usuario_Juego
    */
-  agregarJuego(juego: JuegoRawg): Observable<void> {
-    // Verificar que no esté ya agregado
-    if (!this.juegosGuardados.find(j => j.id === juego.id)) {
-      this.juegosGuardados.push(juego);
-      localStorage.setItem('biblioteca_juegos', JSON.stringify(this.juegosGuardados));
-      console.log('✅ Juego agregado a biblioteca:', juego.name);
-    }
-
-    return of(void 0).pipe(delay(200));
+  agregarJuego(juego: Juego): Observable<UsuarioJuego> {
+    return this.usuarioJuegoService.agregarJuegoAUsuario({
+      usuarioId: this.usuarioId,
+      juegoId: juego.id,
+      detalle: `Juego "${juego.nombre}" agregado a la biblioteca`
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   /**
-   * Elimina un juego de la biblioteca
+   * Elimina un juego de la biblioteca del usuario actual
+   * Elimina el registro de Usuario_Juego
    */
   eliminarJuego(juegoId: number): Observable<void> {
-    this.juegosGuardados = this.juegosGuardados.filter(j => j.id !== juegoId);
-    localStorage.setItem('biblioteca_juegos', JSON.stringify(this.juegosGuardados));
-
-    // También quitar de favoritos si estaba
-    this.favoritosIds.delete(juegoId);
-    this.guardarFavoritos();
-
-    console.log('🗑️ Juego eliminado de biblioteca');
-    return of(void 0).pipe(delay(200));
+    return this.usuarioJuegoService.eliminarJuegoDeUsuario({
+      usuarioId: this.usuarioId,
+      juegoId: juegoId
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   /**
-   * Obtiene los IDs de juegos favoritos
+   * Obtiene los IDs de juegos favoritos del usuario
+   * TODO: Implementar endpoint en backend para favoritos
    */
   obtenerFavoritos(): Observable<number[]> {
+    // Temporalmente usar localStorage hasta tener endpoint
     const stored = localStorage.getItem('biblioteca_favoritos');
     if (stored) {
       const favoritos = JSON.parse(stored) as number[];
-      this.favoritosIds = new Set(favoritos);
+      return new Observable(observer => {
+        observer.next(favoritos);
+        observer.complete();
+      });
     }
-
-    return of(Array.from(this.favoritosIds)).pipe(delay(200));
+    return new Observable(observer => {
+      observer.next([]);
+      observer.complete();
+    });
   }
 
   /**
    * Agrega un juego a favoritos
+   * TODO: Implementar endpoint en backend para favoritos
    */
   agregarAFavoritos(juegoId: number): Observable<void> {
-    this.favoritosIds.add(juegoId);
-    this.guardarFavoritos();
+    const stored = localStorage.getItem('biblioteca_favoritos');
+    const favoritos: number[] = stored ? JSON.parse(stored) : [];
+    if (!favoritos.includes(juegoId)) {
+      favoritos.push(juegoId);
+      localStorage.setItem('biblioteca_favoritos', JSON.stringify(favoritos));
+    }
     console.log('❤️ Agregado a favoritos');
-    return of(void 0).pipe(delay(200));
+    return new Observable(observer => {
+      observer.next();
+      observer.complete();
+    });
   }
 
   /**
    * Quita un juego de favoritos
+   * TODO: Implementar endpoint en backend para favoritos
    */
   quitarDeFavoritos(juegoId: number): Observable<void> {
-    this.favoritosIds.delete(juegoId);
-    this.guardarFavoritos();
+    const stored = localStorage.getItem('biblioteca_favoritos');
+    const favoritos: number[] = stored ? JSON.parse(stored) : [];
+    const filtered = favoritos.filter(id => id !== juegoId);
+    localStorage.setItem('biblioteca_favoritos', JSON.stringify(filtered));
     console.log('💔 Quitado de favoritos');
-    return of(void 0).pipe(delay(200));
+    return new Observable(observer => {
+      observer.next();
+      observer.complete();
+    });
   }
 
   /**
-   * Verifica si un juego ya está en la biblioteca
+   * Verifica si un juego ya está en la biblioteca del usuario
    */
   estaEnBiblioteca(juegoId: number): Observable<boolean> {
-    const stored = localStorage.getItem('biblioteca_juegos');
-    if (stored) {
-      const juegos = JSON.parse(stored) as JuegoRawg[];
-      return of(juegos.some(j => j.id === juegoId));
-    }
-    return of(false);
-  }
-
-  /**
-   * Guarda favoritos en localStorage
-   */
-  private guardarFavoritos(): void {
-    localStorage.setItem('biblioteca_favoritos', JSON.stringify(Array.from(this.favoritosIds)));
-  }
-
-  /**
-   * Obtiene todos los juegos de la biblioteca del usuario
-   * @returns Observable con array de juegos
-   */
-  getJuegos(): Observable<Juego[]> {
-    return this.http.get<Juego[]>(this.apiUrl).pipe(
-      catchError(this.handleError) // 👈 Manejo centralizado de errores
-    );
-  }
-
-  /**
-   * Obtiene un juego específico por ID
-   * @param id - ID del juego
-   * @returns Observable con el juego
-   */
-  getJuegoById(id: number): Observable<Juego> {
-    return this.http.get<Juego>(`${this.apiUrl}/${id}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  /**
-   * Busca juegos por nombre
-   * @param searchTerm - Término de búsqueda
-   * @returns Observable con juegos filtrados
-   */
-  searchJuegos(searchTerm: string): Observable<Juego[]> {
-    return this.http.get<Juego[]>(`${this.apiUrl}/search`, {
-      params: { q: searchTerm }
-    }).pipe(
-      catchError(this.handleError)
+    return this.obtenerJuegos().pipe(
+      map((juegos: Juego[]) => juegos.some(j => j.id === juegoId)),
+      catchError(() => {
+        return new Observable<boolean>(observer => {
+          observer.next(false);
+          observer.complete();
+        });
+      })
     );
   }
 
@@ -169,6 +147,6 @@ export class BibliotecaService {
    */
   private handleError(error: any): Observable<never> {
     console.error('Error en BibliotecaService:', error);
-    return throwError(() => new Error('Error al cargar los juegos. Por favor, intenta nuevamente.'));
+    return throwError(() => new Error('Error al procesar la solicitud. Por favor, intenta nuevamente.'));
   }
 }

@@ -3,7 +3,7 @@
     <div class="game-image-container">
         <img
             [src]="getGameImage()"
-            [alt]="juego.name"
+            [alt]="juego.nombre"
             class="game-image"
             loading="lazy"
         />
@@ -51,9 +51,8 @@
         </div>
 
 
-        <div class="rating-badge" *ngIf="juego.rating">
-            <i class="pi pi-star-fill"></i>
-            <span>{{ juego.rating }}</span>
+        <div class="price-badge">
+            <span>{{ getFormattedPrice() }}</span>
         </div>
     </div>
 
@@ -62,42 +61,39 @@
 
         <h3
             class="game-title"
-            [pTooltip]="juego.name"
+            [pTooltip]="juego.nombre"
             tooltipPosition="top"
         >
-            {{ juego.name }}
+            {{ juego.nombre }}
         </h3>
 
 
-        <p class="game-release-date">
-            <i class="pi pi-calendar"></i>
-            {{ getFormattedDate() }}
+        <p class="game-developer">
+            <i class="pi pi-building"></i>
+            {{ getDeveloperName() }}
         </p>
 
 
-        <div class="game-genres-text" *ngIf="hasGenres()">
+        <div class="game-genre-text" *ngIf="hasGenre()">
             <i class="pi pi-tag"></i>
-            <span>{{ getGenreNames() }}</span>
+            <span>{{ getGenreName() }}</span>
         </div>
 
         <div class="game-platforms" *ngIf="hasPlatforms()">
             <span
                 class="platform-icon"
-                *ngFor="let parentPlatform of getLimitedPlatforms()"
-                [pTooltip]="parentPlatform.platform.name"
+                *ngFor="let juegoPlataforma of getLimitedPlatforms()"
+                [pTooltip]="juegoPlataforma.plataforma?.nombre"
                 tooltipPosition="top"
             >
-                <i [class]="getPlatformIcon(parentPlatform.platform.name)"></i>
+                <i [class]="getPlatformIcon(juegoPlataforma.plataforma?.nombre || '')"></i>
             </span>
         </div>
 
 
-        <div class="game-genres" *ngIf="hasGenres()">
-            <span
-                class="genre-tag"
-                *ngFor="let genre of getLimitedGenres()"
-            >
-                {{ genre.name }}
+        <div class="game-genre-tag" *ngIf="hasGenre()">
+            <span class="genre-tag">
+                {{ juego.genero?.nombre }}
             </span>
         </div>
     </div>

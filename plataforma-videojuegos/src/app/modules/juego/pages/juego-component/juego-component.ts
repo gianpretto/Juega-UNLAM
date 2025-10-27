@@ -27,7 +27,7 @@ export class JuegoComponentDetalle implements OnInit {
 
 
     listarJuego(id: number){
-        this.juego = this.juegoService.getJuegoById(id);
+        this.juego = this.juegoService.getJuegoPorId(id);
     }
 
 }

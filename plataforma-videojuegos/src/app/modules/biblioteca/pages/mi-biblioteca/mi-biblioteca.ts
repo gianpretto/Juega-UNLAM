@@ -75,9 +75,8 @@ export class MiBibliotecaComponent implements OnInit {
   sortOptions: { label: string; value: string }[] = [
     { label: 'Nombre A-Z', value: 'name-asc' },
     { label: 'Nombre Z-A', value: 'name-desc' },
-    { label: 'Agregado recientemente', value: 'date-desc' },
-    { label: 'Agregado hace tiempo', value: 'date-asc' },
-    { label: 'Mejor valorados', value: 'rating-desc' }
+    { label: 'Precio: menor a mayor', value: 'price-asc' },
+    { label: 'Precio: mayor a menor', value: 'price-desc' }
   ];
 
   /** Opciones para el dropdown de géneros (se llena dinámicamente) */
@@ -168,7 +167,9 @@ export class MiBibliotecaComponent implements OnInit {
     // Extraer géneros únicos
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
-      juego.genres?.forEach(genre => genresSet.add(genre.name));
+      if (juego.genero?.nombre) {
+        genresSet.add(juego.genero.nombre);
+      }
     });
     this.availableGenres = Array.from(genresSet).sort();
     this.genreOptions = this.availableGenres.map(genre => ({
@@ -179,7 +180,11 @@ export class MiBibliotecaComponent implements OnInit {
     // Extraer plataformas únicas
     const platformsSet = new Set<string>();
     this.juegos.forEach(juego => {
-      juego.parent_platforms?.forEach(pp => platformsSet.add(pp.platform.name));
+      juego.plataformas?.forEach(jp => {
+        if (jp.plataforma?.nombre) {
+          platformsSet.add(jp.plataforma.nombre);
+        }
+      });
     });
     this.availablePlatforms = Array.from(platformsSet).sort();
     this.platformOptions = this.availablePlatforms.map(platform => ({
@@ -241,7 +246,7 @@ export class MiBibliotecaComponent implements OnInit {
    * Maneja el clic en una tarjeta de juego
    */
   handleGameClick(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.name);
+    console.log('👁️ Ver detalles de:', juego.nombre);
     // TODO: Navegar a página de detalles
     // this.router.navigate(['/juegos', juego.id]);
   }
@@ -250,9 +255,9 @@ export class MiBibliotecaComponent implements OnInit {
    * Maneja la eliminación de un juego de la biblioteca
    */
   handleRemoveFromBiblio(juego: Juego): void {
-    console.log('🗑️ Eliminar de biblioteca:', juego.name);
+    console.log('🗑️ Eliminar de biblioteca:', juego.nombre);
 
-    const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar "${juego.name}" de tu biblioteca?`);
+    const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar "${juego.nombre}" de tu biblioteca?`);
 
     if (confirmDelete) {
       this.bibliotecaService.eliminarJuego(juego.id).subscribe({
@@ -277,7 +282,7 @@ export class MiBibliotecaComponent implements OnInit {
    * Maneja el toggle de favorito
    */
   handleToggleFavorite(juego: Juego): void {
-    console.log('❤️ Toggle favorito:', juego.name);
+    console.log('❤️ Toggle favorito:', juego.nombre);
 
     const esFavorito = this.favoritosIds.has(juego.id);
 
@@ -330,21 +335,23 @@ export class MiBibliotecaComponent implements OnInit {
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       result = result.filter(juego =>
-        juego.name.toLowerCase().includes(term)
+        juego.nombre.toLowerCase().includes(term) ||
+        juego.descripcion?.toLowerCase().includes(term) ||
+        juego.desarrollador?.nombre.toLowerCase().includes(term)
       );
     }
 
     // 2. Filtrar por género
     if (this.selectedGenre) {
       result = result.filter(juego =>
-        juego.genres?.some(g => g.name === this.selectedGenre)
+        juego.genero?.nombre === this.selectedGenre
       );
     }
 
     // 3. Filtrar por plataforma
     if (this.selectedPlatform) {
       result = result.filter(juego =>
-        juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
+        juego.plataformas?.some(jp => jp.plataforma?.nombre === this.selectedPlatform)
       );
     }
 
@@ -366,27 +373,16 @@ export class MiBibliotecaComponent implements OnInit {
 
     switch (sortType) {
       case 'name-asc':
-        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+        return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       case 'name-desc':
-        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+        return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
 
-      case 'date-desc':
-        return sorted.sort((a, b) => {
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateB - dateA;
-        });
+      case 'price-asc':
+        return sorted.sort((a, b) => a.precio - b.precio);
 
-      case 'date-asc':
-        return sorted.sort((a, b) => {
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateA - dateB;
-        });
-
-      case 'rating-desc':
-        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case 'price-desc':
+        return sorted.sort((a, b) => b.precio - a.precio);
 
       default:
         return sorted;

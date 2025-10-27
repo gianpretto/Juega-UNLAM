@@ -104,58 +104,52 @@ export class GameCardComponent {
   }
 
   /**
-   * Obtiene los nombres de géneros concatenados
+   * Obtiene el nombre del género (ahora es un solo género por juego)
    */
-  getGenreNames(): string {
-    return this.juego.genres?.map(g => g.name).slice(0, 3).join(', ') || 'Sin género';
+  getGenreName(): string {
+    return this.juego.genero?.nombre || 'Sin género';
   }
 
   /**
    * Obtiene la imagen del juego o el placeholder
+   * TODO: Agregar campo de imagen al modelo de BD
    */
   getGameImage(): string {
-    return this.juego.background_image || this.placeholderImage;
+    return this.placeholderImage;
   }
 
   /**
    * Verifica si el juego tiene plataformas disponibles
    */
   hasPlatforms(): boolean {
-    return !!(this.juego.parent_platforms && this.juego.parent_platforms.length > 0);
+    return !!(this.juego.plataformas && this.juego.plataformas.length > 0);
   }
 
   /**
-   * Verifica si el juego tiene géneros disponibles
+   * Verifica si el juego tiene género disponible
    */
-  hasGenres(): boolean {
-    return !!(this.juego.genres && this.juego.genres.length > 0);
+  hasGenre(): boolean {
+    return !!this.juego.genero;
   }
 
   /**
-   * Obtiene las plataformas limitadas a mostrar (máximo 4)
+   * Obtiene las plataformas del juego (máximo 4)
    */
   getLimitedPlatforms() {
-    return this.juego.parent_platforms?.slice(0, 4) || [];
+    return this.juego.plataformas?.slice(0, 4) || [];
   }
 
   /**
-   * Obtiene los géneros limitados a mostrar (máximo 3)
+   * Obtiene el precio formateado
    */
-  getLimitedGenres() {
-    return this.juego.genres?.slice(0, 3) || [];
+  getFormattedPrice(): string {
+    return `$${this.juego.precio.toFixed(2)}`;
   }
 
   /**
-   * Formatea la fecha de lanzamiento
+   * Obtiene el nombre del desarrollador
    */
-  getFormattedDate(): string {
-    if (!this.juego.released) return 'Sin fecha';
-
-    const date = new Date(this.juego.released);
-    return date.toLocaleDateString('es-AR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
+  getDeveloperName(): string {
+    return this.juego.desarrollador?.nombre || 'Desarrollador desconocido';
   }
 }
