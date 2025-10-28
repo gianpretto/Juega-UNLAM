@@ -1,6 +1,7 @@
 import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '../../../../shared/models/juego.model';
+import { Imagen } from '../../../../shared/models/imagen.model';
 
 @Component({
   selector: 'app-detalle-juego-component',
@@ -17,7 +18,7 @@ export class DetalleJuegoComponent implements OnInit {
   
   ngOnInit(): void {
     if(this.juego){
-    this.imagenes = this.juego.imagenes;
+    this.imagenes = this.juego.imagenes?.map(img => img.url) || [];
     }
   }
   imagenAMostrar = computed(() =>{

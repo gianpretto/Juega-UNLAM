@@ -2,8 +2,7 @@
   @for (review of juego.reviews; track $index) {
     <div class="card shadow-lg border-0 rounded-4 bg-dark text-white" style="max-width: 25rem;">
     <div class="card-header bg-secondary bg-opacity-25 border-0 rounded-top-4">
-      <h5 class="mb-0">Reseña</h5>
-      <small class="text-muted text-white">{{review.valoracion}}</small>
+      <h5 class="mb-0">Reseña de {{ review.usuario?.nombre || 'Usuario' }}</h5>
     </div>
     <div class="card-body">
       <p class="card-text">{{review.descripcion}}</p>

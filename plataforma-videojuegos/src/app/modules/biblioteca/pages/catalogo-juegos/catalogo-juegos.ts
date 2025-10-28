@@ -155,8 +155,10 @@ export class CatalogoJuegosComponent implements OnInit {
     // Extraer géneros únicos
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
-      if (juego.genero?.nombre) {
-        genresSet.add(juego.genero.nombre);
+      // Para obtener los nombres de los géneros:
+      const generos = juego.juegoGeneros?.map(jg => jg.genero?.nombre).filter((g): g is string => !!g);
+      if (generos && generos.length) {
+        generos.forEach(g => genresSet.add(g));
       }
     });
     this.availableGenres = Array.from(genresSet).sort();
@@ -323,7 +325,7 @@ export class CatalogoJuegosComponent implements OnInit {
     // 2. Filtrar por género
     if (this.selectedGenre) {
       result = result.filter(juego =>
-        juego.genero?.nombre === this.selectedGenre
+        juego.juegoGeneros?.some(jg => jg.genero?.nombre === this.selectedGenre)
       );
     }
 

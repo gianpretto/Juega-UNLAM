@@ -26,7 +26,23 @@ export class BibliotecaService {
   private readonly usuarioJuegoService = inject(UsuarioJuegoService);
   
   // TODO: Obtener el ID del usuario desde un servicio de autenticación
-  private readonly usuarioId = 1; // Hardcodeado temporalmente
+  private usuarioId = 6; // ID del usuario actual (cambiar según necesites)
+
+  /**
+   * Permite cambiar el ID del usuario actual
+   * Útil para testing o hasta que se implemente autenticación
+   */
+  setUsuarioId(id: number): void {
+    this.usuarioId = id;
+    console.log(`📚 Usuario de biblioteca cambiado a ID: ${id}`);
+  }
+
+  /**
+   * Obtiene el ID del usuario actual
+   */
+  getUsuarioId(): number {
+    return this.usuarioId;
+  }
 
   /**
    * Obtiene todos los juegos de la biblioteca del usuario actual

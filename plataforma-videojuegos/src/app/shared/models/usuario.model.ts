@@ -7,7 +7,6 @@ import type { Carrito } from "./carrito.model";
 export interface Usuario {
   id: number;
   email: string;
-  // Nunca enviar password al cliente en responses productivas
   password?: string; // opcional aquí; preferir DTO sin password
   nombre: string;
   apellido: string;

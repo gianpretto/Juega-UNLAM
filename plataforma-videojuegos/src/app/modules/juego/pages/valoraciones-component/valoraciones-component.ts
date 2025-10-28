@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '../../../../shared/models/juego.model';
 @Component({
   selector: 'app-valoraciones-component',
   imports: [CardModule, ButtonModule],

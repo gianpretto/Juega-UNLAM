@@ -4,7 +4,7 @@ import { OpcionesComponent } from '../opciones-component/opciones-component';
 import { ValoracionesComponent } from '../valoraciones-component/valoraciones-component';
 import { JuegoService } from '../../../../core/services/juego.service';
 import { ActivatedRoute } from '@angular/router';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '../../../../shared/models/juego.model';
 
 @Component({
   selector: 'app-juego-component',
@@ -27,7 +27,9 @@ export class JuegoComponentDetalle implements OnInit {
 
 
     listarJuego(id: number){
-        this.juego = this.juegoService.getJuegoPorId(id);
-    }
+    this.juegoService.getJuegoPorId(id).subscribe(juego => {
+        this.juego = juego;
+    });
+}
 
 }

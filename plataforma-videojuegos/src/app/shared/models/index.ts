@@ -8,5 +8,7 @@ export * from './carrito-juego.model';
 export * from './juego.model';
 export * from './desarrollador.model';
 export * from './genero.model';
+export * from './juego-genero.model';
 export * from './juego-plataforma.model';
 export * from './plataforma.model';
+export * from './imagen.model';

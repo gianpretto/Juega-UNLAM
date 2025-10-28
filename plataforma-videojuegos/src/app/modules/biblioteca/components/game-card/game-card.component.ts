@@ -104,10 +104,10 @@ export class GameCardComponent {
   }
 
   /**
-   * Obtiene el nombre del género (ahora es un solo género por juego)
+   * Obtiene los nombres de los géneros del juego
    */
-  getGenreName(): string {
-    return this.juego.genero?.nombre || 'Sin género';
+  getGeneros(): string {
+    return this.juego.juegoGeneros?.map(jg => jg.genero?.nombre).filter((g): g is string => !!g).join(', ') || 'Sin género';
   }
 
   /**
@@ -129,7 +129,7 @@ export class GameCardComponent {
    * Verifica si el juego tiene género disponible
    */
   hasGenre(): boolean {
-    return !!this.juego.genero;
+    return !!(this.juego.juegoGeneros && this.juego.juegoGeneros.length > 0);
   }
 
   /**

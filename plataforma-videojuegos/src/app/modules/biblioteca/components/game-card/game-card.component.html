@@ -76,7 +76,7 @@
 
         <div class="game-genre-text" *ngIf="hasGenre()">
             <i class="pi pi-tag"></i>
-            <span>{{ getGenreName() }}</span>
+            <span>{{ getGeneros() }}</span>
         </div>
 
         <div class="game-platforms" *ngIf="hasPlatforms()">
@@ -93,7 +93,7 @@
 
         <div class="game-genre-tag" *ngIf="hasGenre()">
             <span class="genre-tag">
-                {{ juego.genero?.nombre }}
+                {{ getGeneros() }}
             </span>
         </div>
     </div>

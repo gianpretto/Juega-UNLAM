@@ -100,6 +100,9 @@ export class MiBibliotecaComponent implements OnInit {
   /** Ordenamiento seleccionado */
   selectedSort: string = '';
 
+  /** ID del usuario actual */
+  usuarioId: number = 0;
+
   // ========================================
   // SERVICIOS INYECTADOS
   // ========================================
@@ -112,6 +115,7 @@ export class MiBibliotecaComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("📚 Mi Biblioteca inicializada");
+    this.usuarioId = this.bibliotecaService.getUsuarioId();
     this.cargarBiblioteca();
     this.cargarFavoritos();
   }
@@ -167,8 +171,10 @@ export class MiBibliotecaComponent implements OnInit {
     // Extraer géneros únicos
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
-      if (juego.genero?.nombre) {
-        genresSet.add(juego.genero.nombre);
+      // Para obtener los nombres de los géneros:
+      const generos = juego.juegoGeneros?.map(jg => jg.genero?.nombre).filter((g): g is string => !!g);
+      if (generos && generos.length) {
+        generos.forEach(g => genresSet.add(g));
       }
     });
     this.availableGenres = Array.from(genresSet).sort();
@@ -344,7 +350,7 @@ export class MiBibliotecaComponent implements OnInit {
     // 2. Filtrar por género
     if (this.selectedGenre) {
       result = result.filter(juego =>
-        juego.genero?.nombre === this.selectedGenre
+        juego.juegoGeneros?.some(jg => jg.genero?.nombre === this.selectedGenre)
       );
     }
 
