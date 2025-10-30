@@ -4,7 +4,6 @@ export interface JuegoRest{
     subtitulo:string,
     precio:number,
     descripcion:string,
-    imagen:string[],
     reviews?: Review[];
 }
 

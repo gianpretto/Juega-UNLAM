@@ -4,9 +4,19 @@ export interface Juego{
     subtitulo:string,
     precio:number,
     descripcion:string,
-    imagen:string[],
     reviews?: Review[];
 }
+
+
+export interface Imagen{
+    id: number,
+    url: string,
+    alt: string,
+    orden: number,
+    isMain: boolean,
+    juegoId: number
+}
+
 
 
 

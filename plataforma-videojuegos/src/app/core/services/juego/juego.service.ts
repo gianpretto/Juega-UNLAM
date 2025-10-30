@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Juego } from '../../../modules/juego/interfaces/juego.interface';
+import { Imagen, Juego } from '../../../modules/juego/interfaces/juego.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { JuegoMapper } from './juego-mapper/juego.mapper';
@@ -25,7 +25,7 @@ export class JuegoService {
   }
 
 
-    obtenerImagenesDeUnJuego(id:number):Observable<string[]>{
-    return this.httpClient.get<string[]>(`${environment.BACKEND_URL}/api/juegos/imagenes/${id}`);
+    obtenerImagenesDeUnJuego(id:number):Observable<Imagen[]>{
+    return this.httpClient.get<Imagen[]>(`${environment.BACKEND_URL}/api/juegos/imagenes/${id}`);
   }
 }

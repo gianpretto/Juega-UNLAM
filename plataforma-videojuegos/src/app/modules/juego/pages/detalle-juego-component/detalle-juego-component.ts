@@ -1,8 +1,7 @@
 import { Component, computed, inject, Input, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
-import { Juego } from '../../interfaces/juego.interface';
+import { Imagen, Juego } from '../../interfaces/juego.interface';
 import { JuegoService } from '../../../../core/services/juego/juego.service';
-import { subscribe } from 'diagnostics_channel';
 
 
 @Component({
@@ -22,18 +21,7 @@ export class DetalleJuegoComponent implements OnInit {
   
   ngOnInit(): void {
     if(this.juego){
-    this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
-      next : (data) => {
-        console.log("LAS IMAGENES:",data)
-        this.imagenes = data;
-      },
-      error : (data) => {
-        console.log("ERROR AL TREAR LAS IMAGENES",data)
-      },
-      complete : () => {
-        console.log("IMAGENES TRAIDAS")
-      },
-    });
+    this.obtenerImagenesDeUnJuego(this.juego.id);
     }
   }
   imagenAMostrar = computed(() =>{
@@ -42,6 +30,21 @@ export class DetalleJuegoComponent implements OnInit {
 
   cambiarImagen(imagen: string) {
     this.imagenActual.set(imagen);
+  }
+
+  obtenerImagenesDeUnJuego(id:number){
+    this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
+      next : (data) => {
+        console.log("LAS IMAGENES:",data)
+        this.imagenes = data.map((img: { url: string }) => img.url);
+      },
+      error : (data) => {
+        console.log("ERROR AL TREAR LAS IMAGENES",data)
+      },
+      complete : () => {
+        console.log("IMAGENES TRAIDAS")
+      },
+    });
   }
 
   responsiveOptions = [
