@@ -1,6 +1,9 @@
-import { Component, computed, Input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, Input, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { Juego } from '../../interfaces/juego.interface';
+import { JuegoService } from '../../../../core/services/juego/juego.service';
+import { subscribe } from 'diagnostics_channel';
+
 
 @Component({
   selector: 'app-detalle-juego-component',
@@ -11,13 +14,26 @@ import { Juego } from '../../interfaces/juego.interface';
 })
 export class DetalleJuegoComponent implements OnInit {
 
+  juegoService = inject(JuegoService);
+
   imagenActual = signal('');
   @Input() juego!: Juego;
   imagenes: string[] = [];
   
   ngOnInit(): void {
     if(this.juego){
-    this.imagenes = this.juego.imagen;
+    this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
+      next : (data) => {
+        console.log("LAS IMAGENES:",data)
+        this.imagenes = data;
+      },
+      error : (data) => {
+        console.log("ERROR AL TREAR LAS IMAGENES",data)
+      },
+      complete : () => {
+        console.log("IMAGENES TRAIDAS")
+      },
+    });
     }
   }
   imagenAMostrar = computed(() =>{

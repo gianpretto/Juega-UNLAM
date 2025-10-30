@@ -23,4 +23,9 @@ export class JuegoService {
       })
     );
   }
+
+
+    obtenerImagenesDeUnJuego(id:number):Observable<string[]>{
+    return this.httpClient.get<string[]>(`${environment.BACKEND_URL}/api/juegos/imagenes/${id}`);
+  }
 }
