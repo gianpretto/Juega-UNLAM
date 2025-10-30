@@ -1,4 +1,4 @@
-export interface Juego{
+export interface JuegoRest{
     id:number,
     nombre:string,
     subtitulo:string,

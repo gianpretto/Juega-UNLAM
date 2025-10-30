@@ -17,7 +17,7 @@ export class DetalleJuegoComponent implements OnInit {
   
   ngOnInit(): void {
     if(this.juego){
-    this.imagenes = this.juego.imagenes;
+    this.imagenes = this.juego.imagen;
     }
   }
   imagenAMostrar = computed(() =>{
