@@ -4,7 +4,6 @@ export interface Juego{
     subtitulo:string,
     precio:number,
     descripcion:string,
-    reviews?: Review[];
 }
 
 
@@ -21,8 +20,9 @@ export interface Imagen{
 
 
 
-export type Review = {
-    id: number;
-    descripcion: string;
-    valoracion : string;
+export interface Review {
+    id: number,
+    descripcion: string,
+    valoracion : string,
+    expandida : boolean
 }

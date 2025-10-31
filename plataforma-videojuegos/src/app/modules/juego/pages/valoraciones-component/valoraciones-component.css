@@ -1,0 +1,20 @@
+.review-card {
+  width: 25rem;
+  min-height: 18rem; /* asegura tamaño uniforme */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+/* Truncar texto largo */
+.truncated {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* cantidad de líneas visibles */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
