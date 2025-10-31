@@ -181,52 +181,82 @@ INSERT INTO Juego_Plataforma (juegoId, plataformaId) VALUES
 -- --------------------------------------------
 -- 8. IMÁGENES (ejemplos)
 -- --------------------------------------------
-INSERT INTO Imagen (url, alt, orden, isMain, creadoAt, updatedAt, juegoId) VALUES
--- The Witcher 3
-('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg', 'The Witcher 3 portada', 0, true, NOW(), NOW(), 1),
-('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/ss_1.jpg', 'Gameplay 1', 1, false, NOW(), NOW(), 1),
-('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/ss_2.jpg', 'Gameplay 2', 2, false, NOW(), NOW(), 1),
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/img/rnd/202211/0711/kh4MUIuMbzsQvUkq5RVvmwJt.png', 'The Witcher 3 Wild Hunt Cover', 1, 1, NOW(), NOW());
 
--- Red Dead Redemption 2
-('https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg', 'RDR2 portada', 0, true, NOW(), NOW(), 2),
-('https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/ss_1.jpg', 'Gameplay 1', 1, false, NOW(), NOW(), 2),
+-- Red Dead Redemption 2 (ID: 2)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png', 'Red Dead Redemption 2 Cover', 2, 1, NOW(), NOW());
 
--- Elden Ring
-('https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg', 'Elden Ring portada', 0, true, NOW(), NOW(), 3),
-('https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/ss_1.jpg', 'Gameplay 1', 1, false, NOW(), NOW(), 3),
+-- Elden Ring (ID: 3)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/aGhopp3MHppi7kooGE2Dtt8C.png', 'Elden Ring Cover', 3, 1, NOW(), NOW());
 
--- Half-Life 2
-('https://cdn.cloudflare.steamstatic.com/steam/apps/220/header.jpg', 'Half-Life 2 portada', 0, true, NOW(), NOW(), 4),
+-- Half-Life 2 (ID: 4)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://cdn.cloudflare.steamstatic.com/steam/apps/220/header.jpg', 'Half-Life 2 Cover', 4, 1, NOW(), NOW());
 
--- Zelda BOTW
-('https://assets.nintendo.com/image/upload/f_auto/q_auto/dpr_2.0/c_scale,w_500/ncom/en_US/games/switch/t/the-legend-of-zelda-breath-of-the-wild-switch/hero', 'Zelda BOTW portada', 0, true, NOW(), NOW(), 5),
+-- The Legend of Zelda: Breath of the Wild (ID: 5)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000000025/7137262b5a64d921e193653f8aa0b722925abc5680380ca0e18a5cfd91697f58', 'The Legend of Zelda Breath of the Wild Cover', 5, 1, NOW(), NOW());
 
--- God of War
-('https://image.api.playstation.com/vulcan/img/rnd/202010/2217/p3pYq0QxntZQREXRVdAzmn1w.png', 'God of War portada', 0, true, NOW(), NOW(), 6),
+-- God of War (ID: 6)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/img/rnd/202010/2217/LsaRVLF8IU3GjUX3kJbwkJHS.png', 'God of War Cover', 6, 1, NOW(), NOW());
 
--- The Last of Us Part II
-('https://image.api.playstation.com/vulcan/img/rnd/202010/2618/Y02ljdBodKFBiziorYgqftol.png', 'TLOU2 portada', 0, true, NOW(), NOW(), 7),
+-- The Last of Us Part II (ID: 7)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/img/rnd/202010/2618/Y02ljdBodKFBiziorYgqftTA.png', 'The Last of Us Part II Cover', 7, 1, NOW(), NOW());
 
--- Skyrim
-('https://cdn.cloudflare.steamstatic.com/steam/apps/489830/header.jpg', 'Skyrim portada', 0, true, NOW(), NOW(), 8),
+-- Skyrim (ID: 8)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://cdn.cloudflare.steamstatic.com/steam/apps/489830/header.jpg', 'The Elder Scrolls V Skyrim Cover', 8, 1, NOW(), NOW());
 
--- AC Valhalla
-('https://cdn.cloudflare.steamstatic.com/steam/apps/2208920/header.jpg', 'AC Valhalla portada', 0, true, NOW(), NOW(), 9),
+-- Assassins Creed Valhalla (ID: 9)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/ap/rnd/202008/1318/8XGEPtD1xoasNyMUFGVF5OtI.png', 'Assassins Creed Valhalla Cover', 9, 1, NOW(), NOW());
 
--- Fortnite
-('https://cdn2.unrealengine.com/14br-consoles-1920x1080-wlogo-1920x1080-d4e82ec8c478.jpg', 'Fortnite portada', 0, true, NOW(), NOW(), 10);
+-- Fortnite (ID: 10)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://cdn2.unrealengine.com/fortnite-chapter-5-season-1-key-art-1920x1080-47d14c816a82.jpg', 'Fortnite Cover', 10, 1, NOW(), NOW());
 
--- Actualizar mainImagenId en Juegos
-UPDATE Juego SET mainImagenId = 1 WHERE id = 1;
-UPDATE Juego SET mainImagenId = 4 WHERE id = 2;
-UPDATE Juego SET mainImagenId = 6 WHERE id = 3;
-UPDATE Juego SET mainImagenId = 8 WHERE id = 4;
-UPDATE Juego SET mainImagenId = 9 WHERE id = 5;
-UPDATE Juego SET mainImagenId = 10 WHERE id = 6;
-UPDATE Juego SET mainImagenId = 11 WHERE id = 7;
-UPDATE Juego SET mainImagenId = 12 WHERE id = 8;
-UPDATE Juego SET mainImagenId = 13 WHERE id = 9;
-UPDATE Juego SET mainImagenId = 14 WHERE id = 10;
+-- Cyberpunk 2077 (ID: 11)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/cKZ4tKNFj9C00giTzYtH8PF1.png', 'Cyberpunk 2077 Cover', 11, 1, NOW(), NOW());
+
+-- Dark Souls III (ID: 12)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/cdn/UP0700/CUSA03388_00/v8JlD8KcQUtTqaLBmpFnj1ESRR5zMkLk.png', 'Dark Souls III Cover', 12, 1, NOW(), NOW());
+
+-- Portal 2 (ID: 13)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg', 'Portal 2 Cover', 13, 1, NOW(), NOW());
+
+-- Grand Theft Auto V (ID: 14)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://image.api.playstation.com/vulcan/ap/rnd/202202/2816/82vLy6pgRAXCGLXHO4IJ9Bxf.png', 'Grand Theft Auto V Cover', 14, 1, NOW(), NOW());
+
+-- Hades (ID: 15)
+INSERT INTO Imagen (url, alt, juegoId, isMain, creadoAt, updatedAt) VALUES
+('https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/header.jpg', 'Hades Cover', 15, 1, NOW(), NOW());
+
+-- ACTUALIZAR mainImagenId en la tabla Juego
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 1 AND isMain = 1) WHERE id = 1;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 2 AND isMain = 1) WHERE id = 2;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 3 AND isMain = 1) WHERE id = 3;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 4 AND isMain = 1) WHERE id = 4;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 5 AND isMain = 1) WHERE id = 5;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 6 AND isMain = 1) WHERE id = 6;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 7 AND isMain = 1) WHERE id = 7;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 8 AND isMain = 1) WHERE id = 8;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 9 AND isMain = 1) WHERE id = 9;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 10 AND isMain = 1) WHERE id = 10;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 11 AND isMain = 1) WHERE id = 11;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 12 AND isMain = 1) WHERE id = 12;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 13 AND isMain = 1) WHERE id = 13;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 14 AND isMain = 1) WHERE id = 14;
+UPDATE Juego SET mainImagenId = (SELECT id FROM Imagen WHERE juegoId = 15 AND isMain = 1) WHERE id = 15;
+
 
 -- --------------------------------------------
 -- 9. USUARIOS
@@ -243,28 +273,34 @@ INSERT INTO Usuario (id, email, password, nombre, apellido, direccion, saldo, ti
 -- 10. USUARIO_JUEGO (Biblioteca personal)
 -- --------------------------------------------
 INSERT INTO Usuario_Juego (id, detalle, fecha, usuarioId, juegoId) VALUES
+-- Usuario 1 (Admin) tiene algunos juegos de prueba
+(1, 'Juego de prueba admin', '2025-10-01 08:00:00', 1, 1),
+(2, 'Comprado para testing', '2025-10-05 09:30:00', 1, 4),
+(3, 'Juego gratuito', '2025-10-10 10:00:00', 1, 10),
+(4, 'Compra de prueba', '2025-10-12 11:15:00', 1, 13),
+
 -- Usuario 6 (Pedro) tiene varios juegos
-(1, 'Comprado en oferta', '2025-10-01 10:30:00', 6, 1),
-(2, 'Regalo de cumpleaños', '2025-10-05 14:20:00', 6, 3),
-(3, 'Juego gratuito', '2025-10-10 09:15:00', 6, 10),
-(4, 'Compra regular', '2025-10-15 16:45:00', 6, 6),
-(5, 'Comprado en bundle', '2025-10-20 11:00:00', 6, 8),
+(5, 'Comprado en oferta', '2025-10-01 10:30:00', 6, 1),
+(6, 'Regalo de cumpleaños', '2025-10-05 14:20:00', 6, 3),
+(7, 'Juego gratuito', '2025-10-10 09:15:00', 6, 10),
+(8, 'Compra regular', '2025-10-15 16:45:00', 6, 6),
+(9, 'Comprado en bundle', '2025-10-20 11:00:00', 6, 8),
 
 -- Usuario 2 (Juan)
-(6, 'Primera compra', '2025-09-15 10:00:00', 2, 2),
-(7, 'Comprado en oferta', '2025-09-20 14:30:00', 2, 4),
-(8, 'Juego gratuito', '2025-10-01 09:00:00', 2, 10),
+(10, 'Primera compra', '2025-09-15 10:00:00', 2, 2),
+(11, 'Comprado en oferta', '2025-09-20 14:30:00', 2, 4),
+(12, 'Juego gratuito', '2025-10-01 09:00:00', 2, 10),
 
 -- Usuario 3 (María)
-(9, 'Compra especial', '2025-09-10 12:00:00', 3, 5),
-(10, 'Comprado', '2025-09-25 15:30:00', 3, 7),
-(11, 'Oferta', '2025-10-05 10:15:00', 3, 1),
-(12, 'Bundle', '2025-10-10 11:45:00', 3, 11),
+(13, 'Compra especial', '2025-09-10 12:00:00', 3, 5),
+(14, 'Comprado', '2025-09-25 15:30:00', 3, 7),
+(15, 'Oferta', '2025-10-05 10:15:00', 3, 1),
+(16, 'Bundle', '2025-10-10 11:45:00', 3, 11),
 
 -- Usuario 5 (Ana)
-(13, 'Compra premium', '2025-10-01 09:30:00', 5, 3),
-(14, 'Oferta especial', '2025-10-10 14:00:00', 5, 12),
-(15, 'Gratuito', '2025-10-15 10:00:00', 5, 10);
+(17, 'Compra premium', '2025-10-01 09:30:00', 5, 3),
+(18, 'Oferta especial', '2025-10-10 14:00:00', 5, 12),
+(19, 'Gratuito', '2025-10-15 10:00:00', 5, 10);
 
 -- --------------------------------------------
 -- 11. WISHLIST

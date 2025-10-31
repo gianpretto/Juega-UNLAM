@@ -1,9 +1,10 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError, map } from 'rxjs';
+import { Observable, catchError, throwError, map, of } from 'rxjs';
 import { Juego, UsuarioJuego } from '../../shared/models';
 import { environment } from '../../../environments/environment';
 import { UsuarioJuegoService } from './usuario-juego.service';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Servicio para manejar la biblioteca de juegos del usuario
@@ -24,9 +25,11 @@ import { UsuarioJuegoService } from './usuario-juego.service';
 export class BibliotecaService {
   private readonly http = inject(HttpClient);
   private readonly usuarioJuegoService = inject(UsuarioJuegoService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
   
   // TODO: Obtener el ID del usuario desde un servicio de autenticación
-  private usuarioId = 6; // ID del usuario actual (cambiar según necesites)
+  private usuarioId = 1; // ID del usuario actual (cambiar según necesites)
 
   /**
    * Permite cambiar el ID del usuario actual
@@ -92,19 +95,18 @@ export class BibliotecaService {
    * TODO: Implementar endpoint en backend para favoritos
    */
   obtenerFavoritos(): Observable<number[]> {
+    // Solo usar localStorage en el navegador, no en SSR
+    if (!this.isBrowser) {
+      return of([]);
+    }
+    
     // Temporalmente usar localStorage hasta tener endpoint
     const stored = localStorage.getItem('biblioteca_favoritos');
     if (stored) {
       const favoritos = JSON.parse(stored) as number[];
-      return new Observable(observer => {
-        observer.next(favoritos);
-        observer.complete();
-      });
+      return of(favoritos);
     }
-    return new Observable(observer => {
-      observer.next([]);
-      observer.complete();
-    });
+    return of([]);
   }
 
   /**
@@ -112,6 +114,10 @@ export class BibliotecaService {
    * TODO: Implementar endpoint en backend para favoritos
    */
   agregarAFavoritos(juegoId: number): Observable<void> {
+    if (!this.isBrowser) {
+      return of(void 0);
+    }
+    
     const stored = localStorage.getItem('biblioteca_favoritos');
     const favoritos: number[] = stored ? JSON.parse(stored) : [];
     if (!favoritos.includes(juegoId)) {
@@ -119,10 +125,7 @@ export class BibliotecaService {
       localStorage.setItem('biblioteca_favoritos', JSON.stringify(favoritos));
     }
     console.log('❤️ Agregado a favoritos');
-    return new Observable(observer => {
-      observer.next();
-      observer.complete();
-    });
+    return of(void 0);
   }
 
   /**
@@ -130,15 +133,16 @@ export class BibliotecaService {
    * TODO: Implementar endpoint en backend para favoritos
    */
   quitarDeFavoritos(juegoId: number): Observable<void> {
+    if (!this.isBrowser) {
+      return of(void 0);
+    }
+    
     const stored = localStorage.getItem('biblioteca_favoritos');
     const favoritos: number[] = stored ? JSON.parse(stored) : [];
     const filtered = favoritos.filter(id => id !== juegoId);
     localStorage.setItem('biblioteca_favoritos', JSON.stringify(filtered));
     console.log('💔 Quitado de favoritos');
-    return new Observable(observer => {
-      observer.next();
-      observer.complete();
-    });
+    return of(void 0);
   }
 
   /**
@@ -147,12 +151,7 @@ export class BibliotecaService {
   estaEnBiblioteca(juegoId: number): Observable<boolean> {
     return this.obtenerJuegos().pipe(
       map((juegos: Juego[]) => juegos.some(j => j.id === juegoId)),
-      catchError(() => {
-        return new Observable<boolean>(observer => {
-          observer.next(false);
-          observer.complete();
-        });
-      })
+      catchError(() => of(false))
     );
   }
 

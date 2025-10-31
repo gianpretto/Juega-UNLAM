@@ -1,11 +1,92 @@
 // Ejemplo de servidor Node.js con Express y Prisma
 // Este archivo muestra cómo integrar el schema de Prisma en tu backend
 
+// ============================================
+// SERVIDOR EXPRESS CON PRISMA - EJEMPLO ACTUALIZADO
+// ============================================
+// Este archivo muestra cómo configurar tu servidor Node.js
+
 import express from 'express';
+import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
+
+// Importar rutas (ajusta las rutas según tu estructura de proyecto)
+import usuarioJuegoRoutes from './routes/usuario-juego.routes'; // o el nombre que uses
 
 const app = express();
 const prisma = new PrismaClient();
+const PORT = process.env.PORT || 3000;
+
+// ============================================
+// MIDDLEWARES
+// ============================================
+
+// CORS - Permitir peticiones desde Angular
+app.use(cors({
+  origin: 'http://localhost:4200', // URL de tu frontend Angular
+  credentials: true
+}));
+
+// Parser de JSON
+app.use(express.json());
+
+// Logger básico
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// ============================================
+// RUTAS
+// ============================================
+
+// Ruta de health check
+app.get('/', (req, res) => {
+  res.json({ message: 'API Juega-UNLAM funcionando ✅' });
+});
+
+// Montar las rutas de usuario-juego
+app.use('/usuario-juego', usuarioJuegoRoutes);
+
+// Aquí puedes agregar más rutas:
+// app.use('/juegos', juegoRoutes);
+// app.use('/usuarios', usuarioRoutes);
+// app.use('/generos', generoRoutes);
+// etc.
+
+// ============================================
+// MANEJO DE ERRORES
+// ============================================
+
+// Ruta no encontrada
+app.use((req, res) => {
+  res.status(404).json({ error: 'Ruta no encontrada' });
+});
+
+// Manejador de errores global
+app.use((err, req, res, next) => {
+  console.error('❌ Error:', err);
+  res.status(500).json({ 
+    error: 'Error interno del servidor',
+    message: err.message 
+  });
+});
+
+// ============================================
+// INICIAR SERVIDOR
+// ============================================
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`📊 Base de datos: ${process.env.DATABASE_URL ? 'Conectada' : 'No configurada'}`);
+});
+
+// Manejo de cierre graceful
+process.on('SIGINT', async () => {
+  console.log('\n🛑 Cerrando servidor...');
+  await prisma.$disconnect();
+  process.exit(0);
+});
 
 // Middleware para parsear JSON
 app.use(express.json());

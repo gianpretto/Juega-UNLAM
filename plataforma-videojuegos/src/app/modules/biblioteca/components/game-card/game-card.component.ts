@@ -111,10 +111,25 @@ export class GameCardComponent {
   }
 
   /**
-   * Obtiene la imagen del juego o el placeholder
-   * TODO: Agregar campo de imagen al modelo de BD
+   * Obtiene la imagen del juego (imagen principal o la primera disponible)
    */
   getGameImage(): string {
+    // Si tiene mainImagen, usar esa
+    if (this.juego.mainImagen?.url) {
+      return this.juego.mainImagen.url;
+    }
+    
+    // Si tiene imagenes, usar la primera que sea isMain o simplemente la primera
+    if (this.juego.imagenes && this.juego.imagenes.length > 0) {
+      const mainImage = this.juego.imagenes.find(img => img.isMain);
+      if (mainImage?.url) {
+        return mainImage.url;
+      }
+      // Usar la primera imagen disponible
+      return this.juego.imagenes[0].url;
+    }
+    
+    // Fallback al placeholder
     return this.placeholderImage;
   }
 
