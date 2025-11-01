@@ -106,48 +106,40 @@ export class GameCardComponent {
   /**
    * Obtiene los nombres de géneros concatenados
    */
+  /*
+  TODO:HAY QUE CAMBIAR ESTO PARA QUE OBTENGA DEL SERVICIO LOS GENEROS DE LOS JUEGOS
+  */
+  /*
   getGenreNames(): string {
     return this.juego.genres?.map(g => g.name).slice(0, 3).join(', ') || 'Sin género';
   }
 
-  /**
-   * Obtiene la imagen del juego o el placeholder
-   */
+
   getGameImage(): string {
     return this.juego.background_image || this.placeholderImage;
   }
 
-  /**
-   * Verifica si el juego tiene plataformas disponibles
-   */
+
   hasPlatforms(): boolean {
     return !!(this.juego.parent_platforms && this.juego.parent_platforms.length > 0);
   }
 
-  /**
-   * Verifica si el juego tiene géneros disponibles
-   */
+
   hasGenres(): boolean {
     return !!(this.juego.genres && this.juego.genres.length > 0);
   }
 
-  /**
-   * Obtiene las plataformas limitadas a mostrar (máximo 4)
-   */
+
   getLimitedPlatforms() {
     return this.juego.parent_platforms?.slice(0, 4) || [];
   }
 
-  /**
-   * Obtiene los géneros limitados a mostrar (máximo 3)
-   */
+
   getLimitedGenres() {
     return this.juego.genres?.slice(0, 3) || [];
   }
 
-  /**
-   * Formatea la fecha de lanzamiento
-   */
+
   getFormattedDate(): string {
     if (!this.juego.released) return 'Sin fecha';
 
@@ -157,5 +149,7 @@ export class GameCardComponent {
       month: '2-digit',
       year: 'numeric'
     });
-  }
+  }*/
+
+
 }

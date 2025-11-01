@@ -15,16 +15,14 @@ export class JuegoService {
 
   private httpClient = inject(HttpClient);
 
+  getJuegos(): Observable<Juego[]>{
+    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/api/juegos/`)
+  }
 
   
   getJuegoById(id: number):Observable<Juego> {
     
     return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/api/juegos/${id}`)
-    .pipe(
-      map((res) => {
-        return JuegoMapper.mapRestJuegoToJuego(res);
-      })
-    );
   }
 
 

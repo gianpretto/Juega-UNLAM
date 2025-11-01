@@ -9,6 +9,8 @@ export class JuegoMapper{
             subtitulo : juegoRest.subtitulo,
             descripcion : juegoRest.descripcion,
             precio : juegoRest.precio,
+            released : juegoRest.released,
+            rating: juegoRest.rating
         }
     }
 

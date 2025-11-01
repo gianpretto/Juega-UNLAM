@@ -165,6 +165,8 @@ export class MiBibliotecaComponent implements OnInit {
    * Extrae las opciones únicas de géneros y plataformas
    */
   private extractFilterOptions(): void {
+    /*
+    TODO: MODIFICAR ESTO PARA QUE TRAIGA DEL SERVICIO LOS GENEROS
     // Extraer géneros únicos
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
@@ -191,6 +193,7 @@ export class MiBibliotecaComponent implements OnInit {
       genres: this.availableGenres.length,
       platforms: this.availablePlatforms.length
     });
+    */
   }
 
   // ========================================
@@ -334,6 +337,8 @@ export class MiBibliotecaComponent implements OnInit {
       );
     }
 
+    /*
+    TODO: MODIFICAR PARA QUE VENGA DEL SERVICIO EN VEZ DE QUE EL JUEGO TENGA EL GENERO DENTRO
     // 2. Filtrar por género
     if (this.selectedGenre) {
       result = result.filter(juego =>
@@ -347,6 +352,7 @@ export class MiBibliotecaComponent implements OnInit {
         juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
       );
     }
+ */
 
     // 4. Aplicar ordenamiento
     if (this.selectedSort) {
@@ -370,6 +376,7 @@ export class MiBibliotecaComponent implements OnInit {
 
       case 'name-desc':
         return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        
 
       case 'date-desc':
         return sorted.sort((a, b) => {

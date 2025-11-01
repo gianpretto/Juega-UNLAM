@@ -21,7 +21,9 @@ export class DetalleJuegoComponent implements OnInit {
   imagenes: string[] = [];
   
   ngOnInit(): void {
+    console.log("ESTE ES EL JUEGO: ",this.juego);
     if(this.juego){
+      console.log(this.juego);
     this.obtenerImagenesDeUnJuego(this.juego.id);
     }
   }
