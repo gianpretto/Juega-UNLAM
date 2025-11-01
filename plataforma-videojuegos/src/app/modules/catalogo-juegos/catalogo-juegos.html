@@ -1,0 +1,48 @@
+<div class="catalogo-container">
+    <!-- Header del catálogo -->
+    <div class="catalogo-header">
+        <div class="title-container">
+            <h1 class="catalogo-title">
+                <i class="pi pi-gamepad"></i>
+                Catálogo de Juegos
+            </h1>
+            <p class="catalogo-subtitle">Descubre y explora tu próximo juego favorito</p>
+        </div>
+
+        <div class="header-stats" *ngIf="juegos.length > 0">
+            <span class="stat-badge">
+                <i class="pi pi-trophy"></i>
+                {{ juegos.length }} Juegos Disponibles
+            </span>
+        </div>
+    </div>
+
+    <!-- Componente de búsqueda -->
+    <app-game-search
+        [placeholder]="'Buscar juegos por título...'"
+        [disabled]="loading"
+        (onSearch)="handleSearch($event)"
+    ></app-game-search>
+
+    <!-- Componente de filtros -->
+    <app-game-filters
+        [filters]="filters"
+        [sortOptions]="sortOptions"
+        [genreOptions]="genreOptions"
+        [selectedOptions]="selectedOptions"
+        [platformOptions]="platformOptions"
+        [disabled]="loading"
+        (onFilterChange)="handleFilterChange($event)"
+        (onClearFilters)="clearFilters()"
+    ></app-game-filters>
+
+    <!-- Componente de grilla de juegos -->
+    <app-game-grid
+        [juegos]="filteredJuegos"
+        [loading]="loading"
+        [emptyMessage]="getEmptyMessage()"
+        (onGameClick)="handleGameClick($event)"
+        (onAddToBiblio)="handleAddToBiblio($event)"
+        (onToggleFavorite)="handleToggleFavorite($event)"
+    ></app-game-grid>
+</div>
