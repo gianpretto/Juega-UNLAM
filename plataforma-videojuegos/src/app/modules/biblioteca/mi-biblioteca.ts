@@ -1,13 +1,13 @@
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Juego } from "../../interfaces/juego.interface";
-import { GameFilter } from "../../interfaces/game-filter.interface";
-import { BibliotecaService } from "../../../../core/services/biblioteca.service";
+import { Juego } from "@interfaces/juego.interface";
+import { GameFilter } from "@interfaces/game-filter.interface";
+import { BibliotecaService } from "@servicios/biblioteca.service";
 
 // Componentes hijos reutilizables
-import { GameSearchComponent } from "../../components/game-search/game-search.component";
-import { GameFiltersComponent } from "../../components/game-filters/game-filters.component";
-import { GameGridComponent } from "../../components/game-grid/game-grid.component";
+import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
+import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
+import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 
 /**
  * SMART COMPONENT - Mi Biblioteca Personal
