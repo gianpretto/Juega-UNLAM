@@ -1,13 +1,13 @@
 import { Usuario } from "@interfaces/usuario.interface";
 import { Juego } from "@interfaces/juego.interface";
 
-export interface Review {
+
+export interface UsuarioJuego {
   id: number;
-  valoracion?: string;
-  descripcion?: string;
+  detalle?: string;
+  fecha: Date;
   usuarioId?: number;
   usuario?: Usuario;
   juegoId?: number;
   juego?: Juego;
-  expandida: boolean;
 }

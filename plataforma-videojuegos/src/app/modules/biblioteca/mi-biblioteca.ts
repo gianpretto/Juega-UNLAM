@@ -241,7 +241,7 @@ export class MiBibliotecaComponent implements OnInit {
    * Maneja el clic en una tarjeta de juego
    */
   handleGameClick(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.name);
+    console.log('👁️ Ver detalles de:', juego.nombre);
     // TODO: Navegar a página de detalles
     // this.router.navigate(['/juegos', juego.id]);
   }
@@ -250,9 +250,9 @@ export class MiBibliotecaComponent implements OnInit {
    * Maneja la eliminación de un juego de la biblioteca
    */
   handleRemoveFromBiblio(juego: Juego): void {
-    console.log('🗑️ Eliminar de biblioteca:', juego.name);
+    console.log('🗑️ Eliminar de biblioteca:', juego.nombre);
 
-    const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar "${juego.name}" de tu biblioteca?`);
+    const confirmDelete = confirm(`¿Estás seguro de que quieres eliminar "${juego.nombre}" de tu biblioteca?`);
 
     if (confirmDelete) {
       this.bibliotecaService.eliminarJuego(juego.id).subscribe({
@@ -277,7 +277,7 @@ export class MiBibliotecaComponent implements OnInit {
    * Maneja el toggle de favorito
    */
   handleToggleFavorite(juego: Juego): void {
-    console.log('❤️ Toggle favorito:', juego.name);
+    console.log('❤️ Toggle favorito:', juego.nombre);
 
     const esFavorito = this.favoritosIds.has(juego.id);
 
@@ -330,7 +330,7 @@ export class MiBibliotecaComponent implements OnInit {
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       result = result.filter(juego =>
-        juego.name.toLowerCase().includes(term)
+        juego.nombre.toLowerCase().includes(term)
       );
     }
 
@@ -366,10 +366,10 @@ export class MiBibliotecaComponent implements OnInit {
 
     switch (sortType) {
       case 'name-asc':
-        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+        return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       case 'name-desc':
-        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+        return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
 
       case 'date-desc':
         return sorted.sort((a, b) => {

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GameFilter } from '../../interfaces/game-filter.interface';
-import { FilterOption } from '../../interfaces/filter-options.interface';
+import { GameFilter } from '@interfaces/game-filter.interface';
+import { FilterOption } from '@interfaces/filter-options.interface';
 
 /**
  * Componente presentacional para los filtros de juegos

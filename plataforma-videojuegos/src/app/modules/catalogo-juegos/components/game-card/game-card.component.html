@@ -3,7 +3,7 @@
     <div class="game-image-container">
         <img
             [src]="getGameImage()"
-            [alt]="juego.name"
+            [alt]="juego.nombre"
             class="game-image"
             loading="lazy"
         />
@@ -62,10 +62,10 @@
 
         <h3
             class="game-title"
-            [pTooltip]="juego.name"
+            [pTooltip]="juego.nombre"
             tooltipPosition="top"
         >
-            {{ juego.name }}
+            {{ juego.nombre }}
         </h3>
 
 

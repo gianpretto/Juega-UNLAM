@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '@interfaces/juego.interface';
 
 /**
  * Componente presentacional para mostrar una tarjeta individual de juego

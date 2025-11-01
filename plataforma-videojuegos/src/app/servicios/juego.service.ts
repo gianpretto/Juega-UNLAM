@@ -36,32 +36,6 @@ export class JuegoService {
   obtenerReviewsDeUnJuego(id:number):Observable<Review[]>{
     return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/api/juegos/reviews/${id}`);
   }
-  getJuegos():Observable<Juego[]>{
-    return this.httpClient.get<any>(`${environment.apiUrl}games?key=${environment.rawgApiKey}&page_size=10`)
-    .pipe(
-      map((response: any) =>{
-        //console.log('📦 Respuesta completa:', response);
-        //console.log('🎮 Solo results:', response.results);
-        //console.log('🔢 Tipo de results:', Array.isArray(response.results));
-         return response.results
-        })
-    )
-  }
-  
-  // getJuegoById(id: number):Observable<Juego>{
-  //     return this.httpClient.get<any>(`${environment.apiUrl}games/${id}?key=${environment.rawgApiKey}`)
-  //     .pipe(
-  //       map((response: any) =>{
-  //         return response
-  //       })
-  //     )
-  //   }
-  
-    /*getSessionFilteredGames(): Juego[]{
-      const juego : Juego[] = [];
-      return juego;
-    }*/
-  
   
     saveTermInSession(term: string): void {
       //localStorage.setItem('searchTerm', term);
@@ -109,4 +83,34 @@ export class JuegoService {
     clearFilters(){
       sessionStorage.clear();
     }
+
+
 }
+
+
+
+// getJuegos():Observable<Juego[]>{
+  //   return this.httpClient.get<any>(`${environment.apiUrl}games?key=${environment.rawgApiKey}&page_size=10`)
+  //   .pipe(
+  //     map((response: any) =>{
+  //       //console.log('📦 Respuesta completa:', response);
+  //       //console.log('🎮 Solo results:', response.results);
+  //       //console.log('🔢 Tipo de results:', Array.isArray(response.results));
+  //        return response.results
+  //       })
+  //   )
+  // }
+  
+  // getJuegoById(id: number):Observable<Juego>{
+  //     return this.httpClient.get<any>(`${environment.apiUrl}games/${id}?key=${environment.rawgApiKey}`)
+  //     .pipe(
+  //       map((response: any) =>{
+  //         return response
+  //       })
+  //     )
+  //   }
+  
+    /*getSessionFilteredGames(): Juego[]{
+      const juego : Juego[] = [];
+      return juego;
+    }*/

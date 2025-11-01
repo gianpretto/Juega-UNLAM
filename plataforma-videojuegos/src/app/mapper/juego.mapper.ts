@@ -1,5 +1,5 @@
-import { Juego } from "../../../../modules/juego/interfaces/juego.interface"
-import { JuegoRest } from "./juego.rest"
+import { Juego } from "@interfaces/juego.interface"
+import { JuegoRest } from "@rest/juego.rest"
 
 export class JuegoMapper{
     static mapRestJuegoToJuego(juegoRest:JuegoRest):Juego{

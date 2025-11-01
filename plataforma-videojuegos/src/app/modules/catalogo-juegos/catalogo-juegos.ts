@@ -227,7 +227,7 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego seleccionado
    */
   viewDetails(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.name);
+    console.log('👁️ Ver detalles de:', juego.nombre);
     // TODO: Navegar a página de detalles
     // this.router.navigate(['/juegos', juego.id]);
   }
@@ -237,9 +237,9 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego a agregar
    */
   addToLibrary(juego: Juego): void {
-    console.log('➕ Agregar a biblioteca:', juego.name);
+    console.log('➕ Agregar a biblioteca:', juego.nombre);
     // TODO: Implementar lógica con BibliotecaService
-    alert(`"${juego.name}" se agregará a tu biblioteca (pendiente de implementar)`);
+    alert(`"${juego.nombre}" se agregará a tu biblioteca (pendiente de implementar)`);
   }
 
   /**
@@ -265,7 +265,7 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego seleccionado
    */
   handleGameClick(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.name);
+    console.log('👁️ Ver detalles de:', juego.nombre);
     // TODO: Navegar a página de detalles
     // this.router.navigate(['/juegos', juego.id]);
   }
@@ -275,11 +275,11 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego a agregar
    */
   handleAddToBiblio(juego: Juego): void {
-    console.log('➕ Agregar a biblioteca:', juego.name);
+    console.log('➕ Agregar a biblioteca:', juego.nombre);
 
     this.bibliotecaService.agregarJuego(juego).subscribe({
       next: () => {
-        alert(`✅ "${juego.name}" se agregó a tu biblioteca!`);
+        alert(`✅ "${juego.nombre}" se agregó a tu biblioteca!`);
       },
       error: (error: any) => {
         console.error('Error al agregar:', error);
@@ -293,9 +293,9 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param juego - Juego a marcar/desmarcar
    */
   handleToggleFavorite(juego: Juego): void {
-    console.log('❤️ Toggle favorito:', juego.name);
+    console.log('❤️ Toggle favorito:', juego.nombre);
     // TODO: Implementar lógica de favoritos
-    alert(`"${juego.name}" favorito toggled (pendiente de implementar)`);
+    alert(`"${juego.nombre}" favorito toggled (pendiente de implementar)`);
   }
 
   /**
@@ -323,7 +323,7 @@ export class CatalogoJuegosComponent implements OnInit {
       const term = this.searchTerm.toLowerCase();
 	  this.juegoService.saveTermInSession(term);
       result = result.filter(juego =>
-        juego.name.toLowerCase().includes(term)
+        juego.nombre.toLowerCase().includes(term)
       );
     }
 
@@ -365,10 +365,10 @@ export class CatalogoJuegosComponent implements OnInit {
 
     switch (sortType) {
       case 'name-asc':
-        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+        return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
 
       case 'name-desc':
-        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+        return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
 
       case 'date-desc':
         return sorted.sort((a, b) => {

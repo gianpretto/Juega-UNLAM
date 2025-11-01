@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, of, delay, map } from 'rxjs';
-import { Juego } from '../../shared/models';
-import { Juego as JuegoRawg } from '../../modules/biblioteca/interfaces/juego.interface';
-import { environment } from '../../../environments/environment';
+import { Juego } from '@interfaces/juego.interface';
+import { environment } from '@evironment/environment';
 
 /**
  * Servicio para manejar la biblioteca de juegos del usuario
@@ -25,7 +24,7 @@ export class BibliotecaService {
 
   // Almacenamiento temporal en memoria (simulando backend)
   // TODO: Reemplazar con llamadas reales a la API cuando esté disponible
-  private juegosGuardados: JuegoRawg[] = [];
+  private juegosGuardados: Juego[] = [];
   private favoritosIds: Set<number> = new Set();
 
   /**
@@ -33,7 +32,7 @@ export class BibliotecaService {
    * NOTA: Por ahora retorna datos de localStorage/memoria
    * TODO: Reemplazar con llamada HTTP real cuando el backend esté listo
    */
-  obtenerJuegos(): Observable<JuegoRawg[]> {
+  obtenerJuegos(): Observable<Juego[]> {
     // Simulación de carga desde localStorage
     const stored = localStorage.getItem('biblioteca_juegos');
     if (stored) {
@@ -50,12 +49,12 @@ export class BibliotecaService {
   /**
    * Agrega un juego a la biblioteca
    */
-  agregarJuego(juego: JuegoRawg): Observable<void> {
+  agregarJuego(juego: Juego): Observable<void> {
     // Verificar que no esté ya agregado
     if (!this.juegosGuardados.find(j => j.id === juego.id)) {
       this.juegosGuardados.push(juego);
       localStorage.setItem('biblioteca_juegos', JSON.stringify(this.juegosGuardados));
-      console.log('✅ Juego agregado a biblioteca:', juego.name);
+      console.log('✅ Juego agregado a biblioteca:', juego.nombre);
     }
 
     return of(void 0).pipe(delay(200));
@@ -115,7 +114,7 @@ export class BibliotecaService {
   estaEnBiblioteca(juegoId: number): Observable<boolean> {
     const stored = localStorage.getItem('biblioteca_juegos');
     if (stored) {
-      const juegos = JSON.parse(stored) as JuegoRawg[];
+      const juegos = JSON.parse(stored) as Juego[];
       return of(juegos.some(j => j.id === juegoId));
     }
     return of(false);

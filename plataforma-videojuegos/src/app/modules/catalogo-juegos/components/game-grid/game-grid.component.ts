@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Juego } from '../../interfaces/juego.interface';
-import { GameCardComponent } from '../game-card/game-card.component';
+import { Juego } from '@interfaces/juego.interface';
+import { GameCardComponent } from '@modules/catalogo-juegos/components/game-card/game-card.component';
 
 /**
  * Componente presentacional para mostrar una grilla de juegos
