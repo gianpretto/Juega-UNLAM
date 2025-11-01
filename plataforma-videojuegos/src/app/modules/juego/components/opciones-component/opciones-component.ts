@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { Juego } from '../../interfaces/juego.interface';
+import { Juego } from '@interfaces/juego.interface';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({

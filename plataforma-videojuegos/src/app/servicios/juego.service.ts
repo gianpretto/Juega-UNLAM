@@ -1,10 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Imagen, Juego, Review } from '../../../modules/juego/interfaces/juego.interface';
+import {  Juego } from '@interfaces/juego.interface';
+import { Imagen } from '@interfaces/image.interface';
+import { Review } from '@interfaces/review.interface';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
-import { JuegoMapper } from './juego-mapper/juego.mapper';
-import { FilterOption } from "../../../modules/biblioteca/interfaces/filter-options.interface";
+import { environment } from '@evironment/environment';
+import { JuegoMapper } from '@mapper/juego.mapper';
+import { FilterOption } from "@interfaces/filter-options.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +48,14 @@ export class JuegoService {
     )
   }
   
-  getJuegoById(id: number):Observable<Juego>{
-      return this.httpClient.get<any>(`${environment.apiUrl}games/${id}?key=${environment.rawgApiKey}`)
-      .pipe(
-        map((response: any) =>{
-          return response
-        })
-      )
-    }
+  // getJuegoById(id: number):Observable<Juego>{
+  //     return this.httpClient.get<any>(`${environment.apiUrl}games/${id}?key=${environment.rawgApiKey}`)
+  //     .pipe(
+  //       map((response: any) =>{
+  //         return response
+  //       })
+  //     )
+  //   }
   
     /*getSessionFilteredGames(): Juego[]{
       const juego : Juego[] = [];

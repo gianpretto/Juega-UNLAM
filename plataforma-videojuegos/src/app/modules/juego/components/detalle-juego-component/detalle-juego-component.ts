@@ -1,7 +1,8 @@
 import { Component, computed, inject, Input, OnInit, signal } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
-import { Imagen, Juego } from '../../interfaces/juego.interface';
-import { JuegoService } from '../../../../core/services/juego/juego.service';
+import {Juego } from '@interfaces/juego.interface';
+import {Imagen } from '@interfaces/image.interface';
+import { JuegoService } from '@servicios/juego.service';
 
 
 @Component({

@@ -1,8 +1,9 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { Juego, Review } from '../../interfaces/juego.interface';
-import { JuegoService } from '../../../../core/services/juego/juego.service';
+import { Juego } from '@interfaces/juego.interface';
+import { Review } from '@interfaces/review.interface';
+import { JuegoService } from '@servicios/juego.service';
 @Component({
   selector: 'app-valoraciones-component',
   imports: [CardModule, ButtonModule],

@@ -1,15 +1,15 @@
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Juego } from "../../interfaces/juego.interface";
-import { GameFilter } from "../../interfaces/game-filter.interface";
-import { JuegoService } from "../../../../api/api-rawg/juego/juego.service";
-import { BibliotecaService } from "../../../../core/services/biblioteca.service";
+import { Juego } from "@interfaces/juego.interface";
+import { GameFilter } from "@interfaces/game-filter.interface";
+import { JuegoService } from "@servicios/juego.service";
+import { BibliotecaService } from "@servicios/biblioteca.service";
 
 // Componentes hijos
-import { GameSearchComponent } from "../../components/game-search/game-search.component";
-import { GameFiltersComponent } from "../../components/game-filters/game-filters.component";
-import { GameGridComponent } from "../../components/game-grid/game-grid.component";
-import { FilterOption } from "../../interfaces/filter-options.interface";
+import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
+import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
+import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
+import { FilterOption } from "@interfaces/filter-options.interface";
 
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
