@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/home-component/home-component';
-
-import { DetalleJuegoComponent } from '@modules/juego/components/detalle-juego-component/detalle-juego-component';
 import { CatalogoJuegosComponent } from '@modules/catalogo-juegos/catalogo-juegos';
 import { MiBibliotecaComponent } from '@modules/biblioteca/mi-biblioteca';
 import { RegistroComponent } from '@modules/registro/registro.component';
 import { IniciarSesionComponent } from '@modules/iniciar-sesion/iniciar-sesion.component';
 import { UsuarioPerfilComponent } from '@modules/usuario-perfil/usuario-perfil.component';
 import { WishlistComponent } from '@modules/wishlist/wishlist.component';
+import { JuegoComponent } from '@modules/juego/juego-component';
 
 export const routes: Routes = [
     {
@@ -16,7 +15,7 @@ export const routes: Routes = [
     },
     {
         path: 'juego/:id',
-        component : DetalleJuegoComponent
+        component : JuegoComponent
     },
     {
         path: '',

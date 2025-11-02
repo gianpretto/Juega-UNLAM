@@ -163,9 +163,11 @@ export class CatalogoJuegosComponent implements OnInit {
   /**
    * Extrae las opciones únicas de géneros y plataformas
    * de los juegos cargados para poblar los filtros
+   * TODO: ACA HAY QUE CAMBIARLO
    */
   private extractFilterOptions(): void {
     // Extraer géneros únicos
+    /*
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
       juego.genres?.forEach(genre => genresSet.add(genre.name));
@@ -191,6 +193,7 @@ export class CatalogoJuegosComponent implements OnInit {
       genres: this.availableGenres.length,
       platforms: this.availablePlatforms.length
     });
+    */
   }
 
   // ========================================
@@ -315,15 +318,19 @@ export class CatalogoJuegosComponent implements OnInit {
   /**
    * Aplica todos los filtros activos a la lista de juegos
    */
+  /*
+  TODO: ACA HAY QUE CAMBIAR, deja los metodos de saveInSession como estan
+  */
   private applyFilters(): void {
+    /*
     let result = [...this.juegos];
 
     // 1. Aplicar búsqueda por texto
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
-	  this.juegoService.saveTermInSession(term);
+    this.juegoService.saveTermInSession(term);
       result = result.filter(juego =>
-        juego.nombre.toLowerCase().includes(term)
+        juego.nombre ? juego.nombre.toLowerCase().includes(term) : false
       );
     }
 
@@ -352,6 +359,7 @@ export class CatalogoJuegosComponent implements OnInit {
     this.filteredJuegos = result;
 
     console.log(`📋 Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
+    */
   }
 
   /**
@@ -360,7 +368,11 @@ export class CatalogoJuegosComponent implements OnInit {
    * @param sortType - Tipo de ordenamiento
    * @returns Lista ordenada
    */
+  /*
+  TODO: ACA HAY QUE CAMBIAR
+  */
   private sortGames(games: Juego[], sortType: string): Juego[] {
+    /*
     const sorted = [...games];
 
     switch (sortType) {
@@ -387,6 +399,9 @@ export class CatalogoJuegosComponent implements OnInit {
       default:
         return sorted;
     }
+    */
+   //TODO: ESTO VUELA, ES PARA QUE COMPILE
+   return [];
   }
 
   // ========================================
