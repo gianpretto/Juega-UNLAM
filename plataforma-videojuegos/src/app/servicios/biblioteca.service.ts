@@ -20,7 +20,7 @@ import { environment } from '@evironment/environment';
 })
 export class BibliotecaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = `${environment.apiUrl}/biblioteca`;
+  private readonly apiUrl = `${environment.BACKEND_URL}/biblioteca`;
 
   // Almacenamiento temporal en memoria (simulando backend)
   // TODO: Reemplazar con llamadas reales a la API cuando esté disponible

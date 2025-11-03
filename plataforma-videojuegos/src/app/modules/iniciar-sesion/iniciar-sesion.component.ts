@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { UsuarioService } from '../../servicios/usuario.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-iniciar-sesion',
   standalone: true,
@@ -11,13 +14,27 @@ import { ButtonModule } from 'primeng/button';
 })
 export class IniciarSesionComponent {
   email = '';
-  contrasena = '';
+  password = '';
 
-  onSubmit() {
-    console.log('Inicio de sesión:', {
-      email: this.email,
-      contraseña: this.contrasena
-    });
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router
+  ) {}
+
+   irARegistro() {
+    this.router.navigate(['/registro']);
   }
 
+
+  onSubmit() {
+    this.usuarioService.loginUsuario(this.email, this.password)
+      .subscribe({
+        next: (res) => {
+          console.log('Sesión iniciada:', res);
+          // 🔹 Redirigir al catálogo
+          this.router.navigate(['/catalogo']);
+        },
+        error: (err) => console.error('Error al iniciar sesión:', err)
+      });
+  }
 }
