@@ -1,7 +1,8 @@
 <div class="game-card" (click)="handleCardClick($event)">
 
     <div class="game-image-container">
-        <!--TODO:HAY QUE FIXEAR EL .TS PARA QUE FUNCIONE
+        <!--
+        TODO: DESCOMENTAR CUANDO FUNCIONE
         <img
             [src]="getGameImage()"
             [alt]="juego.nombre"
@@ -52,12 +53,11 @@
             </div>
         </div>
 
-        <!--TODO: ESTO HAY QUE CAMBIARLO 
+
         <div class="rating-badge" *ngIf="juego.rating">
             <i class="pi pi-star-fill"></i>
             <span>{{ juego.rating }}</span>
         </div>
-        -->
     </div>
 
 
@@ -71,7 +71,8 @@
             {{ juego.nombre }}
         </h3>
 
-        <!--TODO:HAY QUE CAMBIAR EN EL .TS PARA QUE FUNCIONE
+        <!--
+        TODO: POR AHORA COMENTADO, UNA VEZ QUE FUNCIONE LO DEMAS DESCOMENTARLO
         <p class="game-release-date">
             <i class="pi pi-calendar"></i>
             {{ getFormattedDate() }}
@@ -103,7 +104,6 @@
                 {{ genre.name }}
             </span>
         </div>
-         -->
+        -->
     </div>
-   
 </div>

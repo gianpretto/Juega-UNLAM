@@ -1,11 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 
-import { JuegoService } from '../../core/services/juego.service';
-// Ajustá esta ruta a donde está tu card real:
+import { JuegoService } from '../../servicios/juego.service';
 import { GameCardComponent } from '../../modules/biblioteca/components/game-card/game-card.component';
 
 type CardVM = {
@@ -26,51 +25,27 @@ type CardVM = {
   templateUrl: './home-component.html',
   styleUrls: ['./home-component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   private js = inject(JuegoService);
 
-  // Base: Silksong hardcodeado desde el service
-  private base = this.js.getJuegoById(1);
+  // base game cargado desde el servicio (async)
+  private base: any = null;
 
-  // HERO: usa las imágenes del juego
-  heroSlides = this.base.imagenes.map(src => ({
-    img: src,
-    title: this.base.nombre,
-    subtitle: 'Explorá el reino de seda y canto',
-    cta: { text: 'Explorar catálogo', link: '/catalogo' }
-  }));
+  // HERO / carruseles inicializados vacíos para evitar errores en template
+  heroSlides: Array<any> = [];
+  ofertas: CardVM[] = [];
+  destacados: CardVM[] = [];
+  populares: CardVM[] = [];
 
-  // Map a ViewModel simple para la card
+  // Map a ViewModel simple para la card (usa valores por defecto si no hay base)
   private toCard = (extra: Partial<CardVM> = {}): CardVM => ({
-    id: this.base.id,
-    nombre: this.base.nombre,
-    precio: this.base.precio,
-    imagen: this.base.imagenes[0],
-    imagenes: this.base.imagenes,
+    id: this.base?.id ?? 0,
+    nombre: this.base?.name ?? this.base?.title ?? 'Sin nombre',
+    precio: this.base?.price ?? 0,
+    imagen: (this.base?.short_screenshots?.[0]?.image ?? this.base?.background_image) ?? '',
+    imagenes: this.base?.short_screenshots?.map((s: any) => s.image) ?? (this.base?.imagenes ?? []),
     ...extra
   });
-
-  // Carruseles (mock front)
-  ofertas: CardVM[] = [
-    this.toCard({ descuento: 30 }),
-    this.toCard({ descuento: 20 }),
-    this.toCard({ descuento: 15 }),
-    this.toCard({ descuento: 40 })
-  ];
-
-  destacados: CardVM[] = [
-    this.toCard(),
-    this.toCard(),
-    this.toCard(),
-    this.toCard()
-  ];
-
-  populares: CardVM[] = [
-    this.toCard({ rating: 9.2 }),
-    this.toCard({ rating: 8.9 }),
-    this.toCard({ rating: 8.6 }),
-    this.toCard({ rating: 8.3 })
-  ];
 
   // Breakpoints del carrusel
   resp = [
@@ -79,4 +54,53 @@ export class HomeComponent {
     { breakpoint: '960px',  numVisible: 2, numScroll: 2 },
     { breakpoint: '640px',  numVisible: 1, numScroll: 1 }
   ];
+
+  ngOnInit(): void {
+    // cargar el juego de ejemplo (id 1)
+    this.js.getJuegoById(1).subscribe({
+      next: (game) => {
+        this.base = game || {};
+        this.buildHeroAndCarousels();
+      },
+      error: (err) => {
+        console.error('Error cargando juego base para home:', err);
+        // fallback: dejar carruseles vacíos o con mock mínimo
+      }
+    });
+  }
+
+  private buildHeroAndCarousels(): void {
+    const images = this.base?.short_screenshots?.map((s: any) => s.image)
+      || (this.base?.imagenes ?? [])
+      || (this.base?.background_image ? [this.base.background_image] : []);
+
+    this.heroSlides = (images || []).map((src: string) => ({
+      img: src,
+      title: this.base?.name ?? this.base?.title ?? 'Sin nombre',
+      subtitle: 'Explorá el catálogo',
+      cta: { text: 'Explorar catálogo', link: '/catalogo' }
+    }));
+
+    // ejemplos basados en la misma base
+    this.ofertas = [
+      this.toCard({ descuento: 30 }),
+      this.toCard({ descuento: 20 }),
+      this.toCard({ descuento: 15 }),
+      this.toCard({ descuento: 40 })
+    ];
+
+    this.destacados = [
+      this.toCard(),
+      this.toCard(),
+      this.toCard(),
+      this.toCard()
+    ];
+
+    this.populares = [
+      this.toCard({ rating: 9.2 }),
+      this.toCard({ rating: 8.9 }),
+      this.toCard({ rating: 8.6 }),
+      this.toCard({ rating: 8.3 })
+    ];
+  }
 }

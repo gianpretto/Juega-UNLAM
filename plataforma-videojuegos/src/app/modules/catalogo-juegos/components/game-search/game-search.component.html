@@ -1,0 +1,29 @@
+<div class="search-container">
+    <span class="p-input-icon-left search-wrapper">
+        <!-- Icono de búsqueda -->
+        <i class="pi pi-search search-icon"></i>
+
+        <!-- Input de búsqueda -->
+        <input
+            pInputText
+            type="text"
+            [placeholder]="placeholder"
+            class="search-input"
+            [(ngModel)]="searchTerm"
+            (input)="handleSearchInput()"
+            [disabled]="disabled"
+        />
+
+        <!-- Botón de limpiar (aparece solo si hay texto) -->
+        <button
+            *ngIf="hasSearchTerm()"
+            class="clear-button"
+            type="button"
+            (click)="clearSearch()"
+            pTooltip="Limpiar búsqueda"
+            tooltipPosition="top"
+        >
+            <i class="pi pi-times"></i>
+        </button>
+    </span>
+</div>

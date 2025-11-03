@@ -103,14 +103,11 @@ export class GameCardComponent {
     return 'pi pi-desktop'; // Icono por defecto
   }
 
-  /**
-   * Obtiene los nombres de géneros concatenados
-   */
   /*
-  TODO:HAY QUE CAMBIAR ESTO PARA QUE OBTENGA DEL SERVICIO LOS GENEROS DE LOS JUEGOS
-  */
-  /*
+  TODO: MODIFICAR PARA QUE USE EL JUEGOSERVICE PARA TRAER LAS ENTIDADES Y NO DEPENDER DEL JUEGO
   getGenreNames(): string {
+    
+
     return this.juego.genres?.map(g => g.name).slice(0, 3).join(', ') || 'Sin género';
   }
 
@@ -118,7 +115,6 @@ export class GameCardComponent {
   getGameImage(): string {
     return this.juego.background_image || this.placeholderImage;
   }
-
 
   hasPlatforms(): boolean {
     return !!(this.juego.parent_platforms && this.juego.parent_platforms.length > 0);
@@ -129,7 +125,6 @@ export class GameCardComponent {
     return !!(this.juego.genres && this.juego.genres.length > 0);
   }
 
-
   getLimitedPlatforms() {
     return this.juego.parent_platforms?.slice(0, 4) || [];
   }
@@ -138,7 +133,6 @@ export class GameCardComponent {
   getLimitedGenres() {
     return this.juego.genres?.slice(0, 3) || [];
   }
-
 
   getFormattedDate(): string {
     if (!this.juego.released) return 'Sin fecha';
@@ -149,7 +143,6 @@ export class GameCardComponent {
       month: '2-digit',
       year: 'numeric'
     });
-  }*/
-
-
+  }
+  */
 }
