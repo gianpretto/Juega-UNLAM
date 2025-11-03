@@ -1,0 +1,15 @@
+.section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: .5rem; }
+
+.hero-slide {
+  position: relative; height: 360px; border-radius: 12px;
+  background-size: cover; background-position: center;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(12,12,18,.85), rgba(12,12,18,.35));
+  color: #fff; display: flex; flex-direction: column; justify-content: center;
+  padding: 2rem 3rem; border-radius: 12px;
+}
+.hero-title { font-size: clamp(1.8rem, 3vw, 3rem); margin: 0 0 .5rem 0; }
+.hero-sub { opacity: .9; margin: 0 0 1rem 0; }
+:host ::ng-deep .p-carousel .p-carousel-content { padding: .25rem 0; }

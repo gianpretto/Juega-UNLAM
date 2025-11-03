@@ -1,3 +1,50 @@
-<p>home-component works!</p>
+<!-- HERO -->
+<section class="container-xxl my-4">
+  <p-carousel [value]="heroSlides" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="6000">
+    <ng-template let-s pTemplate="item">
+      <div class="hero-slide" [style.background-image]="'url(' + s.img + ')'">
+        <div class="hero-overlay">
+          <h1 class="hero-title">{{ s.title }}</h1>
+          <p class="hero-sub">Ofertas, lanzamientos y los más populares.</p>
+          <a [routerLink]="s.cta.link" pButton class="p-button-lg" [label]="s.cta.text"></a>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
 
-<p-button label="VER DETALLE DEL JUEGO" [routerLink]="['/juego/1']" class="bg-info"  severity="success" />
+<!-- Ofertas -->
+<section class="container-xxl my-5">
+  <h2 class="section-title">Ofertas</h2>
+  <p-carousel [value]="ofertas" [numVisible]="5" [numScroll]="5" [responsiveOptions]="resp">
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- Destacados -->
+<section class="container-xxl my-5">
+  <h2 class="section-title">Destacados</h2>
+  <p-carousel [value]="destacados" [numVisible]="5" [numScroll]="5" [responsiveOptions]="resp">
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- Más populares -->
+<section class="container-xxl my-5">
+  <h2 class="section-title">Más populares</h2>
+  <p-carousel [value]="populares" [numVisible]="5" [numScroll]="5" [responsiveOptions]="resp">
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>

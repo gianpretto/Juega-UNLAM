@@ -10,22 +10,24 @@ import { UsuarioPerfilComponent } from './modules/usuario-perfil/usuario-perfil.
 import { WishlistComponent } from './modules/wishlist/wishlist.component';
 
 export const routes: Routes = [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
     {
         path: 'home',
-        component : HomeComponent
+        component : HomeComponent,
+        data: { title: 'Inicio'}
     },
     {
         path: 'juego/:id',
         component : JuegoComponentDetalle
     },
     {
-        path: '',
-        redirectTo: 'catalogo',
-        pathMatch: 'full'
-    },
-    {
       path: 'catalogo',
-      component: CatalogoJuegosComponent
+      component: CatalogoJuegosComponent,
+      data: { title: 'Catálogo' }
     },
     {
       path: 'mi-biblioteca',
@@ -49,7 +51,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'home'
     },
 
   ]
