@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { Juego } from '@interfaces/juego.interface';
+import { environment } from '@evironment/environment';
 
 /**
- * Componente presentacional para mostrar una tarjeta individual de juego
+ * Componente presentacional para mostrar una tarjeta individual de juego en la biblioteca
  * Es completamente "tonto" - solo recibe datos y emite eventos
  */
 @Component({
@@ -22,34 +23,19 @@ export class GameCardComponent {
   @Input() juego!: Juego;
 
   /**
-   * Indica si el juego está en la biblioteca del usuario
-   */
-  @Input() isInBiblio: boolean = false;
-
-  /**
-   * Indica si el juego está marcado como favorito
-   */
-  @Input() isFavorite: boolean = false;
-
-  /**
    * URL de imagen placeholder si no hay imagen
    */
   @Input() placeholderImage: string = 'assets/placeholder.png';
 
   /**
+   * Bandera para manejar errores de carga de imagen
+   */
+  imageError: boolean = false;
+
+  /**
    * Evento emitido cuando se hace click en la card
    */
   @Output() onClick = new EventEmitter<void>();
-
-  /**
-   * Evento emitido cuando se agrega a la biblioteca
-   */
-  @Output() onAddToBiblio = new EventEmitter<void>();
-
-  /**
-   * Evento emitido cuando se marca/desmarca como favorito
-   */
-  @Output() onToggleFavorite = new EventEmitter<void>();
 
   /**
    * Maneja el click en la card completa
@@ -63,93 +49,30 @@ export class GameCardComponent {
   }
 
   /**
-   * Maneja el click en el botón de agregar a biblioteca
+   * Obtiene la URL de la imagen del juego
    */
-  handleAddToBiblio(event: Event): void {
-    event.stopPropagation();
-    this.onAddToBiblio.emit();
+  getImageUrl(): string {
+    if (!this.juego.mainImagenId) return this.placeholderImage;
+    return `${environment.BACKEND_URL}/imagenes/${this.juego.mainImagenId}`;
   }
 
   /**
-   * Maneja el click en el botón de favoritos
+   * Maneja el error de carga de imagen
    */
-  handleToggleFavorite(event: Event): void {
-    event.stopPropagation();
-    this.onToggleFavorite.emit();
+  onImageError(event: Event): void {
+    this.imageError = true;
+    console.warn(`⚠️ Error cargando imagen para ${this.juego.nombre}`);
   }
 
   /**
-   * Obtiene el icono correspondiente a una plataforma
+   * Obtiene una descripción corta del juego (máximo 100 caracteres)
    */
-  getPlatformIcon(platformName: string): string {
-    const platformIcons: { [key: string]: string } = {
-      'PC': 'pi pi-desktop',
-      'PlayStation': 'pi pi-circle',
-      'Xbox': 'pi pi-times',
-      'Nintendo': 'pi pi-star',
-      'iOS': 'pi pi-mobile',
-      'Android': 'pi pi-android',
-      'Linux': 'pi pi-code',
-      'macOS': 'pi pi-apple'
-    };
-
-    // Buscar coincidencia parcial
-    for (const [key, icon] of Object.entries(platformIcons)) {
-      if (platformName.toLowerCase().includes(key.toLowerCase())) {
-        return icon;
-      }
+  getShortDescription(): string {
+    if (!this.juego.descripcion) return '';
+    const maxLength = 100;
+    if (this.juego.descripcion.length <= maxLength) {
+      return this.juego.descripcion;
     }
-
-    return 'pi pi-desktop'; // Icono por defecto
+    return this.juego.descripcion.substring(0, maxLength) + '...';
   }
-
-  /**
-   * Obtiene los nombres de géneros concatenados
-   */
-  /*
-  TODO:HAY QUE CAMBIAR ESTO PARA QUE OBTENGA DEL SERVICIO LOS GENEROS DE LOS JUEGOS
-  */
-  /*
-  getGenreNames(): string {
-    return this.juego.genres?.map(g => g.name).slice(0, 3).join(', ') || 'Sin género';
-  }
-
-
-  getGameImage(): string {
-    return this.juego.background_image || this.placeholderImage;
-  }
-
-
-  hasPlatforms(): boolean {
-    return !!(this.juego.parent_platforms && this.juego.parent_platforms.length > 0);
-  }
-
-
-  hasGenres(): boolean {
-    return !!(this.juego.genres && this.juego.genres.length > 0);
-  }
-
-
-  getLimitedPlatforms() {
-    return this.juego.parent_platforms?.slice(0, 4) || [];
-  }
-
-
-  getLimitedGenres() {
-    return this.juego.genres?.slice(0, 3) || [];
-  }
-
-
-  getFormattedDate(): string {
-    if (!this.juego.released) return 'Sin fecha';
-
-    const date = new Date(this.juego.released);
-    return date.toLocaleDateString('es-AR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  }*/
-
-
 }

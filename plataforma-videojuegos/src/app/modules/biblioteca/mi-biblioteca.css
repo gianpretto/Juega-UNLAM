@@ -49,6 +49,26 @@
     font-weight: 400;
 }
 
+/* Badge de ID de usuario (debug) */
+.user-id-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    margin-top: 0.5rem;
+    background: rgba(74, 144, 226, 0.15);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a90e2;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+}
+
+.user-id-badge i {
+    font-size: 0.9rem;
+}
+
 .header-stats {
     display: flex;
     align-items: center;

@@ -42,6 +42,9 @@ export class MiBibliotecaComponent implements OnInit {
   // PROPIEDADES DE ESTADO
   // ========================================
 
+  /** ID del usuario actual (hardcoded temporalmente) */
+  currentUserId: number = 1; // TODO: Obtener del servicio de autenticación
+
   /** Lista completa de juegos en la biblioteca */
   juegos: Juego[] = [];
 
@@ -56,9 +59,6 @@ export class MiBibliotecaComponent implements OnInit {
 
   /** Término de búsqueda actual */
   searchTerm: string = '';
-
-  /** IDs de juegos marcados como favoritos */
-  favoritosIds: Set<number> = new Set();
 
   // ========================================
   // OPCIONES PARA FILTROS
@@ -80,24 +80,6 @@ export class MiBibliotecaComponent implements OnInit {
     { label: 'Mejor valorados', value: 'rating-desc' }
   ];
 
-  /** Opciones para el dropdown de géneros (se llena dinámicamente) */
-  genreOptions: { label: string; value: string }[] = [];
-
-  /** Opciones para el dropdown de plataformas (se llena dinámicamente) */
-  platformOptions: { label: string; value: string }[] = [];
-
-  /** Géneros únicos disponibles */
-  availableGenres: string[] = [];
-
-  /** Plataformas únicas disponibles */
-  availablePlatforms: string[] = [];
-
-  /** Género seleccionado */
-  selectedGenre: string = '';
-
-  /** Plataforma seleccionada */
-  selectedPlatform: string = '';
-
   /** Ordenamiento seleccionado */
   selectedSort: string = '';
 
@@ -114,7 +96,6 @@ export class MiBibliotecaComponent implements OnInit {
   ngOnInit(): void {
     console.log("📚 Mi Biblioteca inicializada");
     this.cargarBiblioteca();
-    this.cargarFavoritos();
   }
 
   // ========================================
@@ -128,7 +109,7 @@ export class MiBibliotecaComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.bibliotecaService.obtenerJuegos().subscribe({
+    this.bibliotecaService.obtenerJuegos(this.currentUserId).subscribe({
       next: (data) => {
         console.log('✅ Biblioteca cargada:', data.length, 'juegos');
         this.juegos = data;
@@ -147,53 +128,12 @@ export class MiBibliotecaComponent implements OnInit {
   }
 
   /**
-   * Carga los IDs de juegos marcados como favoritos
-   */
-  cargarFavoritos(): void {
-    this.bibliotecaService.obtenerFavoritos().subscribe({
-      next: (favoritos) => {
-        this.favoritosIds = new Set(favoritos);
-        console.log('❤️ Favoritos cargados:', this.favoritosIds.size);
-      },
-      error: (error) => {
-        console.error('❌ Error al cargar favoritos:', error);
-      }
-    });
-  }
-
-  /**
    * Extrae las opciones únicas de géneros y plataformas
+   * TODO: Implementar cuando se agregue soporte para géneros y plataformas desde el backend
    */
   private extractFilterOptions(): void {
-    /*
-    TODO: MODIFICAR ESTO PARA QUE TRAIGA DEL SERVICIO LOS GENEROS
-    // Extraer géneros únicos
-    const genresSet = new Set<string>();
-    this.juegos.forEach(juego => {
-      juego.genres?.forEach(genre => genresSet.add(genre.name));
-    });
-    this.availableGenres = Array.from(genresSet).sort();
-    this.genreOptions = this.availableGenres.map(genre => ({
-      label: genre,
-      value: genre
-    }));
-
-    // Extraer plataformas únicas
-    const platformsSet = new Set<string>();
-    this.juegos.forEach(juego => {
-      juego.parent_platforms?.forEach(pp => platformsSet.add(pp.platform.name));
-    });
-    this.availablePlatforms = Array.from(platformsSet).sort();
-    this.platformOptions = this.availablePlatforms.map(platform => ({
-      label: platform,
-      value: platform
-    }));
-
-    console.log('📊 Filtros de biblioteca:', {
-      genres: this.availableGenres.length,
-      platforms: this.availablePlatforms.length
-    });
-    */
+    // Pendiente: implementar con datos del backend
+    console.log('⚠️ Extracción de filtros pendiente de implementación');
   }
 
   // ========================================
@@ -217,8 +157,7 @@ export class MiBibliotecaComponent implements OnInit {
 
     this.filters = filters;
     this.selectedSort = filters.sortBy;
-    this.selectedGenre = filters.genero;
-    this.selectedPlatform = filters.plataforma;
+    // TODO: Implementar filtros de género y plataforma cuando estén disponibles desde el backend
 
     this.applyFilters();
   }
@@ -229,8 +168,6 @@ export class MiBibliotecaComponent implements OnInit {
   clearFilters(): void {
     console.log('🗑️ Limpiar filtros de biblioteca');
     this.searchTerm = '';
-    this.selectedGenre = '';
-    this.selectedPlatform = '';
     this.selectedSort = '';
     this.filters = {
       sortBy: '',
@@ -264,46 +201,10 @@ export class MiBibliotecaComponent implements OnInit {
           // Remover del array local
           this.juegos = this.juegos.filter(j => j.id !== juego.id);
           this.applyFilters();
-
-          // También quitar de favoritos si estaba
-          this.favoritosIds.delete(juego.id);
         },
         error: (error) => {
           console.error('❌ Error al eliminar:', error);
           alert('Error al eliminar el juego. Por favor, intenta de nuevo.');
-        }
-      });
-    }
-  }
-
-  /**
-   * Maneja el toggle de favorito
-   */
-  handleToggleFavorite(juego: Juego): void {
-    console.log('❤️ Toggle favorito:', juego.nombre);
-
-    const esFavorito = this.favoritosIds.has(juego.id);
-
-    if (esFavorito) {
-      // Quitar de favoritos
-      this.bibliotecaService.quitarDeFavoritos(juego.id).subscribe({
-        next: () => {
-          this.favoritosIds.delete(juego.id);
-          console.log('💔 Quitado de favoritos');
-        },
-        error: (error) => {
-          console.error('❌ Error al quitar de favoritos:', error);
-        }
-      });
-    } else {
-      // Agregar a favoritos
-      this.bibliotecaService.agregarAFavoritos(juego.id).subscribe({
-        next: () => {
-          this.favoritosIds.add(juego.id);
-          console.log('❤️ Agregado a favoritos');
-        },
-        error: (error) => {
-          console.error('❌ Error al agregar a favoritos:', error);
         }
       });
     }
@@ -337,24 +238,9 @@ export class MiBibliotecaComponent implements OnInit {
       );
     }
 
-    /*
-    TODO: MODIFICAR PARA QUE VENGA DEL SERVICIO EN VEZ DE QUE EL JUEGO TENGA EL GENERO DENTRO
-    // 2. Filtrar por género
-    if (this.selectedGenre) {
-      result = result.filter(juego =>
-        juego.genres?.some(g => g.name === this.selectedGenre)
-      );
-    }
+    // TODO: Implementar filtros de género y plataforma cuando estén disponibles desde el backend
 
-    // 3. Filtrar por plataforma
-    if (this.selectedPlatform) {
-      result = result.filter(juego =>
-        juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
-      );
-    }
- */
-
-    // 4. Aplicar ordenamiento
+    // 2. Aplicar ordenamiento
     if (this.selectedSort) {
       result = this.sortGames(result, this.selectedSort);
     }
@@ -380,6 +266,7 @@ export class MiBibliotecaComponent implements OnInit {
 
       case 'date-desc':
         return sorted.sort((a, b) => {
+          if (!a.released || !b.released) return 0;
           const dateA = new Date(a.released).getTime();
           const dateB = new Date(b.released).getTime();
           return dateB - dateA;
@@ -387,6 +274,7 @@ export class MiBibliotecaComponent implements OnInit {
 
       case 'date-asc':
         return sorted.sort((a, b) => {
+          if (!a.released || !b.released) return 0;
           const dateA = new Date(a.released).getTime();
           const dateB = new Date(b.released).getTime();
           return dateA - dateB;
@@ -410,8 +298,6 @@ export class MiBibliotecaComponent implements OnInit {
   hasActiveFilters(): boolean {
     return !!(
       this.searchTerm.trim() ||
-      this.selectedGenre ||
-      this.selectedPlatform ||
       this.selectedSort
     );
   }
@@ -422,17 +308,9 @@ export class MiBibliotecaComponent implements OnInit {
   getActiveFiltersCount(): number {
     let count = 0;
     if (this.searchTerm.trim()) count++;
-    if (this.selectedGenre) count++;
-    if (this.selectedPlatform) count++;
     if (this.selectedSort) count++;
+    // TODO: Agregar conteo de género y plataforma cuando estén implementados
     return count;
-  }
-
-  /**
-   * Verifica si un juego es favorito
-   */
-  isFavorite(juegoId: number): boolean {
-    return this.favoritosIds.has(juegoId);
   }
 
   /**
@@ -440,10 +318,8 @@ export class MiBibliotecaComponent implements OnInit {
    */
   getStats() {
     return {
-      total: this.juegos.length,
-      favoritos: this.favoritosIds.size,
-      genres: this.availableGenres.length,
-      platforms: this.availablePlatforms.length
+      total: this.juegos.length
+      // TODO: Agregar estadísticas de géneros y plataformas cuando estén implementados
     };
   }
 
@@ -453,6 +329,5 @@ export class MiBibliotecaComponent implements OnInit {
   reloadBiblioteca(): void {
     this.clearFilters();
     this.cargarBiblioteca();
-    this.cargarFavoritos();
   }
 }

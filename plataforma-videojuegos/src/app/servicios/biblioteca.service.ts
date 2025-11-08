@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, of, delay, map } from 'rxjs';
 import { Juego } from '@interfaces/juego.interface';
+import { UsuarioJuego } from '@interfaces/usuario-juego.interface';
 import { environment } from '@evironment/environment';
 
 /**
@@ -20,28 +21,24 @@ import { environment } from '@evironment/environment';
 })
 export class BibliotecaService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = `${environment.apiUrl}/biblioteca`;
+  private readonly baseApiUrl = `${environment.BACKEND_URL}/usuario-juegos`;
 
-  // Almacenamiento temporal en memoria (simulando backend)
-  // TODO: Reemplazar con llamadas reales a la API cuando esté disponible
-  private juegosGuardados: Juego[] = [];
+  // Almacenamiento temporal de favoritos en memoria
   private favoritosIds: Set<number> = new Set();
 
   /**
-   * Obtiene todos los juegos de la biblioteca del usuario
-   * NOTA: Por ahora retorna datos de localStorage/memoria
-   * TODO: Reemplazar con llamada HTTP real cuando el backend esté listo
+   * Obtiene todos los juegos de la biblioteca del usuario especificado
+   * Llama al endpoint del backend que retorna usuario_juegos y extrae solo los juegos
+   * @param usuarioId - ID del usuario del cual obtener la biblioteca
    */
-  obtenerJuegos(): Observable<Juego[]> {
-    // Simulación de carga desde localStorage
-    const stored = localStorage.getItem('biblioteca_juegos');
-    if (stored) {
-      this.juegosGuardados = JSON.parse(stored);
-    }
-
-    // Simular delay de red
-    return of(this.juegosGuardados).pipe(
-      delay(300),
+  obtenerJuegos(usuarioId: number = 1): Observable<Juego[]> {
+    const apiUrl = `${this.baseApiUrl}/usuario/${usuarioId}`;
+    return this.http.get<UsuarioJuego[]>(apiUrl).pipe(
+      map(usuarioJuegos => {
+        console.log(`📦 Usuario-Juegos recibidos para usuario ${usuarioId}:`, usuarioJuegos.length);
+        // Extraer solo el objeto juego de cada relación usuario-juego
+        return usuarioJuegos.map(uj => uj.juego);
+      }),
       catchError(this.handleError)
     );
   }
@@ -50,39 +47,40 @@ export class BibliotecaService {
    * Agrega un juego a la biblioteca
    */
   agregarJuego(juego: Juego): Observable<void> {
-    // Verificar que no esté ya agregado
-    if (!this.juegosGuardados.find(j => j.id === juego.id)) {
-      this.juegosGuardados.push(juego);
-      localStorage.setItem('biblioteca_juegos', JSON.stringify(this.juegosGuardados));
-      console.log('✅ Juego agregado a biblioteca:', juego.nombre);
-    }
-
-    return of(void 0).pipe(delay(200));
+    return this.http.post<void>(`${this.baseApiUrl}`, { juegoId: juego.id }).pipe(
+      map(() => {
+        console.log('✅ Juego agregado a biblioteca:', juego.nombre);
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /**
    * Elimina un juego de la biblioteca
    */
   eliminarJuego(juegoId: number): Observable<void> {
-    this.juegosGuardados = this.juegosGuardados.filter(j => j.id !== juegoId);
-    localStorage.setItem('biblioteca_juegos', JSON.stringify(this.juegosGuardados));
-
-    // También quitar de favoritos si estaba
-    this.favoritosIds.delete(juegoId);
-    this.guardarFavoritos();
-
-    console.log('🗑️ Juego eliminado de biblioteca');
-    return of(void 0).pipe(delay(200));
+    return this.http.delete<void>(`${this.baseApiUrl}/${juegoId}`).pipe(
+      map(() => {
+        // También quitar de favoritos si estaba
+        this.favoritosIds.delete(juegoId);
+        this.guardarFavoritos();
+        console.log('🗑️ Juego eliminado de biblioteca');
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /**
    * Obtiene los IDs de juegos favoritos
    */
   obtenerFavoritos(): Observable<number[]> {
-    const stored = localStorage.getItem('biblioteca_favoritos');
-    if (stored) {
-      const favoritos = JSON.parse(stored) as number[];
-      this.favoritosIds = new Set(favoritos);
+    // Proteger contra SSR - localStorage solo existe en el navegador
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const stored = localStorage.getItem('biblioteca_favoritos');
+      if (stored) {
+        const favoritos = JSON.parse(stored) as number[];
+        this.favoritosIds = new Set(favoritos);
+      }
     }
 
     return of(Array.from(this.favoritosIds)).pipe(delay(200));
@@ -112,10 +110,13 @@ export class BibliotecaService {
    * Verifica si un juego ya está en la biblioteca
    */
   estaEnBiblioteca(juegoId: number): Observable<boolean> {
-    const stored = localStorage.getItem('biblioteca_juegos');
-    if (stored) {
-      const juegos = JSON.parse(stored) as Juego[];
-      return of(juegos.some(j => j.id === juegoId));
+    // Proteger contra SSR
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      const stored = localStorage.getItem('biblioteca_juegos');
+      if (stored) {
+        const juegos = JSON.parse(stored) as Juego[];
+        return of(juegos.some(j => j.id === juegoId));
+      }
     }
     return of(false);
   }
@@ -124,17 +125,10 @@ export class BibliotecaService {
    * Guarda favoritos en localStorage
    */
   private guardarFavoritos(): void {
-    localStorage.setItem('biblioteca_favoritos', JSON.stringify(Array.from(this.favoritosIds)));
-  }
-
-  /**
-   * Obtiene todos los juegos de la biblioteca del usuario
-   * @returns Observable con array de juegos
-   */
-  getJuegos(): Observable<Juego[]> {
-    return this.http.get<Juego[]>(this.apiUrl).pipe(
-      catchError(this.handleError) // 👈 Manejo centralizado de errores
-    );
+    // Proteger contra SSR
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      localStorage.setItem('biblioteca_favoritos', JSON.stringify(Array.from(this.favoritosIds)));
+    }
   }
 
   /**
@@ -143,7 +137,7 @@ export class BibliotecaService {
    * @returns Observable con el juego
    */
   getJuegoById(id: number): Observable<Juego> {
-    return this.http.get<Juego>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<Juego>(`${this.baseApiUrl}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -154,7 +148,7 @@ export class BibliotecaService {
    * @returns Observable con juegos filtrados
    */
   searchJuegos(searchTerm: string): Observable<Juego[]> {
-    return this.http.get<Juego[]>(`${this.apiUrl}/search`, {
+    return this.http.get<Juego[]>(`${this.baseApiUrl}/search`, {
       params: { q: searchTerm }
     }).pipe(
       catchError(this.handleError)

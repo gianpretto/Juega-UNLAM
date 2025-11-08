@@ -16,48 +16,65 @@ export class JuegoService {
   private httpClient = inject(HttpClient);
 
   getJuegos(): Observable<Juego[]>{
-    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/api/juegos/`)
+    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/juegos/`)
   }
 
   
   getJuegoById(id: number):Observable<Juego> {
     
-    return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/api/juegos/${id}`)
+    return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/juegos/${id}`)
   }
 
 
     obtenerImagenesDeUnJuego(id:number):Observable<Imagen[]>{
-    return this.httpClient.get<Imagen[]>(`${environment.BACKEND_URL}/api/juegos/imagenes/${id}`);
+    return this.httpClient.get<Imagen[]>(`${environment.BACKEND_URL}/juegos/imagenes/${id}`);
   }
 
 
   obtenerReviewsDeUnJuego(id:number):Observable<Review[]>{
-    return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/api/juegos/reviews/${id}`);
+    return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/juegos/reviews/${id}`);
   }
   
     saveTermInSession(term: string): void {
       //localStorage.setItem('searchTerm', term);
-      sessionStorage.setItem('searchTerm', term);
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('searchTerm', term);
+      }
     }
     saveGenreInSession(genre: string): void {
       //localStorage.setItem('genre', genre);
-      sessionStorage.setItem('genre', genre);
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('genre', genre);
+      }
     }
     savePlatformInSession(platform: string): void {
       //localStorage.setItem('platform', platform);
-      sessionStorage.setItem('platform', platform);
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('platform', platform);
+      }
     }
     saveSortInSession(sort: string): void {
       //localStorage.setItem('sort', sort);
-      sessionStorage.setItem('sort', sort);
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('sort', sort);
+      }
     }
   
   
     getSessionFilteredGames(): FilterOption[]{
-      const term :string = sessionStorage.getItem('searchTerm') || '';
-      const genre:string = sessionStorage.getItem('genre') || '';
-      const platform:string = sessionStorage.getItem('platform') || '';
-      const sort:string = sessionStorage.getItem('sort') || '';
+      let term = '';
+      let genre = '';
+      let platform = '';
+      let sort = '';
+
+      // Proteger contra SSR
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+        term = sessionStorage.getItem('searchTerm') || '';
+        genre = sessionStorage.getItem('genre') || '';
+        platform = sessionStorage.getItem('platform') || '';
+        sort = sessionStorage.getItem('sort') || '';
+      }
+
       return [{
         name : "term",
         value : term
@@ -79,7 +96,9 @@ export class JuegoService {
   
   
     clearFilters(){
-      sessionStorage.clear();
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+        sessionStorage.clear();
+      }
     }
 
 

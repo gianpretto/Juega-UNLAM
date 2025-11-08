@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { Juego } from '@interfaces/juego.interface';
+import { environment } from '@evironment/environment';
 
 /**
  * Componente presentacional para mostrar una tarjeta individual de juego
@@ -35,6 +36,11 @@ export class GameCardComponent {
    * URL de imagen placeholder si no hay imagen
    */
   @Input() placeholderImage: string = 'assets/placeholder.png';
+
+  /**
+   * Bandera para manejar errores de carga de imagen
+   */
+  imageError: boolean = false;
 
   /**
    * Evento emitido cuando se hace click en la card
@@ -103,37 +109,9 @@ export class GameCardComponent {
     return 'pi pi-desktop'; // Icono por defecto
   }
 
-  /*
-  TODO: MODIFICAR PARA QUE USE EL JUEGOSERVICE PARA TRAER LAS ENTIDADES Y NO DEPENDER DEL JUEGO
-  getGenreNames(): string {
-    
-
-    return this.juego.genres?.map(g => g.name).slice(0, 3).join(', ') || 'Sin género';
-  }
-
-
-  getGameImage(): string {
-    return this.juego.background_image || this.placeholderImage;
-  }
-
-  hasPlatforms(): boolean {
-    return !!(this.juego.parent_platforms && this.juego.parent_platforms.length > 0);
-  }
-
-
-  hasGenres(): boolean {
-    return !!(this.juego.genres && this.juego.genres.length > 0);
-  }
-
-  getLimitedPlatforms() {
-    return this.juego.parent_platforms?.slice(0, 4) || [];
-  }
-
-
-  getLimitedGenres() {
-    return this.juego.genres?.slice(0, 3) || [];
-  }
-
+  /**
+   * Obtiene la fecha formateada del lanzamiento
+   */
   getFormattedDate(): string {
     if (!this.juego.released) return 'Sin fecha';
 
@@ -144,5 +122,32 @@ export class GameCardComponent {
       year: 'numeric'
     });
   }
-  */
+
+  /**
+   * Obtiene la URL de la imagen del juego
+   */
+  getImageUrl(): string {
+    if (!this.juego.mainImagenId) return this.placeholderImage;
+    return `${environment.BACKEND_URL}/imagenes/${this.juego.mainImagenId}`;
+  }
+
+  /**
+   * Maneja el error de carga de imagen
+   */
+  onImageError(event: Event): void {
+    this.imageError = true;
+    console.warn(`Error cargando imagen para ${this.juego.nombre}`);
+  }
+
+  /**
+   * Obtiene una descripción corta del juego (máximo 100 caracteres)
+   */
+  getShortDescription(): string {
+    if (!this.juego.descripcion) return '';
+    const maxLength = 100;
+    if (this.juego.descripcion.length <= maxLength) {
+      return this.juego.descripcion;
+    }
+    return this.juego.descripcion.substring(0, maxLength) + '...';
+  }
 }

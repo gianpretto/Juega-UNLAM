@@ -1,19 +1,23 @@
 <div class="game-card" (click)="handleCardClick($event)">
 
     <div class="game-image-container">
-        <!--TODO:HAY QUE FIXEAR EL .TS PARA QUE FUNCIONE
-        <img
-            [src]="getGameImage()"
+        <!-- Imagen del juego o placeholder -->
+        <img 
+            *ngIf="juego.mainImagenId && !imageError" 
+            [src]="getImageUrl()" 
             [alt]="juego.nombre"
             class="game-image"
             loading="lazy"
+            (error)="onImageError($event)"
         />
-        -->
+        <div *ngIf="!juego.mainImagenId || imageError" class="game-placeholder">
+            <i class="pi pi-image"></i>
+            <p>{{ juego.nombre }}</p>
+        </div>
 
-
+        <!-- Overlay con SOLO el botón de ver detalles -->
         <div class="game-overlay">
             <div class="overlay-actions">
-
                 <button
                     pButton
                     type="button"
@@ -24,45 +28,12 @@
                 >
                     <i class="pi pi-eye"></i>
                 </button>
-
-
-                <button
-                    pButton
-                    type="button"
-                    [class]="isFavorite ? 'p-button-rounded p-button-danger action-button favorite-active' : 'p-button-rounded p-button-danger action-button'"
-                    [pTooltip]="isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'"
-                    tooltipPosition="top"
-                    (click)="handleToggleFavorite($event)"
-                >
-                    <i [class]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
-                </button>
-
-
-                <button
-                    pButton
-                    type="button"
-                    [class]="isInBiblio ? 'p-button-rounded p-button-success action-button in-biblio' : 'p-button-rounded p-button-secondary action-button'"
-                    [pTooltip]="isInBiblio ? 'En tu biblioteca' : 'Agregar a biblioteca'"
-                    tooltipPosition="top"
-                    (click)="handleAddToBiblio($event)"
-                    [disabled]="isInBiblio"
-                >
-                    <i [class]="isInBiblio ? 'pi pi-check' : 'pi pi-plus'"></i>
-                </button>
             </div>
         </div>
-
-        <!--TODO: ESTO HAY QUE CAMBIARLO 
-        <div class="rating-badge" *ngIf="juego.rating">
-            <i class="pi pi-star-fill"></i>
-            <span>{{ juego.rating }}</span>
-        </div>
-        -->
     </div>
 
-
+    <!-- Información del juego: Solo nombre y descripción -->
     <div class="game-info">
-
         <h3
             class="game-title"
             [pTooltip]="juego.nombre"
@@ -71,39 +42,10 @@
             {{ juego.nombre }}
         </h3>
 
-        <!--TODO:HAY QUE CAMBIAR EN EL .TS PARA QUE FUNCIONE
-        <p class="game-release-date">
-            <i class="pi pi-calendar"></i>
-            {{ getFormattedDate() }}
+        <!-- Descripción corta -->
+        <p class="game-description" *ngIf="juego.descripcion">
+            {{ getShortDescription() }}
         </p>
-
-
-        <div class="game-genres-text" *ngIf="hasGenres()">
-            <i class="pi pi-tag"></i>
-            <span>{{ getGenreNames() }}</span>
-        </div>
-
-        <div class="game-platforms" *ngIf="hasPlatforms()">
-            <span
-                class="platform-icon"
-                *ngFor="let parentPlatform of getLimitedPlatforms()"
-                [pTooltip]="parentPlatform.platform.name"
-                tooltipPosition="top"
-            >
-                <i [class]="getPlatformIcon(parentPlatform.platform.name)"></i>
-            </span>
-        </div>
-
-
-        <div class="game-genres" *ngIf="hasGenres()">
-            <span
-                class="genre-tag"
-                *ngFor="let genre of getLimitedGenres()"
-            >
-                {{ genre.name }}
-            </span>
-        </div>
-         -->
     </div>
    
 </div>
