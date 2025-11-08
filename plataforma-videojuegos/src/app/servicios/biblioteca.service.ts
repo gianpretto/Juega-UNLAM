@@ -21,6 +21,7 @@ import { environment } from '@evironment/environment';
 })
 export class BibliotecaService {
   private readonly http = inject(HttpClient);
+
   private readonly baseApiUrl = `${environment.BACKEND_URL}/usuario-juegos`;
 
   // Almacenamiento temporal de favoritos en memoria
