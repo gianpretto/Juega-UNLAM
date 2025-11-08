@@ -16,27 +16,27 @@ export class UsuarioService {
 
 
 listUsuarios(): Observable<Usuario[]> {
-  return this.http.get<Usuario[]>(`${environment.BACKEND_URL}/api/usuarios`);
+  return this.http.get<Usuario[]>(`${environment.BACKEND_URL}/usuarios`);
 }
 
 eliminarUsuario(usuario: Usuario) {
-  return this.http.delete(`${environment.BACKEND_URL}/api/usuarios/${usuario.id}`);
+  return this.http.delete(`${environment.BACKEND_URL}/usuarios/${usuario.id}`);
 }
 
 verUsuario(id: number): Observable<Usuario> {
-  return this.http.get<Usuario>(`${environment.BACKEND_URL}/api/usuarios/${id}`);
+  return this.http.get<Usuario>(`${environment.BACKEND_URL}/usuarios/${id}`);
 }
 
 createUsuario(usuario: Usuario): Observable<Usuario> {
-  return this.http.post<Usuario>(`${environment.BACKEND_URL}/api/usuarios`, usuario);
+  return this.http.post<Usuario>(`${environment.BACKEND_URL}/usuarios`, usuario);
 }
 
 updateUsuario(usuario: Usuario) {
-  return this.http.put<Usuario>(`${environment.BACKEND_URL}/api/usuarios/${usuario.id}`, usuario);
+  return this.http.put<Usuario>(`${environment.BACKEND_URL}/usuarios/${usuario.id}`, usuario);
 }
 
 loginUsuario(email: string, password: string): Observable<Usuario> {
-  return this.http.post<Usuario>(`${environment.BACKEND_URL}/api/usuarios/login`, { email, password });
+  return this.http.post<Usuario>(`${environment.BACKEND_URL}/usuarios/login`, { email, password });
 }
 
 
