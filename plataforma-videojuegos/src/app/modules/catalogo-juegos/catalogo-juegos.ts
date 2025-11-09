@@ -10,6 +10,10 @@ import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-se
 import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 import { FilterOption } from "@interfaces/filter-options.interface";
+import { Genero } from "@interfaces/genero.interface";
+import { Plataforma } from "@interfaces/plataforma.interface";
+import { GeneroService } from "@servicios/genero/genero.service";
+import { PlataformaService } from "@servicios/plataforma/plataforma.service";
 
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
@@ -43,6 +47,7 @@ export class CatalogoJuegosComponent implements OnInit {
   // ========================================
   // PROPIEDADES DE ESTADO
   // ========================================
+  
 
   /** Lista completa de juegos obtenidos de RAWG */
   juegos: Juego[] = [];
@@ -51,6 +56,9 @@ export class CatalogoJuegosComponent implements OnInit {
   filteredJuegos: Juego[] = [];
 
   selectedOptions: FilterOption[] = [];
+
+  genero!:Genero;
+  plataforma!:Plataforma;
 
   /** Estado de carga */
   loading: boolean = true;
@@ -111,6 +119,8 @@ export class CatalogoJuegosComponent implements OnInit {
 
   private juegoService = inject(JuegoService);
   private bibliotecaService = inject(BibliotecaService);
+  private generoService = inject(GeneroService)
+  private plataformaService = inject(PlataformaService)
 
   // ========================================
   // LIFECYCLE HOOKS
@@ -167,6 +177,7 @@ export class CatalogoJuegosComponent implements OnInit {
    */
   private extractFilterOptions(): void {
     // Extraer géneros únicos
+    
     /*
     const genresSet = new Set<string>();
     this.juegos.forEach(juego => {
@@ -359,7 +370,7 @@ export class CatalogoJuegosComponent implements OnInit {
     this.filteredJuegos = result;
 
     console.log(`📋 Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
-    */
+    
   }
 
   /**
