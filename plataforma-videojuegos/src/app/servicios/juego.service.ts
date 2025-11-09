@@ -16,23 +16,23 @@ export class JuegoService {
   private httpClient = inject(HttpClient);
 
   getJuegos(): Observable<Juego[]>{
-    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/juegos/`)
+    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/juego/`)
   }
 
   
   getJuegoById(id: number):Observable<Juego> {
     
-    return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/juegos/${id}`)
+    return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/juego/${id}`)
   }
 
 
     obtenerImagenesDeUnJuego(id:number):Observable<Imagen[]>{
-    return this.httpClient.get<Imagen[]>(`${environment.BACKEND_URL}/juegos/imagenes/${id}`);
+    return this.httpClient.get<Imagen[]>(`${environment.BACKEND_URL}/juego/imagenes/${id}`);
   }
 
 
   obtenerReviewsDeUnJuego(id:number):Observable<Review[]>{
-    return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/juegos/reviews/${id}`);
+    return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/juego/reviews/${id}`);
   }
   
     saveTermInSession(term: string): void {
@@ -103,31 +103,3 @@ export class JuegoService {
 
 
 }
-
-
-
-// getJuegos():Observable<Juego[]>{
-  //   return this.httpClient.get<any>(`${environment.apiUrl}games?key=${environment.rawgApiKey}&page_size=10`)
-  //   .pipe(
-  //     map((response: any) =>{
-  //       //console.log('📦 Respuesta completa:', response);
-  //       //console.log('🎮 Solo results:', response.results);
-  //       //console.log('🔢 Tipo de results:', Array.isArray(response.results));
-  //        return response.results
-  //       })
-  //   )
-  // }
-  
-  // getJuegoById(id: number):Observable<Juego>{
-  //     return this.httpClient.get<any>(`${environment.apiUrl}games/${id}?key=${environment.rawgApiKey}`)
-  //     .pipe(
-  //       map((response: any) =>{
-  //         return response
-  //       })
-  //     )
-  //   }
-  
-    /*getSessionFilteredGames(): Juego[]{
-      const juego : Juego[] = [];
-      return juego;
-    }*/
