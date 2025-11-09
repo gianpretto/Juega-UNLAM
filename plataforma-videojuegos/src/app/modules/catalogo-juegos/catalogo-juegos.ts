@@ -11,9 +11,13 @@ import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-f
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { Genero } from "@interfaces/genero.interface";
-import { Plataforma } from "@interfaces/plataforma.interface";
 import { GeneroService } from "@servicios/genero/genero.service";
 import { PlataformaService } from "@servicios/plataforma/plataforma.service";
+import { Plataforma } from "@interfaces/plataforma.interface";
+import { JuegoPlataforma } from "@interfaces/juego-plataforma.interface";
+import { JuegoGenero } from "@interfaces/juego-genero.interface";
+import { JuegoPlataformaService } from "@general/servicios/juego-plataforma/juego-plataforma.service";
+import { JuegoGeneroService } from "@general/servicios/juego-genero/juego-genero.service";
 
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
@@ -57,8 +61,10 @@ export class CatalogoJuegosComponent implements OnInit {
 
   selectedOptions: FilterOption[] = [];
 
-  genero!:Genero;
-  plataforma!:Plataforma;
+  generos:Genero[] =[];
+  plataformas:Plataforma[] =[];
+  juegosPlataformas:JuegoPlataforma[] = [];
+  juegosGeneros:JuegoGenero[] =[];
 
   /** Estado de carga */
   loading: boolean = true;
@@ -119,8 +125,10 @@ export class CatalogoJuegosComponent implements OnInit {
 
   private juegoService = inject(JuegoService);
   private bibliotecaService = inject(BibliotecaService);
-  private generoService = inject(GeneroService)
-  private plataformaService = inject(PlataformaService)
+  private generoService = inject(GeneroService);
+  private plataformaService = inject(PlataformaService);
+  private juegoPlataformaService = inject(JuegoPlataformaService);
+  private juegoGeneroService = inject(JuegoGeneroService);
 
   // ========================================
   // LIFECYCLE HOOKS
@@ -128,7 +136,11 @@ export class CatalogoJuegosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("🎮 Catálogo de Juegos inicializado");
-	this.cargarJuegos();
+    this.cargarPlataformas();
+    this.cargarGeneros();
+    this.cargarJuegosPlataformas();
+    this.cargarJuegosGeneros();
+	  this.cargarJuegos();
     this.selectedOptions = this.juegoService.getSessionFilteredGames();
 	const hasActiveFilters = this.selectedOptions.some(opt => opt.value !== '');
 
@@ -170,6 +182,27 @@ export class CatalogoJuegosComponent implements OnInit {
     });
   }
 
+  cargarJuegosPlataformas(){
+    this.juegoPlataformaService.obtenerJuegosPlataformas().subscribe({
+      next : (data) => {
+        this.juegosGeneros = data;
+      },
+      error : (data) => {
+        console.log("ERROR AL CARGAR LOS JUEGOS-PLATAFORMAS")
+      }
+    })
+  }
+  cargarJuegosGeneros(){
+    this.juegoGeneroService.obtenerJuegosGeneros().subscribe({
+      next : (data) => {
+        this.juegosPlataformas = data;
+      },
+      error : (data) => {
+        console.log("ERROR AL CARGAR LOS JUEGOS-GENEROS")
+      }
+    })
+  }
+
   /**
    * Extrae las opciones únicas de géneros y plataformas
    * de los juegos cargados para poblar los filtros
@@ -178,10 +211,12 @@ export class CatalogoJuegosComponent implements OnInit {
   private extractFilterOptions(): void {
     // Extraer géneros únicos
     
-    /*
+    
     const genresSet = new Set<string>();
-    this.juegos.forEach(juego => {
-      juego.genres?.forEach(genre => genresSet.add(genre.name));
+    this.generos.forEach(g => {
+      if (g.nombre) {
+        genresSet.add(g.nombre);
+      }
     });
     this.availableGenres = Array.from(genresSet).sort();
     this.genreOptions = this.availableGenres.map(genre => ({
@@ -191,9 +226,11 @@ export class CatalogoJuegosComponent implements OnInit {
 
     // Extraer plataformas únicas
     const platformsSet = new Set<string>();
-    this.juegos.forEach(juego => {
-      juego.parent_platforms?.forEach(pp => platformsSet.add(pp.platform.name));
-    });
+    this.plataformas.forEach(g=> {
+      if(g.nombre){
+        platformsSet.add(g.nombre);
+      }
+    })
     this.availablePlatforms = Array.from(platformsSet).sort();
     this.platformOptions = this.availablePlatforms.map(platform => ({
       label: platform,
@@ -204,7 +241,28 @@ export class CatalogoJuegosComponent implements OnInit {
       genres: this.availableGenres.length,
       platforms: this.availablePlatforms.length
     });
-    */
+    
+  }
+
+  cargarPlataformas(){
+    this.plataformaService.obtenerPlataformas().subscribe({
+      next : (data) => {
+        this.plataformas = data;
+      },
+      error : (data) => {
+        console.log("ERRO AL TRAER LAS PLATAFORMAS")
+      }
+    })
+  }
+  cargarGeneros(){
+    this.generoService.obtenerGeneros().subscribe({
+      next : (data) => {
+        this.generos = data;
+      },
+      error : (data) => {
+        console.log("ERROR AL TRAER LOS GENEROS")
+      }
+    })
   }
 
   // ========================================
@@ -333,38 +391,38 @@ export class CatalogoJuegosComponent implements OnInit {
   TODO: ACA HAY QUE CAMBIAR, deja los metodos de saveInSession como estan
   */
   private applyFilters(): void {
-    /*
+    
     let result = [...this.juegos];
+
 
     // 1. Aplicar búsqueda por texto
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
-    this.juegoService.saveTermInSession(term);
+      this.juegoService.saveTermInSession(term);
       result = result.filter(juego =>
         juego.nombre ? juego.nombre.toLowerCase().includes(term) : false
       );
     }
 
+    
     // 2. Filtrar por género
     if (this.selectedGenre) {
 		this.juegoService.saveGenreInSession(this.selectedGenre);
-      result = result.filter(juego =>
-        juego.genres?.some(g => g.name === this.selectedGenre)
-      );
+      result = this.sortByGenre(result,this.selectedGenre);
     }
-
+    
+    /*
     // 3. Filtrar por plataforma
     if (this.selectedPlatform) {
 		this.juegoService.savePlatformInSession(this.selectedPlatform);
-      result = result.filter(juego =>
-        juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
-      );
+      result = this.sortByPlatform(result,this.selectedPlatform);
     }
+    */
 
     // 4. Aplicar ordenamiento
     if (this.selectedSort) {
 		this.juegoService.saveSortInSession(this.selectedSort);
-      result = this.sortGames(result, this.selectedSort);
+      result = this.sortByName(result, this.selectedSort);
     }
 
     this.filteredJuegos = result;
@@ -373,17 +431,11 @@ export class CatalogoJuegosComponent implements OnInit {
     
   }
 
-  /**
-   * Ordena la lista de juegos según el criterio seleccionado
-   * @param games - Lista de juegos a ordenar
-   * @param sortType - Tipo de ordenamiento
-   * @returns Lista ordenada
-   */
-  /*
-  TODO: ACA HAY QUE CAMBIAR
-  */
-  private sortGames(games: Juego[], sortType: string): Juego[] {
-    /*
+   sortByGenre(result:Juego[],selectedGenre:string):Juego[]{
+      return this.juegoGeneroService.filtrarJuegosPorGenero(result,selectedGenre,this.generos,this.juegosGeneros);
+   }
+  private sortByName(games: Juego[], sortType: string): Juego[] {
+    
     const sorted = [...games];
 
     switch (sortType) {
@@ -393,26 +445,9 @@ export class CatalogoJuegosComponent implements OnInit {
       case 'name-desc':
         return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
 
-      case 'date-desc':
-        return sorted.sort((a, b) => {
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateB - dateA; // Más reciente primero
-        });
-
-      case 'date-asc':
-        return sorted.sort((a, b) => {
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateA - dateB; // Más antiguo primero
-        });
-
       default:
         return sorted;
     }
-    */
-   //TODO: ESTO VUELA, ES PARA QUE COMPILE
-   return [];
   }
 
   // ========================================
