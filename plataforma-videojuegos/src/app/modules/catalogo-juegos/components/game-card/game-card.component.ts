@@ -6,7 +6,7 @@ import { Juego } from '@interfaces/juego.interface';
 import { environment } from '@evironment/environment';
 
 /**
- * Componente presentacional para mostrar una tarjeta individual de juego en la biblioteca
+ * Componente presentacional para mostrar una tarjeta individual de juego
  * Es completamente "tonto" - solo recibe datos y emite eventos
  */
 @Component({
@@ -21,6 +21,16 @@ export class GameCardComponent {
    * Datos del juego a mostrar
    */
   @Input() juego!: Juego;
+
+  /**
+   * Indica si el juego está en la biblioteca del usuario
+   */
+  @Input() isInBiblio: boolean = false;
+
+  /**
+   * Indica si el juego está marcado como favorito
+   */
+  @Input() isFavorite: boolean = false;
 
   /**
    * URL de imagen placeholder si no hay imagen
@@ -38,6 +48,16 @@ export class GameCardComponent {
   @Output() onClick = new EventEmitter<void>();
 
   /**
+   * Evento emitido cuando se agrega a la biblioteca
+   */
+  @Output() onAddToBiblio = new EventEmitter<void>();
+
+  /**
+   * Evento emitido cuando se marca/desmarca como favorito
+   */
+  @Output() onToggleFavorite = new EventEmitter<void>();
+
+  /**
    * Maneja el click en la card completa
    */
   handleCardClick(event: Event): void {
@@ -46,6 +66,61 @@ export class GameCardComponent {
     if (!target.closest('button')) {
       this.onClick.emit();
     }
+  }
+
+  /**
+   * Maneja el click en el botón de agregar a biblioteca
+   */
+  handleAddToBiblio(event: Event): void {
+    event.stopPropagation();
+    this.onAddToBiblio.emit();
+  }
+
+  /**
+   * Maneja el click en el botón de favoritos
+   */
+  handleToggleFavorite(event: Event): void {
+    event.stopPropagation();
+    this.onToggleFavorite.emit();
+  }
+
+  /**
+   * Obtiene el icono correspondiente a una plataforma
+   */
+  getPlatformIcon(platformName: string): string {
+    const platformIcons: { [key: string]: string } = {
+      'PC': 'pi pi-desktop',
+      'PlayStation': 'pi pi-circle',
+      'Xbox': 'pi pi-times',
+      'Nintendo': 'pi pi-star',
+      'iOS': 'pi pi-mobile',
+      'Android': 'pi pi-android',
+      'Linux': 'pi pi-code',
+      'macOS': 'pi pi-apple'
+    };
+
+    // Buscar coincidencia parcial
+    for (const [key, icon] of Object.entries(platformIcons)) {
+      if (platformName.toLowerCase().includes(key.toLowerCase())) {
+        return icon;
+      }
+    }
+
+    return 'pi pi-desktop'; // Icono por defecto
+  }
+
+  /**
+   * Obtiene la fecha formateada del lanzamiento
+   */
+  getFormattedDate(): string {
+    if (!this.juego.released) return 'Sin fecha';
+
+    const date = new Date(this.juego.released);
+    return date.toLocaleDateString('es-AR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
   }
 
   /**
@@ -61,7 +136,7 @@ export class GameCardComponent {
    */
   onImageError(event: Event): void {
     this.imageError = true;
-    console.warn(`⚠️ Error cargando imagen para ${this.juego.nombre}`);
+    console.warn(`Error cargando imagen para ${this.juego.nombre}`);
   }
 
   /**
