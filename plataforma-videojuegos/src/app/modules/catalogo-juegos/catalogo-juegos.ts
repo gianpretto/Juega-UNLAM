@@ -9,15 +9,13 @@ import { BibliotecaService } from "@servicios/biblioteca.service";
 import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
 import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
+// INTERFACES
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { Genero } from "@interfaces/genero.interface";
 import { GeneroService } from "@servicios/genero/genero.service";
 import { PlataformaService } from "@servicios/plataforma/plataforma.service";
 import { Plataforma } from "@interfaces/plataforma.interface";
-import { JuegoPlataforma } from "@interfaces/juego-plataforma.interface";
-import { JuegoGenero } from "@interfaces/juego-genero.interface";
-import { JuegoPlataformaService } from "@general/servicios/juego-plataforma/juego-plataforma.service";
-import { JuegoGeneroService } from "@general/servicios/juego-genero/juego-genero.service";
+import { JuegoPlataformaGenero } from "@general/interfaces/juego-plafatorma-genero.interface";
 
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
@@ -54,17 +52,15 @@ export class CatalogoJuegosComponent implements OnInit {
   
 
   /** Lista completa de juegos obtenidos de RAWG */
-  juegos: Juego[] = [];
+  juegos: JuegoPlataformaGenero[] = [];
 
   /** Lista filtrada que se muestra en el grid */
-  filteredJuegos: Juego[] = [];
+  filteredJuegos: JuegoPlataformaGenero[] = [];
 
   selectedOptions: FilterOption[] = [];
 
   generos:Genero[] =[];
   plataformas:Plataforma[] =[];
-  juegosPlataformas:JuegoPlataforma[] = [];
-  juegosGeneros:JuegoGenero[] =[];
 
   /** Estado de carga */
   loading: boolean = true;
@@ -99,9 +95,7 @@ export class CatalogoJuegosComponent implements OnInit {
   /** Opciones para el dropdown de ordenamiento */
   sortOptions: { label: string; value: string }[] = [
     { label: 'Nombre A-Z', value: 'name-asc' },
-    { label: 'Nombre Z-A', value: 'name-desc' },
-    { label: 'Más recientes', value: 'date-desc' },
-    { label: 'Más antiguos', value: 'date-asc' }
+    { label: 'Nombre Z-A', value: 'name-desc' }
   ];
 
   /** Opciones para el dropdown de géneros (se llena dinámicamente) */
@@ -127,8 +121,6 @@ export class CatalogoJuegosComponent implements OnInit {
   private bibliotecaService = inject(BibliotecaService);
   private generoService = inject(GeneroService);
   private plataformaService = inject(PlataformaService);
-  private juegoPlataformaService = inject(JuegoPlataformaService);
-  private juegoGeneroService = inject(JuegoGeneroService);
 
   // ========================================
   // LIFECYCLE HOOKS
@@ -138,8 +130,6 @@ export class CatalogoJuegosComponent implements OnInit {
     console.log("🎮 Catálogo de Juegos inicializado");
     this.cargarPlataformas();
     this.cargarGeneros();
-    this.cargarJuegosPlataformas();
-    this.cargarJuegosGeneros();
 	  this.cargarJuegos();
     this.selectedOptions = this.juegoService.getSessionFilteredGames();
 	const hasActiveFilters = this.selectedOptions.some(opt => opt.value !== '');
@@ -157,9 +147,6 @@ export class CatalogoJuegosComponent implements OnInit {
   // MÉTODOS PÚBLICOS - CARGA DE DATOS
   // ========================================
 
-  /**
-   * Carga los juegos desde el servicio RAWG
-   */
   cargarJuegos(): void {
     this.loading = true;
     this.errorMessage = '';
@@ -182,35 +169,8 @@ export class CatalogoJuegosComponent implements OnInit {
     });
   }
 
-  cargarJuegosPlataformas(){
-    this.juegoPlataformaService.obtenerJuegosPlataformas().subscribe({
-      next : (data) => {
-        this.juegosGeneros = data;
-      },
-      error : (data) => {
-        console.log("ERROR AL CARGAR LOS JUEGOS-PLATAFORMAS")
-      }
-    })
-  }
-  cargarJuegosGeneros(){
-    this.juegoGeneroService.obtenerJuegosGeneros().subscribe({
-      next : (data) => {
-        this.juegosPlataformas = data;
-      },
-      error : (data) => {
-        console.log("ERROR AL CARGAR LOS JUEGOS-GENEROS")
-      }
-    })
-  }
 
-  /**
-   * Extrae las opciones únicas de géneros y plataformas
-   * de los juegos cargados para poblar los filtros
-   * TODO: ACA HAY QUE CAMBIARLO
-   */
   private extractFilterOptions(): void {
-    // Extraer géneros únicos
-    
     
     const genresSet = new Set<string>();
     this.generos.forEach(g => {
@@ -224,7 +184,6 @@ export class CatalogoJuegosComponent implements OnInit {
       value: genre
     }));
 
-    // Extraer plataformas únicas
     const platformsSet = new Set<string>();
     this.plataformas.forEach(g=> {
       if(g.nombre){
@@ -251,6 +210,9 @@ export class CatalogoJuegosComponent implements OnInit {
       },
       error : (data) => {
         console.log("ERRO AL TRAER LAS PLATAFORMAS")
+      },
+      complete : () =>{
+        console.log("PLATAFORMAS TRAIDAS")
       }
     })
   }
@@ -261,6 +223,9 @@ export class CatalogoJuegosComponent implements OnInit {
       },
       error : (data) => {
         console.log("ERROR AL TRAER LOS GENEROS")
+      },
+      complete : () =>{
+        console.log("GENEROS TRAIDOS")
       }
     })
   }
@@ -387,9 +352,6 @@ export class CatalogoJuegosComponent implements OnInit {
   /**
    * Aplica todos los filtros activos a la lista de juegos
    */
-  /*
-  TODO: ACA HAY QUE CAMBIAR, deja los metodos de saveInSession como estan
-  */
   private applyFilters(): void {
     
     let result = [...this.juegos];
@@ -407,17 +369,22 @@ export class CatalogoJuegosComponent implements OnInit {
     
     // 2. Filtrar por género
     if (this.selectedGenre) {
+      console.log("NOMBRE DE GENERO SELECCIONADO:",this.selectedGenre);
 		this.juegoService.saveGenreInSession(this.selectedGenre);
-      result = this.sortByGenre(result,this.selectedGenre);
+      result = result.filter(juego => Array.isArray(juego.genero) &&
+        juego?.genero.some(g => g.nombre?.toLocaleLowerCase() == this.selectedGenre.toLocaleLowerCase())
+      );
     }
     
-    /*
+    
     // 3. Filtrar por plataforma
     if (this.selectedPlatform) {
+            console.log("NOMBRE DE PLATAFORMA SELECCIONADA:",this.selectedPlatform);
 		this.juegoService.savePlatformInSession(this.selectedPlatform);
-      result = this.sortByPlatform(result,this.selectedPlatform);
+      result = result.filter(juego => Array.isArray(juego.plataforma) &&
+        juego.plataforma.some(p => p.nombre?.toLocaleLowerCase() == this.selectedPlatform.toLocaleLowerCase()));
     }
-    */
+    
 
     // 4. Aplicar ordenamiento
     if (this.selectedSort) {
@@ -431,10 +398,7 @@ export class CatalogoJuegosComponent implements OnInit {
     
   }
 
-   sortByGenre(result:Juego[],selectedGenre:string):Juego[]{
-      return this.juegoGeneroService.filtrarJuegosPorGenero(result,selectedGenre,this.generos,this.juegosGeneros);
-   }
-  private sortByName(games: Juego[], sortType: string): Juego[] {
+  private sortByName(games: JuegoPlataformaGenero[], sortType: string): JuegoPlataformaGenero[] {
     
     const sorted = [...games];
 

@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@evironment/environment';
 import { JuegoMapper } from '@mapper/juego.mapper';
 import { FilterOption } from "@interfaces/filter-options.interface";
+import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class JuegoService {
 
   private httpClient = inject(HttpClient);
 
-  getJuegos(): Observable<Juego[]>{
-    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/juego/`)
+  getJuegos(): Observable<JuegoPlataformaGenero[]>{
+    return this.httpClient.get<JuegoPlataformaGenero[]>(`${environment.BACKEND_URL}/juego/`)
   }
 
   
