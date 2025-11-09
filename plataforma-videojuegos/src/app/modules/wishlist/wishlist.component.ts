@@ -52,9 +52,7 @@ export class WishlistComponent {
 
   products(): Product[] {
     return [
-      { name: 'Katana Zero', category: 'Indie', image: 'katana.jpg', price: 20, rating: 4.5, inventoryStatus: 'INSTOCK' },
-      { name: 'Dark Souls Remastered', category: 'RPG', image: 'DarkSouls.jpg', price: 60, rating: 5, inventoryStatus: 'LOWSTOCK' },
-      { name: 'Final Fantasy IX', category: 'RPG', image: 'finalFantasy.jpg', price: 5, rating: 5, inventoryStatus: 'OUTOFSTOCK' }
+      
     ];
   }
 }

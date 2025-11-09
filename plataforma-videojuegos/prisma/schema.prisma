@@ -243,3 +243,6 @@ model UsuarioJuego {
   @@index([fkIdUsuario], map: "idx_usuario_juego_usuario")
   @@index([fkIdJuego], map: "idx_usuario_juego_juego")
 }
+
+
+

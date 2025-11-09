@@ -1,47 +1,76 @@
-<div class="wishlist-container">
+<div class="catalogo-container wishlist-container">
+  <!-- Header de la Wishlist -->
+  <div class="catalogo-header">
+    <div class="title-container">
+      <h1 class="catalogo-title">
+        <i class="pi pi-heart"></i>
+        Tu Lista de Deseados
+      </h1>
+      <p class="catalogo-subtitle">Todos los juegos que agregaste a tu lista de deseos</p>
+    </div>
 
-    
-<h1 >Tu lista de deseados</h1>
+    <div class="header-stats" *ngIf="products().length > 0">
+      <span class="stat-badge">
+        <i class="pi pi-star"></i>
+        {{ products().length }} Juegos en tu lista
+      </span>
+    </div>
+  </div>
 
-<p-dataview #dv [value]="products()" layout="list">
-  <ng-template #list let-items>
-    <div class="flex flex-col gap-4 p-4">
-      <div *ngFor="let item of items" class="product-card">
+  <!-- Listado de juegos en wishlist -->
+  <p-dataview #dv [value]="products()" layout="list" class="wishlist-view">
+    <ng-template #list let-items>
+      <div class="flex flex-col gap-4 p-4">
+        <div *ngFor="let item of items" class="wishlist-card flex align-items-center gap-4 p-3 border-round">
+          <!-- Imagen -->
+          <div class="wishlist-img">
+            <img [src]="getImageUrl(item.image)" [alt]="item.name" />
+          </div>
 
-        <!-- Imagen a la izquierda -->
-        <div class="product-img">
-          <img
-            [src]="getImageUrl(item.image)"
-            [alt]="item.name"
-          />
-        </div>
+          <!-- Información -->
+          <div class="wishlist-info flex flex-column justify-content-between">
+            <div>
+              <h3 class="wishlist-name">{{ item.name }}</h3>
+              <p class="wishlist-category">{{ item.category }}</p>
+            </div>
 
-        <!-- Información a la derecha -->
-        <div class="product-info">
-          <div class="product-category">{{ item.category }}</div>
-          <div class="product-name">{{ item.name }}</div>
+            <div class="wishlist-details flex align-items-center gap-3">
+              <span class="wishlist-price">\${{ item.price }}</span>
+              <span class="wishlist-rating">
+                <i class="pi pi-star-fill text-yellow-400 mr-1"></i>
+                {{ item.rating }}
+              </span>
+            </div>
 
-          <div class="product-details">
-            <div class="product-price">{{ '$' + item.price }}</div>
-            <div class="product-rating">
-              <span>{{ item.rating }}</span>
-              <i class="pi pi-star-fill"></i>
+            <div class="wishlist-actions flex gap-2 mt-2">
+              <p-button
+                icon="pi pi-trash"
+                label="Eliminar"
+                class="p-button-danger p-button-sm"
+              ></p-button>
+              <p-button
+                icon="pi pi-shopping-cart"
+                label="Comprar"
+                class="p-button-success p-button-sm"
+              ></p-button>
             </div>
           </div>
-
-          <div class="product-buttons">
-            <p-button icon="pi pi-heart" [outlined]="true" size="small"></p-button>
-            <p-button
-              icon="pi pi-shopping-cart"
-              label="Buy"
-              [disabled]="item.inventoryStatus === 'OUTOFSTOCK'"
-              size="small"
-            ></p-button>
-          </div>
         </div>
-
       </div>
-    </div>
-  </ng-template>
-</p-dataview>
+    </ng-template>
+  </p-dataview>
+
+  <!-- Mensaje vacío -->
+  <div *ngIf="!products().length" class="empty-state text-center mt-5">
+    <i class="pi pi-heart text-5xl text-gray-500 mb-3"></i>
+    <h3>No tienes juegos en tu lista de deseos</h3>
+    <p>Agrega juegos desde el catálogo para verlos aquí.</p>
+    <button
+      pButton
+      label="Volver al Catálogo"
+      icon="pi pi-arrow-left"
+      class="p-button-outlined p-button-lg mt-3"
+      routerLink="/catalogo"
+    ></button>
+  </div>
 </div>

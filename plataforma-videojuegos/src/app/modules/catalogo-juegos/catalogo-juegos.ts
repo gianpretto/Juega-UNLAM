@@ -11,6 +11,8 @@ import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-f
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 import { FilterOption } from "@interfaces/filter-options.interface";
 
+import { Router } from "@angular/router"
+
 /**
  * SMART COMPONENT - Catálogo de Juegos RAWG
  *
@@ -39,6 +41,9 @@ import { FilterOption } from "@interfaces/filter-options.interface";
   styleUrls: ['./catalogo-juegos.css']
 })
 export class CatalogoJuegosComponent implements OnInit {
+
+
+  router = inject(Router);
 
   // ========================================
   // PROPIEDADES DE ESTADO
@@ -209,6 +214,11 @@ export class CatalogoJuegosComponent implements OnInit {
     this.searchTerm = searchTerm;
     this.applyFilters();
   }
+
+  navigateToWishlist(): void {
+  this.router.navigate(['/wishlist']);
+  }
+
 
   /**
    * Maneja cambios en los filtros del componente hijo

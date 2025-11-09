@@ -15,6 +15,16 @@
                 {{ juegos.length }} Juegos Disponibles
             </span>
         </div>
+   <button
+        pButton
+        pRipple
+        label="Mi Lista de Deseos"
+        icon="pi pi-heart"
+        class="p-button-rounded p-button-lg p-button-outlined wishlist-btn"
+        style="background: linear-gradient(135deg, #a855f7, #6366f1); border: none; color: white;"
+        (click)="navigateToWishlist()"
+      ></button>
+
     </div>
 
     <!-- Componente de búsqueda -->

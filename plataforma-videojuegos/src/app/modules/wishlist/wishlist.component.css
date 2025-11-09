@@ -1,77 +1,66 @@
-.product-card {
-  display: flex;
-  gap: 16px;
-  padding: 12px;
-  border-radius: 8px;
-  background-color: #1b1b1b; /* gris oscuro tipo Steam */
-  color: #fff;
-  transition: transform 0.2s, box-shadow 0.2s;
-  align-items: center;
+/* --- WISHLIST --- */
+.wishlist-view {
+  width: 100%;
 }
 
-.product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+.wishlist-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-.product-img img {
-  width: 180px;
-  height: 100px;
+.wishlist-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.25);
+}
+
+.wishlist-img img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
   object-fit: cover;
-  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
-.product-info {
-  display: flex;
-  flex-direction: column;
+.wishlist-info {
+  color: #fff;
   flex: 1;
-  justify-content: space-between;
 }
 
-.product-category {
-  font-size: 0.85rem;
-  color: #aaa;
-}
-
-.product-name {
-  font-size: 1.2rem;
+.wishlist-name {
+  font-size: 1.3rem;
   font-weight: 600;
-  margin: 4px 0;
+  color: #fff;
+  margin-bottom: 0.3rem;
 }
 
-.product-details {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.wishlist-category {
+  color: #b0b0b0;
+  font-size: 0.95rem;
 }
 
-.product-price {
-  font-size: 1rem;
+.wishlist-details {
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+.wishlist-price {
   font-weight: bold;
-  color: #f5c518;
+  color: #4a90e2;
 }
 
-.product-rating {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #f5c518;
+.empty-state {
+  color: #b0b0b0;
+  animation: fadeIn 0.6s ease;
 }
 
-.product-buttons {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-.wishlist-container {
-  background-color: #121212;
-  padding: 16px;
-  min-height: 100vh; 
-}
-
-
-h1 {
-  color: #ffffff;
-  text-align: center;
-  margin-bottom: 24px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
