@@ -5,6 +5,8 @@ import {Imagen } from '@interfaces/image.interface';
 import { JuegoService } from '@servicios/juego.service';
 
 
+
+
 @Component({
   selector: 'app-detalle-juego-component',
   standalone: true,

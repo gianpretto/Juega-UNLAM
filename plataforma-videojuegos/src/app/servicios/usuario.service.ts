@@ -39,6 +39,20 @@ loginUsuario(email: string, password: string): Observable<Usuario> {
   return this.http.post<Usuario>(`${environment.BACKEND_URL}/usuarios/login`, { email, password });
 }
 
+guardarUsuarioEnSesion(id:number){
+  sessionStorage.setItem("idUsuario",id.toString())
+}
+
+obtenerUsuarioDeSesion(): number | null {
+  if (typeof window === 'undefined') {
+    // 🚫 Estamos en el servidor (SSR), no hay sessionStorage
+    return null;
+  }
+
+  const id = sessionStorage.getItem('idUsuario');
+  return id ? parseInt(id, 10) : null;
+}
 
 }
+
 export type { Usuario };

@@ -20,7 +20,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'catalogo',
+        redirectTo: 'iniciar-sesion',
         pathMatch: 'full'
     },
     {

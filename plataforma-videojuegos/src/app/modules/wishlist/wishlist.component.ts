@@ -1,17 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataViewModule } from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-
-interface Product {
-  name: string;
-  category: string;
-  image: string;
-  price: number;
-  rating: number;
-  inventoryStatus: 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
-}
+import { WishlistService } from '@servicios/wishlist.service';
+import { UsuarioService } from '@servicios/usuario.service';
+import { Juego } from '../../models/juego.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -20,41 +15,78 @@ interface Product {
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css']
 })
-export class WishlistComponent {
-  
-  layout: 'list' | 'grid' = 'list';
+export class WishlistComponent implements OnInit {
+  private wishlistService = inject(WishlistService);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
-  sortOptions = [
-    { label: 'Name Asc', value: 'name' },
-    { label: 'Name Desc', value: '!name' },
-    { label: 'Price Asc', value: 'price' },
-    { label: 'Price Desc', value: '!price' }
-  ];
+  juegos: Juego[] = [];
+  loading = true;
 
-  sortField: string = 'name';
-  sortOrder: number = 1;
 
-  onSortChange(event: any) {
-    const value = event.value;
-    if (value.startsWith('!')) {
-      this.sortOrder = -1;
-      this.sortField = value.substring(1);
-    } else {
-      this.sortOrder = 1;
-      this.sortField = value;
+  ngOnInit() {
+    if (typeof window === 'undefined') {
+      this.loading = false;
+      return;
     }
+
+  const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+
+if (usuarioId != null) {
+  this.cargarWishlist(usuarioId);
+} else {
+  this.loading = false;
+}
   }
+private cargarWishlist(usuarioId: number) {
+  this.wishlistService.getWishlistsByUserId(usuarioId).subscribe({
+    next: (data) => {
+      console.log('Datos wishlist:', data);
 
+      this.juegos = (data || [])
+        .map((w: any) => {
+          const juego = w.juego ?? w;
+          return {
+            ...juego,
+            imagenes: juego.imagenes?.map((img: any) => img.url) || []
+          };
+        })
+        .filter((j: any): j is Juego => !!j && !!j.nombre);
 
-  getImageUrl(image: string) {
-  return 'assets/images/' + image;
+      console.log('Juegos cargados:', this.juegos);
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error al obtener wishlist:', error);
+      this.loading = false;
+    },
+  });
 }
 
-  products(): Product[] {
-    return [
-      { name: 'Katana Zero', category: 'Indie', image: 'katana.jpg', price: 20, rating: 4.5, inventoryStatus: 'INSTOCK' },
-      { name: 'Dark Souls Remastered', category: 'RPG', image: 'DarkSouls.jpg', price: 60, rating: 5, inventoryStatus: 'LOWSTOCK' },
-      { name: 'Final Fantasy IX', category: 'RPG', image: 'finalFantasy.jpg', price: 5, rating: 5, inventoryStatus: 'OUTOFSTOCK' }
-    ];
-  }
+  eliminarJuego(juegoId: number) {
+  const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+  if (!usuarioId) return;
+
+  this.wishlistService.borrarDeLaWishlist(juegoId).subscribe({
+    next: () => {
+      this.juegos = this.juegos.filter((j: Juego) => j.id !== juegoId);
+    },
+    error: (err) => console.error('❌ Error al eliminar de la wishlist:', err)
+  });
 }
+
+ getImageUrl(juego: Juego): string {
+  if (juego.imagenes && juego.imagenes.length > 0) {
+    return juego.imagenes[0];
+  }
+  return 'assets/images/default.jpg';
+}
+
+  navigateToCatalogo() {
+      this.router.navigate(['/catalogo']);
+  }
+
+}
+
+
+
