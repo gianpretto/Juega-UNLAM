@@ -10,7 +10,7 @@ import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-se
 import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 import { FilterOption } from "@interfaces/filter-options.interface";
-import { CarritoComponent } from "../carrito-component/carrito-component";
+import { CarritoComponent } from "@modules/carrito-component/carrito-component";
 import { Genero } from "@interfaces/genero.interface";
 import { Plataforma } from "@interfaces/plataforma.interface";
 import { GeneroService } from "@servicios/genero/genero.service";

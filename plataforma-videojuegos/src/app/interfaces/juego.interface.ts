@@ -4,6 +4,7 @@ export interface Juego {
     subtitulo?: string;      // Opcional - puede no venir del backend
     precio: number;
     descripcion: string;
+    imagenes: string;
     desarrolladorId?: number;
     mainImagenId?: number;
     released?: string;       // Opcional - puede no venir del backend

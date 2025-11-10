@@ -8,4 +8,5 @@ export interface JuegoRest{
     mainImagenId?: number;
     released: string;
     rating: number;
+    imagenes: string;
 }
