@@ -32,7 +32,7 @@ export class CarritoService {
 
   agregarJuego(juego: Juego) {
     // Verifica si ya existe en el carrito
-    const yaExiste = this.juegos.some(j => j === juego);
+    const yaExiste = this.juegos.some(j => j.id === juego.id); // ✅ comparar por id
 
     if (!yaExiste) {
       this.juegos.push(juego);
@@ -44,7 +44,7 @@ export class CarritoService {
   }
 
   eliminarJuego(juego: Juego) {
-    this.juegos = this.juegos.filter(j => j !== juego);
+    this.juegos = this.juegos.filter(j => j.id !== juego.id); // ✅ eliminar por id
     this.carritoSubject.next([...this.juegos]);
     this.guardarEnLocalStorage();
   }
