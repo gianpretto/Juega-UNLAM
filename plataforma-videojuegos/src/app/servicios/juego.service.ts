@@ -16,13 +16,13 @@ export class JuegoService {
   private httpClient = inject(HttpClient);
 
   getJuegos(): Observable<Juego[]>{
-    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/juegos/`)
+    return this.httpClient.get<Juego[]>(`${environment.BACKEND_URL}/juego/`)
   }
 
   
   getJuegoById(id: number):Observable<Juego> {
     
-    return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/juegos/${id}`)
+    return this.httpClient.get<Juego>(`${environment.BACKEND_URL}/juego/${id}`)
   }
 
 
