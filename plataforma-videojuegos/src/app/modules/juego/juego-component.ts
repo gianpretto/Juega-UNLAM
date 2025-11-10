@@ -6,10 +6,11 @@ import { ValoracionesComponent } from '@modules/juego/components/valoraciones-co
 import { JuegoService } from '@servicios/juego.service';
 import { ActivatedRoute } from '@angular/router';
 import { Juego } from '@interfaces/juego.interface';
+import { CarritoComponent } from '@modules/carrito-component/carrito-component';
 
 @Component({
   selector: 'app-juego-component',
-  imports: [CommonModule, DetalleJuegoComponent, OpcionesComponent,ValoracionesComponent],
+  imports: [CommonModule, DetalleJuegoComponent, OpcionesComponent,ValoracionesComponent, CarritoComponent],
   templateUrl: './juego-component.html',
   styleUrl: './juego-component.css'
 })

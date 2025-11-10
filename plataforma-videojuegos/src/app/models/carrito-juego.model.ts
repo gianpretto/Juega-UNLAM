@@ -1,4 +1,4 @@
-import { Juego } from "./juego.model";
+import { Juego } from "@interfaces/juego.interface";
 import { Carrito } from "./carrito.model";
 
 

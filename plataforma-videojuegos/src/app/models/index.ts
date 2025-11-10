@@ -3,7 +3,7 @@
  * Esto facilita las importaciones en otros archivos
  * Ejemplo: import { Juego, Desarrollador } from './models';
  */
-export * from './juego.model';
+export * from '@interfaces/juego.interface';
 export * from './desarrollador.model';
 export * from './genero.model';
 export * from './plataforma.model';

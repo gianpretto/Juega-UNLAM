@@ -1,7 +1,7 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { Juego } from '../../shared/models/juego.model';
-import { CarritoService } from '../../core/services/carrito.service';
+import { CarritoService } from '@servicios/carrito.service';
 import { CommonModule } from '@angular/common';
+import { Juego } from '@interfaces/juego.interface';
 
 @Component({
   selector: 'app-carrito-component',
