@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { CarritoService } from '@general/servicios/carrito.service';
 import { Router } from '@angular/router';
+import { UsuarioService } from '@general/servicios/usuario.service';
 
 @Component({
   selector: 'app-pedido-component',
@@ -14,15 +15,21 @@ import { Router } from '@angular/router';
 export class PedidoComponent implements OnInit {
   juegos: Juego[] = [];
   total = 0;
-  saldoUsuario = 15000; // 💵 Ejemplo de saldo, después podés traerlo del backend o usuario logueado
+  saldoUsuario: number = 0;
   mensaje = '';
   carritoService = inject(CarritoService);
   router = inject(Router);
+  usuarioService = inject(UsuarioService);
 
   ngOnInit() {
     this.carritoService.carrito$.subscribe(juegos => {
       this.juegos = juegos;
       this.total = this.carritoService.obtenerTotal();
+    });
+    // Traer saldo del usuario
+    this.usuarioService.getSaldoUsuario().subscribe({
+      next: (saldo) => this.saldoUsuario = saldo,
+      error: () => this.mensaje = 'No se pudo obtener el saldo del usuario.'
     });
   }
 
