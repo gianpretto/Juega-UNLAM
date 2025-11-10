@@ -343,45 +343,46 @@ export class CatalogoJuegosComponent implements OnInit {
   TODO: ACA HAY QUE CAMBIAR, deja los metodos de saveInSession como estan
   */
   private applyFilters(): void {
-    /*
-    let result = [...this.juegos];
+  /*
+  let result = [...this.juegos];
 
-    // 1. Aplicar búsqueda por texto
-    if (this.searchTerm.trim()) {
-      const term = this.searchTerm.toLowerCase();
+  // 1. Aplicar búsqueda por texto
+  if (this.searchTerm.trim()) {
+    const term = this.searchTerm.toLowerCase();
     this.juegoService.saveTermInSession(term);
-      result = result.filter(juego =>
-        juego.nombre ? juego.nombre.toLowerCase().includes(term) : false
-      );
-    }
-
-    // 2. Filtrar por género
-    if (this.selectedGenre) {
-		this.juegoService.saveGenreInSession(this.selectedGenre);
-      result = result.filter(juego =>
-        juego.genres?.some(g => g.name === this.selectedGenre)
-      );
-    }
-
-    // 3. Filtrar por plataforma
-    if (this.selectedPlatform) {
-		this.juegoService.savePlatformInSession(this.selectedPlatform);
-      result = result.filter(juego =>
-        juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
-      );
-    }
-
-    // 4. Aplicar ordenamiento
-    if (this.selectedSort) {
-		this.juegoService.saveSortInSession(this.selectedSort);
-      result = this.sortGames(result, this.selectedSort);
-    }
-
-    this.filteredJuegos = result;
-
-    console.log(`📋 Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
-    
+    result = result.filter(juego =>
+      juego.nombre ? juego.nombre.toLowerCase().includes(term) : false
+    );
   }
+
+  // 2. Filtrar por género
+  if (this.selectedGenre) {
+    this.juegoService.saveGenreInSession(this.selectedGenre);
+    result = result.filter(juego =>
+      juego.genres?.some(g => g.name === this.selectedGenre)
+    );
+  }
+
+  // 3. Filtrar por plataforma
+  if (this.selectedPlatform) {
+    this.juegoService.savePlatformInSession(this.selectedPlatform);
+    result = result.filter(juego =>
+      juego.parent_platforms?.some(p => p.platform.name === this.selectedPlatform)
+    );
+  }
+
+  // 4. Aplicar ordenamiento
+  if (this.selectedSort) {
+    this.juegoService.saveSortInSession(this.selectedSort);
+    result = this.sortGames(result, this.selectedSort);
+  }
+
+  this.filteredJuegos = result;
+
+  console.log(`📋 Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
+  */
+}
+
 
   /**
    * Ordena la lista de juegos según el criterio seleccionado
@@ -424,6 +425,7 @@ export class CatalogoJuegosComponent implements OnInit {
    //TODO: ESTO VUELA, ES PARA QUE COMPILE
    return [];
   }
+  
 
   // ========================================
   // MÉTODOS PÚBLICOS - UTILIDADES

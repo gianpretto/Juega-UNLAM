@@ -1,58 +1,64 @@
 <div class="catalogo-container">
-    <!-- Header del catálogo -->
-    <div class="catalogo-header">
-        <div class="title-container">
-            <h1 class="catalogo-title">
-                <i class="pi pi-gamepad"></i>
-                Catálogo de Juegos
-            </h1>
-            <p class="catalogo-subtitle">Descubre y explora tu próximo juego favorito</p>
-        </div>
+  <!-- HEADER -->
+  <div class="catalogo-header flex justify-content-between align-items-center">
+    <div class="title-container">
+      <h1 class="catalogo-title flex align-items-center gap-2">
+        <i class="pi pi-gamepad text-purple-400"></i>
+        Catálogo de Juegos
+      </h1>
+      <p class="catalogo-subtitle">
+        Descubre y explora tu próximo juego favorito
+      </p>
+    </div>
 
-        <div class="header-stats" *ngIf="juegos.length > 0">
-            <span class="stat-badge">
-                <i class="pi pi-trophy"></i>
-                {{ juegos.length }} Juegos Disponibles
-            </span>
-        </div>
-   <button
-        pButton
-        pRipple
-        label="Mi Lista de Deseos"
-        icon="pi pi-heart"
-        class="p-button-rounded p-button-lg p-button-outlined wishlist-btn"
-        style="background: linear-gradient(135deg, #a855f7, #6366f1); border: none; color: white;"
-        (click)="navigateToWishlist()"
-      ></button>
+    <div class="header-actions flex align-items-center gap-3">
+      <div *ngIf="juegos.length > 0" class="header-stats">
+        <span class="stat-badge">
+          <i class="pi pi-trophy"></i>
+          {{ juegos.length }} Juegos Disponibles
+        </span>
+      </div>
+
 
     </div>
 
-    <!-- Componente de búsqueda -->
-    <app-game-search
-        [placeholder]="'Buscar juegos por título...'"
-        [disabled]="loading"
-        (onSearch)="handleSearch($event)"
-    ></app-game-search>
+  </div>
+<button
+  (click)="navigateToWishlist()"
+  class="flex items-center gap-2 bg-gradient-to-r from-sky-400 to-cyan-500 text-white font-semibold px-5 py-2 rounded-full shadow-md hover:shadow-lg hover:brightness-110 transition-all duration-300"
+>
+  <i class="pi pi-heart text-white"></i>
+  <span>Mi Lista de Deseos</span>
+</button>
 
-    <!-- Componente de filtros -->
-    <app-game-filters
-        [filters]="filters"
-        [sortOptions]="sortOptions"
-        [genreOptions]="genreOptions"
-        [selectedOptions]="selectedOptions"
-        [platformOptions]="platformOptions"
-        [disabled]="loading"
-        (onFilterChange)="handleFilterChange($event)"
-        (onClearFilters)="clearFilters()"
-    ></app-game-filters>
 
-    <!-- Componente de grilla de juegos -->
-    <app-game-grid
-        [juegos]="filteredJuegos"
-        [loading]="loading"
-        [emptyMessage]="getEmptyMessage()"
-        (onGameClick)="handleGameClick($event)"
-        (onAddToBiblio)="handleAddToBiblio($event)"
-        (onToggleFavorite)="handleToggleFavorite($event)"
-    ></app-game-grid>
+ 
+  <!-- BUSCADOR -->
+  <app-game-search
+    [placeholder]="'Buscar juegos por título...'"
+    [disabled]="loading"
+    (onSearch)="handleSearch($event)"
+  ></app-game-search>
+
+  <!-- FILTROS -->
+  <app-game-filters
+    [filters]="filters"
+    [sortOptions]="sortOptions"
+    [genreOptions]="genreOptions"
+    [selectedOptions]="selectedOptions"
+    [platformOptions]="platformOptions"
+    [disabled]="loading"
+    (onFilterChange)="handleFilterChange($event)"
+    (onClearFilters)="clearFilters()"
+  ></app-game-filters>
+
+  <!-- GRILLA -->
+  <app-game-grid
+    [juegos]="filteredJuegos"
+    [loading]="loading"
+    [emptyMessage]="getEmptyMessage()"
+    (onGameClick)="handleGameClick($event)"
+    (onAddToBiblio)="handleAddToBiblio($event)"
+    (onToggleFavorite)="handleToggleFavorite($event)"
+  ></app-game-grid>
 </div>

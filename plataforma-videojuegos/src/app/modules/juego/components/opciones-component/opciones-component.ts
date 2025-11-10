@@ -6,26 +6,30 @@ import { WishlistService } from '@general/servicios/wishlist.service';
 
 @Component({
   selector: 'app-opciones-component',
+  standalone: true,
   imports: [ButtonModule,CurrencyPipe],
   templateUrl: './opciones-component.html',
   styleUrl: './opciones-component.css'
 })
 export class OpcionesComponent {
-
+  
+  @Input() juego!: Juego; 
+  
   constructor(private wishlistService: WishlistService) {}
 
   agregarAWishlist(juegoId: number) {
+    if (!juegoId) {
+      console.warn('⚠️ No se pudo agregar a la wishlist: juegoId indefinido');
+      return;
+    }
+
     this.wishlistService.añadirAWishlist(juegoId).subscribe({
       next: (data) => {
         console.log('Juego agregado a la wishlist:', data);
       },
       error: (error) => {
-        console.error('Error al agregar el juego a la wishlist:', error);
+        alert('El juego ya está en tu wishlist');
       }
     });
   }
-
-
-  @Input() juego!: Juego;
-
 }
