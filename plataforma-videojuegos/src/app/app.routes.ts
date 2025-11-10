@@ -7,6 +7,7 @@ import { IniciarSesionComponent } from '@modules/iniciar-sesion/iniciar-sesion.c
 import { UsuarioPerfilComponent } from '@modules/usuario-perfil/usuario-perfil.component';
 import { WishlistComponent } from '@modules/wishlist/wishlist.component';
 import { JuegoComponent } from '@modules/juego/juego-component';
+import { PedidoComponent } from './modules/pedido-component/pedido-component';
 
 export const routes: Routes = [
     {
@@ -45,6 +46,10 @@ export const routes: Routes = [
     {
       path: 'wishlist',
       component: WishlistComponent
+    },
+    {
+      path: 'pedido',
+      component: PedidoComponent
     },
     {
         path: '**',

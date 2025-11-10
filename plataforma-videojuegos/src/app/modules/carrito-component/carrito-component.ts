@@ -1,10 +1,12 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, inject, NgModule, OnInit } from '@angular/core';
 import { CarritoService } from '@servicios/carrito.service';
 import { CommonModule } from '@angular/common';
 import { Juego } from '@interfaces/juego.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrito-component',
+  standalone:true,
   imports: [CommonModule],
   templateUrl: './carrito-component.html',
   styleUrl: './carrito-component.css'
@@ -14,7 +16,8 @@ export class CarritoComponent implements OnInit {
   total: number = 0;
   mostrarCarrito = false;
 
-  constructor(private carritoService: CarritoService) { }
+  carritoService = inject(CarritoService);
+  router = inject(Router);
 
   ngOnInit() {
     this.carritoService.carrito$.subscribe(juegos => {
@@ -29,5 +32,9 @@ export class CarritoComponent implements OnInit {
 
   eliminar(juego: Juego) {
     this.carritoService.eliminarJuego(juego);
+  }
+
+  irAPedido() {
+    this.router.navigate(['/pedido']);
   }
 }
