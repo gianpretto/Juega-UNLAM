@@ -39,7 +39,8 @@ export class DetalleJuegoComponent implements OnInit {
     this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
       next : (data) => {
         console.log("LAS IMAGENES:",data)
-        this.imagenes = data.map((img: { url: string }) => img.url);
+        this.imagenes = data.map((img: { url: string, isMain: boolean }) => img.isMain === false ? img.url : null)
+        .filter(url => url !== null)
       },
       error : (data) => {
         console.log("ERROR AL TREAR LAS IMAGENES",data)
