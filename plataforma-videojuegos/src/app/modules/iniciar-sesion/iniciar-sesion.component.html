@@ -1,0 +1,22 @@
+<div class="inicio-container">
+  <h1>Iniciar Sesión</h1>
+
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="email">Correo Electrónico:</label><br>
+      <input id="email" type="email" pInputText [(ngModel)]="email" name="email" required />
+    </div>
+    <br>
+    <div>
+      <label for="contraseña">Contraseña:</label><br>
+      <input id="contraseña" type="password" pInputText [(ngModel)]="password" name="contraseña" required />
+    </div>
+    <br>
+
+    <div style="text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+      <button pButton type="submit" label="Iniciar Sesión"></button>
+      <!-- Botón para ir a registro -->
+      <button pButton type="button" label="Ir a Registro" (click)="irARegistro()"></button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+ 
+model Tipo_Usuario {
+  id          Int       @id @default(autoincrement())
+  descripcion String?
+  usuarios    Usuario[]
+}
+ 
+model Usuario {
+  id          Int      @id @default(autoincrement())
+  email          String        @unique
+  password       String
+  nombre         String?
+  apellido       String?
+  direccion      String?
+  saldo          Float         @default(0)
+  tipoUsuario    Tipo_Usuario? @relation(fields: [tipoUsuarioId], references: [id])
+  tipoUsuarioId  Int?           @default(1)
+ 
+  reviews        Review[]
+  usuario_juegos Usuario_Juego[]
+  wishlists      Wishlist[]
+  carritos       Carrito[]
+}
+ 
+model Review {
+  id          Int      @id @default(autoincrement())
+  descripcion String?  @db.Text
+  usuario     Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int?
+  juego       Juego?   @relation(fields: [juegoId], references: [id])
+  juegoId     Int?
+}
+ 
+model Usuario_Juego {
+  id        Int       @id @default(autoincrement())
+  detalle   String?
+  fecha     DateTime  @default(now())
+  usuario   Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+  juego     Juego?    @relation(fields: [juegoId], references: [id])
+  juegoId   Int? 
+}
+ 
+model Wishlist {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  juego     Juego    @relation(fields: [juegoId], references: [id])
+  juegoId   Int
+
+  @@unique([usuarioId, juegoId])
+}
+ 
+model Carrito {
+  id        Int       @id @default(autoincrement())
+  usuario   Usuario?  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+  juegos    Carrito_Juego[]
+}
+ 
+model Carrito_Juego {
+  id         Int       @id @default(autoincrement())
+  carrito    Carrito?  @relation(fields: [carritoId], references: [id])
+  carritoId  Int?
+  juego      Juego?    @relation(fields: [juegoId], references: [id])
+  juegoId    Int?
+}
+ 
+model Juego {
+  id              Int              @id @default(autoincrement())
+  nombre          String?
+  subtitulo       String?
+  precio          Float?
+  descripcion     String?
+  desarrollador   Desarrollador?   @relation(fields: [desarrolladorId], references: [id])
+  desarrolladorId Int?
+ 
+  juego_generos   Juego_Genero[]
+  reviews         Review[]
+  usuario_juegos  Usuario_Juego[]
+  wishlists       Wishlist[]
+  carritos        Carrito_Juego[]
+  plataformas     Juego_Plataforma[]
+  imagenes        Imagen[]
+ 
+  mainImagenId    Int?             @unique
+  mainImagen      Imagen?          @relation("MainImagen", fields: [mainImagenId], references: [id])
+}
+ 
+model Desarrollador {
+  id     Int     @id @default(autoincrement())
+  nombre String?
+  juegos Juego[]
+}
+ 
+model Genero {
+  id             Int     @id @default(autoincrement())
+  nombre         String?
+  juego_generos  Juego_Genero[]
+}
+ 
+model Juego_Genero {
+  id        Int      @id @default(autoincrement())
+  detalle   String?
+  juego     Juego?   @relation(fields: [juegoId], references: [id])
+  juegoId   Int?
+  genero    Genero?  @relation(fields: [generoId], references: [id])
+  generoId  Int?
+}
+ 
+model Juego_Plataforma {
+  id            Int          @id @default(autoincrement())
+  juego         Juego?       @relation(fields: [juegoId], references: [id])
+  juegoId       Int?
+  plataforma    Plataforma?  @relation(fields: [plataformaId], references: [id])
+  plataformaId  Int?
+}
+ 
+model Plataforma {
+  id      Int               @id @default(autoincrement())
+  nombre  String?
+  juegos  Juego_Plataforma[]
+}
+ 
+model Imagen {
+  id        Int      @id @default(autoincrement())
+  url       String?
+  alt       String?
+  orden     Int      @default(0)
+  isMain    Boolean  @default(false)
+ 
+  juego     Juego?   @relation(fields: [juegoId], references: [id])
+  juegoId   Int?
+ 
+  mainJuego Juego?   @relation("MainImagen")
+}

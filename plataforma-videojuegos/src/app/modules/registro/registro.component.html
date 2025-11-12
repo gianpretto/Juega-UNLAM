@@ -1,0 +1,41 @@
+
+<div class="registro-container">
+
+<h1>Registro de Usuario</h1>
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nombre">Nombre:</label><br>
+    <input id="nombre" type="text" pInputText [(ngModel)]="nombre" name="nombre" required />
+  </div>
+  <br>
+
+  <div>
+    <label for="apellido">Apellido:</label><br>
+    <input id="apellido" type="text" pInputText [(ngModel)]="apellido" name="apellido" required />
+  </div>
+  <br>
+
+  <div>
+    <label for="email">Correo Electrónico:</label><br>
+    <input id="email" type="email" pInputText [(ngModel)]="email" name="email" required />
+  </div>
+  <br>
+
+  <div>
+    <label for="direccion">Dirección:</label><br>
+    <input id="direccion" type="text" pInputText [(ngModel)]="direccion" name="direccion" required />
+  </div>
+  <br>
+
+  <div>
+    <label for="contraseña">Contraseña:</label><br>
+<input id="contraseña" type="password" pInputText [(ngModel)]="password" name="contraseña" required />
+  </div>
+  <br>
+
+  <div>
+    <button pButton type="submit" label="Registrarme"></button>
+  </div>
+</form>
+</div>

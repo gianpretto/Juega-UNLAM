@@ -1,0 +1,447 @@
+.game-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 2px solid #2c2c2c;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    border-color: #4a90e2;
+    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
+}
+
+/* Contenedor de imagen */
+.game-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-image {
+    transform: scale(1.1);
+}
+
+/* Overlay con botones de acción */
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+}
+
+.game-card:hover .game-overlay {
+    opacity: 1;
+}
+
+.overlay-actions {
+    display: flex;
+    gap: 0.75rem;
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover .overlay-actions {
+    transform: translateY(0);
+}
+
+/* Botones de acción */
+.action-button {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-button i {
+    font-size: 1.2rem;
+}
+
+.action-button:hover {
+    transform: scale(1.1);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
+
+/* Estados especiales de botones */
+.favorite-active {
+    background: linear-gradient(135deg, #ff4757 0%, #e84118 100%) !important;
+    animation: heartBeat 0.3s ease;
+}
+
+.in-biblio {
+    background: linear-gradient(135deg, #26de81 0%, #20bf6b 100%) !important;
+    cursor: not-allowed;
+}
+
+@keyframes heartBeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    75% {
+        transform: scale(1.15);
+    }
+}
+
+/* Badge de rating */
+.rating-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: #ffd700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.rating-badge i {
+    font-size: 0.9rem;
+}
+
+.rating-badge span {
+    font-size: 0.95rem;
+}
+
+/* Badge de precio */
+.price-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 700;
+    color: #26de81;
+    border: 1px solid rgba(38, 222, 129, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    font-size: 0.9rem;
+}
+
+.price-badge .free-badge {
+    color: #26de81;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Badge de juego adquirido */
+.owned-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(38, 222, 129, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(38, 222, 129, 0.4);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.owned-badge i {
+    font-size: 0.9rem;
+}
+
+/* Placeholder de imagen */
+.game-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    color: #666;
+    font-size: 3rem;
+    gap: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.game-placeholder p {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0;
+    font-weight: 500;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Información del juego */
+.game-info {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.game-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+    min-height: 2.8rem;
+}
+
+.game-release-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    margin: 0;
+}
+
+.game-release-date i {
+    color: #4a90e2;
+    font-size: 0.95rem;
+}
+
+/* Descripción del juego */
+.game-description {
+    font-size: 0.85rem;
+    color: #999;
+    margin: 0;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Géneros como texto */
+.game-genres-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #b0b0b0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.game-genres-text i {
+    color: #4a90e2;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* Plataformas */
+.game-platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.platform-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(74, 144, 226, 0.1);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    border-radius: 6px;
+    color: #4a90e2;
+    transition: all 0.2s ease;
+    cursor: help;
+}
+
+.platform-icon:hover {
+    background: rgba(74, 144, 226, 0.2);
+    border-color: #4a90e2;
+    transform: scale(1.1);
+}
+
+.platform-icon i {
+    font-size: 1rem;
+}
+
+/* Géneros como tags */
+.game-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.genre-tag {
+    display: inline-block;
+    padding: 0.3rem 0.75rem;
+    background: rgba(74, 144, 226, 0.15);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #4a90e2;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.genre-tag:hover {
+    background: rgba(74, 144, 226, 0.25);
+    border-color: #4a90e2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-image-container {
+        height: 180px;
+    }
+
+    .game-title {
+        font-size: 1rem;
+        min-height: 2.4rem;
+    }
+
+    .action-button {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .action-button i {
+        font-size: 1rem;
+    }
+
+    .rating-badge {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .rating-badge i {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-card {
+        border-radius: 10px;
+    }
+
+    .game-image-container {
+        height: 160px;
+    }
+
+    .game-info {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .game-title {
+        font-size: 0.95rem;
+        min-height: 2rem;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+    }
+
+    .game-release-date {
+        font-size: 0.85rem;
+    }
+
+    .game-genres-text {
+        font-size: 0.8rem;
+    }
+
+    .platform-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .platform-icon i {
+        font-size: 0.9rem;
+    }
+
+    .genre-tag {
+        padding: 0.25rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .overlay-actions {
+        gap: 0.5rem;
+    }
+
+    .action-button {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .action-button i {
+        font-size: 0.95rem;
+    }
+}
+
+/* Animación de carga de imagen */
+.game-image {
+    animation: imageLoad 0.5s ease-in-out;
+}
+
+@keyframes imageLoad {
+    from {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

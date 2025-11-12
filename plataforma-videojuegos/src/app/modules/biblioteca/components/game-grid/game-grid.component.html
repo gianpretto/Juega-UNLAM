@@ -1,0 +1,39 @@
+<div class="game-grid-container">
+    <!-- Header con contador de juegos -->
+    <div class="grid-header" *ngIf="hasJuegos() && !loading">
+        <div class="results-count">
+            <i class="pi pi-list"></i>
+            <span>{{ getJuegosCount() }} juego{{ getJuegosCount() !== 1 ? 's' : '' }} encontrado{{ getJuegosCount() !== 1 ? 's' : '' }}</span>
+        </div>
+    </div>
+
+    <!-- Estado de carga -->
+    <div class="loading-container" *ngIf="loading">
+        <div class="spinner-wrapper">
+            <i class="pi pi-spin pi-spinner loading-spinner"></i>
+            <p class="loading-text">Cargando juegos...</p>
+        </div>
+    </div>
+
+    <!-- Grilla de juegos -->
+    <div class="games-grid" *ngIf="hasJuegos() && !loading">
+        <app-game-card
+            *ngFor="let juego of juegos; trackBy: trackByJuegoId"
+            [juego]="juego"
+            (onClick)="handleGameClick(juego)"
+            (onAddToBiblio)="handleAddToBiblio(juego)"
+            (onToggleFavorite)="handleToggleFavorite(juego)"
+        ></app-game-card>
+    </div>
+
+    <!-- Estado vacío (sin resultados) -->
+    <div class="empty-state" *ngIf="!hasJuegos() && !loading">
+        <div class="empty-content">
+            <i class="pi pi-inbox empty-icon"></i>
+            <h3 class="empty-title">{{ emptyMessage }}</h3>
+            <p class="empty-description">
+                Intenta ajustar los filtros o realizar una búsqueda diferente
+            </p>
+        </div>
+    </div>
+</div>
