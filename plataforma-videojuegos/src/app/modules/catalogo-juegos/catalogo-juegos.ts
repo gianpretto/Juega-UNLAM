@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { Router } from "@angular/router";
 import { Juego } from "@interfaces/juego.interface";
 import { GameFilter } from "@interfaces/game-filter.interface";
 import { JuegoService } from "@servicios/juego.service";
@@ -9,16 +10,14 @@ import { BibliotecaService } from "@servicios/biblioteca.service";
 import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
 import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
+import { CarritoComponent } from "@modules/carrito-component/carrito-component";
 // INTERFACES
 import { FilterOption } from "@interfaces/filter-options.interface";
-import { CarritoComponent } from "@modules/carrito-component/carrito-component";
 import { Genero } from "@interfaces/genero.interface";
 import { GeneroService } from "@servicios/genero/genero.service";
 import { PlataformaService } from "@servicios/plataforma/plataforma.service";
 import { Plataforma } from "@interfaces/plataforma.interface";
 import { JuegoPlataformaGenero } from "@general/interfaces/juego-plafatorma-genero.interface";
-
-import { Router } from "@angular/router"
 
 
 @Component({
@@ -36,89 +35,51 @@ import { Router } from "@angular/router"
 })
 export class CatalogoJuegosComponent implements OnInit {
 
-
   router = inject(Router);
-
-  // ========================================
-  // PROPIEDADES DE ESTADO
-  // ========================================
-  
-
-  /** Lista completa de juegos obtenidos de RAWG */
   juegos: JuegoPlataformaGenero[] = [];
-
-  /** Lista filtrada que se muestra en el grid */
   filteredJuegos: JuegoPlataformaGenero[] = [];
-
   selectedOptions: FilterOption[] = [];
-
   generos:Genero[] =[];
   plataformas:Plataforma[] =[];
-
-  /** Estado de carga */
   loading: boolean = true;
-
-  /** Mensaje de error si algo falla */
   errorMessage: string = '';
-
-  /** Término de búsqueda actual */
   searchTerm: string = '';
-
-  // ========================================
-  // OPCIONES PARA FILTROS
-  // ========================================
-
-  /** Géneros únicos disponibles para filtrar */
   availableGenres: string[] = [];
-
-  /** Plataformas únicas disponibles para filtrar */
   availablePlatforms: string[] = [];
 
-  // ========================================
-  // FILTROS ACTIVOS
-  // ========================================
-
-  /** Filtros actuales en formato para componente hijo */
   filters: GameFilter = {
     sortBy: '',
     genero: '',
     plataforma: ''
   };
 
-  /** Opciones para el dropdown de ordenamiento */
+
   sortOptions: { label: string; value: string }[] = [
     { label: 'Nombre A-Z', value: 'name-asc' },
     { label: 'Nombre Z-A', value: 'name-desc' }
   ];
 
-  /** Opciones para el dropdown de géneros (se llena dinámicamente) */
+
   genreOptions: { label: string; value: string }[] = [];
 
-  /** Opciones para el dropdown de plataformas (se llena dinámicamente) */
+  
   platformOptions: { label: string; value: string }[] = [];
 
-  /** Género seleccionado (vacío = todos) */
+
   selectedGenre: string = '';
 
-  /** Plataforma seleccionada (vacía = todas) */
+
   selectedPlatform: string = '';
 
-  /** Ordenamiento seleccionado */
   selectedSort: string = '';
 
-  // ========================================
-  // SERVICIOS INYECTADOS
-  // ========================================
-
+ 
   private juegoService = inject(JuegoService);
   private bibliotecaService = inject(BibliotecaService);
   private generoService = inject(GeneroService);
   private plataformaService = inject(PlataformaService);
 
-  // ========================================
-  // LIFECYCLE HOOKS
-  // ========================================
-
+  
   ngOnInit(): void {
     console.log("🎮 Catálogo de Juegos inicializado");
     this.cargarPlataformas();
@@ -136,9 +97,6 @@ export class CatalogoJuegosComponent implements OnInit {
 	}
   }
 
-  // ========================================
-  // MÉTODOS PÚBLICOS - CARGA DE DATOS
-  // ========================================
 
   cargarJuegos(): void {
     this.loading = true;
@@ -223,14 +181,6 @@ export class CatalogoJuegosComponent implements OnInit {
     })
   }
 
-  // ========================================
-  // MÉTODOS PÚBLICOS - EVENT HANDLERS
-  // ========================================
-
-  /**
-   * Maneja el evento de búsqueda del componente hijo
-   * @param searchTerm - Término de búsqueda ingresado
-   */
   handleSearch(searchTerm: string): void {
     console.log('🔍 Búsqueda:', searchTerm);
     this.searchTerm = searchTerm;
@@ -301,8 +251,7 @@ export class CatalogoJuegosComponent implements OnInit {
    */
   handleGameClick(juego: Juego): void {
     console.log('👁️ Ver detalles de:', juego.nombre);
-    // TODO: Navegar a página de detalles
-    // this.router.navigate(['/juegos', juego.id]);
+    this.router.navigate(['/juego', juego.id]);
   }
 
   /**

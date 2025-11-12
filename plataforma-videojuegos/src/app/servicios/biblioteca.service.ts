@@ -4,6 +4,7 @@ import { Observable, catchError, throwError, of, delay, map } from 'rxjs';
 import { Juego } from '@interfaces/juego.interface';
 import { UsuarioJuego } from '@interfaces/usuario-juego.interface';
 import { environment } from '@evironment/environment';
+import { UsuarioService } from './usuario.service';
 
 /**
  * Servicio para manejar la biblioteca de juegos del usuario
@@ -21,6 +22,7 @@ import { environment } from '@evironment/environment';
 })
 export class BibliotecaService {
   private readonly http = inject(HttpClient);
+  private readonly usuarioService = inject(UsuarioService);
 
   private readonly baseApiUrl = `${environment.BACKEND_URL}/usuario-juego`;
 
@@ -28,15 +30,23 @@ export class BibliotecaService {
   private favoritosIds: Set<number> = new Set();
 
   /**
-   * Obtiene todos los juegos de la biblioteca del usuario especificado
-   * Llama al endpoint del backend que retorna usuario_juegos y extrae solo los juegos
-   * @param usuarioId - ID del usuario del cual obtener la biblioteca
+   * Obtiene todos los juegos de la biblioteca del usuario autenticado
+   * Si no se proporciona usuarioId, lo obtiene de la sesión
+   * @param usuarioId - ID del usuario (opcional, se obtiene de sesión si no se proporciona)
    */
-  obtenerJuegos(usuarioId: number = 7): Observable<Juego[]> {
-    const apiUrl = `${this.baseApiUrl}/usuario/${usuarioId}`;
+  obtenerJuegos(usuarioId?: number): Observable<Juego[]> {
+    // Obtener ID de sesión si no se proporciona
+    const id = usuarioId ?? this.usuarioService.obtenerUsuarioDeSesion();
+    
+    // Validar que hay un usuario autenticado
+    if (!id) {
+      return throwError(() => new Error('Debes iniciar sesión para ver tu biblioteca'));
+    }
+
+    const apiUrl = `${this.baseApiUrl}/usuario/${id}`;
     return this.http.get<UsuarioJuego[]>(apiUrl).pipe(
       map(usuarioJuegos => {
-        console.log(`📦 Usuario-Juegos recibidos para usuario ${usuarioId}:`, usuarioJuegos.length);
+        console.log(`📦 Usuario-Juegos recibidos para usuario ${id}:`, usuarioJuegos.length);
         // Extraer solo el objeto juego de cada relación usuario-juego
         return usuarioJuegos.map(uj => uj.juego);
       }),

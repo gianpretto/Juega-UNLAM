@@ -1,8 +1,10 @@
 import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { Router } from "@angular/router";
 import { Juego } from "@interfaces/juego.interface";
 import { GameFilter } from "@interfaces/game-filter.interface";
 import { BibliotecaService } from "@servicios/biblioteca.service";
+import { UsuarioService } from "@servicios/usuario.service";
 
 // Componentes hijos reutilizables
 import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
@@ -42,8 +44,8 @@ export class MiBibliotecaComponent implements OnInit {
   // PROPIEDADES DE ESTADO
   // ========================================
 
-  /** ID del usuario actual (hardcoded temporalmente) */
-  currentUserId: number = 1; // TODO: Obtener del servicio de autenticación
+  /** ID del usuario actual obtenido de la sesión */
+  currentUserId: number | null = null;
 
   /** Lista completa de juegos en la biblioteca */
   juegos: Juego[] = [];
@@ -88,6 +90,8 @@ export class MiBibliotecaComponent implements OnInit {
   // ========================================
 
   private bibliotecaService = inject(BibliotecaService);
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
   // ========================================
   // LIFECYCLE HOOKS
@@ -95,7 +99,24 @@ export class MiBibliotecaComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("📚 Mi Biblioteca inicializada");
-    this.cargarBiblioteca();
+    
+    // Obtener usuario de la sesión
+    this.currentUserId = this.usuarioService.obtenerUsuarioDeSesion();
+    
+    // Verificar si hay usuario autenticado
+    if (this.currentUserId) {
+      console.log(`👤 Usuario en sesión: ${this.currentUserId}`);
+      this.cargarBiblioteca();
+    } else {
+      console.warn('⚠️ No hay usuario autenticado');
+      this.errorMessage = 'Debes iniciar sesión para ver tu biblioteca';
+      this.loading = false;
+      
+      // Redirigir al login después de 2 segundos
+      setTimeout(() => {
+        this.router.navigate(['/iniciar-sesion']);
+      }, 2000);
+    }
   }
 
   // ========================================
@@ -109,7 +130,8 @@ export class MiBibliotecaComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    this.bibliotecaService.obtenerJuegos(this.currentUserId).subscribe({
+    // No necesita pasar el ID, el servicio lo obtiene de la sesión
+    this.bibliotecaService.obtenerJuegos().subscribe({
       next: (data) => {
         console.log('✅ Biblioteca cargada:', data.length, 'juegos');
         this.juegos = data;
@@ -121,7 +143,18 @@ export class MiBibliotecaComponent implements OnInit {
       },
       error: (error) => {
         console.error('❌ Error al cargar biblioteca:', error);
-        this.errorMessage = 'Error al cargar tu biblioteca. Por favor, intenta de nuevo.';
+        
+        // Mensaje más descriptivo según el error
+        if (error.message.includes('iniciar sesión')) {
+          this.errorMessage = error.message;
+          // Redirigir al login
+          setTimeout(() => {
+            this.router.navigate(['/iniciar-sesion']);
+          }, 2000);
+        } else {
+          this.errorMessage = 'Error al cargar tu biblioteca. Por favor, intenta de nuevo.';
+        }
+        
         this.loading = false;
       }
     });
