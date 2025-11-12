@@ -1,0 +1,8 @@
+/* juegoComponent.component.css */
+:host {
+    display: block;
+    background-color: #121212; /* Fondo oscuro */
+    color: white; /* Texto blanco para contraste */
+    font-family: 'Roboto', sans-serif; /* Tipografía moderna */
+    padding: 1.8rem;
+}

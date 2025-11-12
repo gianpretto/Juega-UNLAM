@@ -1,0 +1,99 @@
+<div class="filters-container">
+    <!-- Título de la sección -->
+    <div class="filters-header">
+        <h3 class="filters-title">
+            <i class="pi pi-filter"></i>
+            Filtros
+        </h3>
+
+        <!-- Botón de limpiar filtros -->
+        <button
+            *ngIf="hasActiveFilters()"
+            class="clear-filters-button"
+            type="button"
+            (click)="clearAllFilters()"
+            title="Limpiar todos los filtros"
+        >
+            <i class="pi pi-filter-slash"></i>
+            Limpiar
+        </button>
+    </div>
+
+    <!-- Contenedor de filtros -->
+    <div class="filters-grid">
+        <!-- Filtro de ordenamiento -->
+        <div class="filter-item">
+            <label class="filter-label" for="sortSelect">
+                <i class="pi pi-sort-alt"></i>
+                Ordenar por
+            </label>
+            <div class="select-wrapper">
+                <select
+                    id="sortSelect"
+                    class="filter-select"
+                    [(ngModel)]="filters.sortBy"
+                    (change)="onSortChange(filters.sortBy)"
+                    [disabled]="disabled"
+                >
+                    <option *ngIf="!filters.sortBy" value="">Selecciona ordenamiento</option>
+                    <option *ngFor="let option of sortOptions" [value]="option.value">
+                        {{ option.label }}
+                    </option>
+                </select>
+                <i class="pi pi-chevron-down select-icon"></i>
+            </div>
+        </div>
+
+        <!-- Filtro de género -->
+        <div class="filter-item">
+            <label class="filter-label" for="genreSelect">
+                <i class="pi pi-tags"></i>
+                Género
+            </label>
+            <div class="select-wrapper">
+                <select
+                    id="genreSelect"
+                    class="filter-select"
+                    [(ngModel)]="filters.genero"
+                    (change)="onGenreChange(filters.genero)"
+                    [disabled]="disabled"
+                >
+                    <option *ngIf="!filters.genero" value="">Todos los géneros</option>
+                    <option *ngFor="let option of genreOptions" [value]="option.value">
+                        {{ option.label }}
+                    </option>
+                </select>
+                <i class="pi pi-chevron-down select-icon"></i>
+            </div>
+        </div>
+
+        <!-- Filtro de plataforma -->
+        <div class="filter-item">
+            <label class="filter-label" for="platformSelect">
+                <i class="pi pi-desktop"></i>
+                Plataforma
+            </label>
+            <div class="select-wrapper">
+                <select
+                    id="platformSelect"
+                    class="filter-select"
+                    [(ngModel)]="filters.plataforma"
+                    (change)="onPlatformChange(filters.plataforma)"
+                    [disabled]="disabled"
+                >
+                    <option *ngIf="!filters.plataforma" value="">Todas las plataformas</option>
+                    <option *ngFor="let option of platformOptions" [value]="option.value">
+                        {{ option.label }}
+                    </option>
+                </select>
+                <i class="pi pi-chevron-down select-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indicador de filtros activos -->
+    <div *ngIf="hasActiveFilters()" class="active-filters-info">
+        <i class="pi pi-info-circle"></i>
+        <span>{{ getActiveFiltersCount() }} filtro(s) activo(s)</span>
+    </div>
+</div>

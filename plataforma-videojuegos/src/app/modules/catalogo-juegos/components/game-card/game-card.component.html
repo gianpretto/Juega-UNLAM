@@ -1,0 +1,68 @@
+<div class="game-card" (click)="handleCardClick($event)">
+
+    <div class="game-image-container">
+        <!-- Imagen del juego o placeholder -->
+        <img 
+            *ngIf="juego.mainImagenId" 
+            [src]="getImageUrl()" 
+            [alt]="juego.nombre"
+            class="game-image"
+            (error)="onImageError($event)"
+        />
+        <div *ngIf="!juego.mainImagenId || imageError" class="game-placeholder">
+            <i class="pi pi-image"></i>
+            <p>{{ juego.nombre }}</p>
+        </div>
+
+        <div class="game-overlay">
+            <div class="overlay-actions">
+
+                <button
+                    pButton
+                    type="button"
+                    class="p-button-rounded p-button-info action-button"
+                    pTooltip="Ver detalles"
+                    tooltipPosition="top"
+                    (click)="onClick.emit()"
+                >
+                    <i class="pi pi-eye"></i>
+                </button>
+
+
+               
+            </div>
+        </div>
+
+
+        <!-- Badge de rating solo si existe -->
+        <div class="rating-badge" *ngIf="juego.rating">
+            <i class="pi pi-star-fill"></i>
+            <span>{{ juego.rating }}</span>
+        </div>
+
+    
+    </div>
+
+
+    <div class="game-info">
+
+        <h3
+            class="game-title"
+            [pTooltip]="juego.nombre"
+            tooltipPosition="top"
+        >
+            {{ juego.nombre }}
+        </h3>
+
+        <!-- Descripción corta -->
+        <p class="game-description" *ngIf="juego.descripcion">
+            {{ getShortDescription() }}
+        </p>
+
+        <!-- Fecha de lanzamiento solo si existe -->
+        <p class="game-release-date" *ngIf="juego.released">
+            <i class="pi pi-calendar"></i>
+            {{ getFormattedDate() }}
+        </p>
+    </div>
+</div>

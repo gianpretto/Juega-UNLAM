@@ -1,0 +1,30 @@
+.registro-container {
+  max-width: 400px;      /* ancho del formulario */
+  margin: 50px auto;      /* centrado horizontal y con espacio arriba */
+  padding: 30px;
+  background-color: #ffffff; /* fondo blanco del formulario */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra sutil */
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+    background-color: #727f73;
+
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

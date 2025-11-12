@@ -1,0 +1,80 @@
+<div class="catalogo-container wishlist-container">
+  <!-- HEADER -->
+  <div class="catalogo-header">
+    <div class="title-container">
+      <h1 class="wishlist-title">
+        <i class="pi pi-heart text-pink-400"></i>
+        Tu Lista de Deseados
+      </h1>
+      <p class="catalogo-subtitle">Todos los juegos que agregaste a tu lista de deseos</p>
+          <div class="header-actions flex align-items-center gap-3">
+      <div *ngIf="juegos.length > 0" class="header-stats">
+        <span class="stat-badge">
+          <i class="pi pi-trophy"></i>
+          {{ juegos.length }} Juegos Deseados
+        </span>
+      </div>
+    </div>
+
+       
+
+
+
+    </div>
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="text-center mt-5">
+    <i class="pi pi-spin pi-spinner text-5xl text-gray-500"></i>
+    <p>Cargando tu wishlist...</p>
+  </div>
+
+  <p-dataview *ngIf="!loading && juegos.length > 0" [value]="juegos" layout="list" class="wishlist-view">
+    <ng-template #list let-items>
+      <div class="flex flex-col gap-4 p-4">
+        <div *ngFor="let item of items" class="wishlist-card flex align-items-center gap-4 p-3 border-round">
+          
+          <div class="wishlist-img">
+            <img [src]="getImageUrl(item)" [alt]="item.nombre" />
+          </div>
+
+          <div class="wishlist-info flex flex-column justify-content-between">
+            <div>
+              <h3 class="wishlist-name">{{ item.nombre }}</h3>
+              <p class="wishlist-subtitulo">{{ item.subtitulo }}</p>
+              <p class="wishlist-descripcion">{{ item.descripcion }}</p>
+            </div>
+
+            <div class="wishlist-details flex align-items-center gap-3 mt-2">
+              <span class="wishlist-price">💲{{ item.precio }}</span>
+            </div>
+
+           <div>
+              <p-button
+                icon="pi pi-trash"
+                label="Eliminar"
+D                (onClick)="eliminarJuego(item.id)"
+              ></p-button>
+            
+</div>
+
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataview>
+   <button
+      pButton
+      label="Volver al Catálogo"
+      icon="pi pi-arrow-left"
+      class="p-button-outlined p-button-lg mt-3"
+      (click)="navigateToCatalogo()"
+    ></button>
+
+  <!-- ESTADO VACÍO -->
+  <div *ngIf="!loading && juegos.length === 0" class="empty-state text-center mt-5">
+    <i class="pi pi-heart text-5xl text-gray-500 mb-3"></i>
+    <h3>No tienes juegos en tu lista de deseos</h3>
+    <p>Agrega juegos desde el catálogo para verlos aquí.</p>
+   
+  </div>
+</div>

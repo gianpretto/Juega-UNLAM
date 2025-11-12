@@ -1,0 +1,20 @@
+.modal-content {
+  border-radius: 15px;
+}
+
+.btn-success {
+  background-color: #2ecc71 !important;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #27ae60 !important;
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+}
+
+.badge {
+  font-size: 0.75rem;
+}
