@@ -4,6 +4,6 @@
         <span>{{juego.precio | currency:'USD':'code'}}</span>
         <button class="buy-btn btn btn-info btn-lg w-100 rounded">Comprar</button>
         <button class="cart-btn btn btn-lg w-100 rounded text-white" style="background-color: #4d4848;">Agregar al carrito</button>
-        <button class="wishlist-btn btn btn-lg w-100 rounded text-white" style="background-color: #4d4848;">A la lista de deseos</button>
+        <button  (click)="agregarAWishlist(juego.id)" class="wishlist-btn btn btn-lg w-100 rounded text-white" style="background-color: #4d4848;">A la lista de deseos</button>
     </div>
 </div>

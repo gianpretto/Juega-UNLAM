@@ -17,21 +17,9 @@ import { PlataformaService } from "@servicios/plataforma/plataforma.service";
 import { Plataforma } from "@interfaces/plataforma.interface";
 import { JuegoPlataformaGenero } from "@general/interfaces/juego-plafatorma-genero.interface";
 
-/**
- * SMART COMPONENT - Catálogo de Juegos RAWG
- *
- * RESPONSABILIDADES:
- * - Obtener datos del servicio RAWG
- * - Gestionar estado (loading, error)
- * - Aplicar lógica de filtros y búsqueda
- * - Coordinar componentes hijos
- * - Extraer opciones de filtros disponibles
- *
- * NO hace:
- * - Renderizar tarjetas directamente
- * - Manejar UI de filtros (por ahora sin componente de filtros)
- * - Estilos visuales complejos
- */
+import { Router } from "@angular/router"
+
+
 @Component({
   selector: 'app-catalogo-juegos',
   standalone: true,
@@ -45,6 +33,9 @@ import { JuegoPlataformaGenero } from "@general/interfaces/juego-plafatorma-gene
   styleUrls: ['./catalogo-juegos.css']
 })
 export class CatalogoJuegosComponent implements OnInit {
+
+
+  router = inject(Router);
 
   // ========================================
   // PROPIEDADES DE ESTADO
@@ -244,6 +235,11 @@ export class CatalogoJuegosComponent implements OnInit {
     this.applyFilters();
   }
 
+  navigateToWishlist(): void {
+  this.router.navigate(['/wishlist']);
+  }
+
+
   /**
    * Maneja cambios en los filtros del componente hijo
    * @param filters - Objeto con género, plataforma y ordenamiento
@@ -335,24 +331,8 @@ export class CatalogoJuegosComponent implements OnInit {
     alert(`"${juego.nombre}" favorito toggled (pendiente de implementar)`);
   }
 
-  /**
-   * Obtiene el mensaje apropiado cuando no hay resultados
-   */
-  getEmptyMessage(): string {
-    if (this.hasActiveFilters()) {
-      return 'No se encontraron juegos con los filtros aplicados';
-    }
-    return 'No se encontraron juegos';
-  }
-
-  // ========================================
-  // MÉTODOS PRIVADOS - LÓGICA DE FILTRADO
-  // ========================================
-
-  /**
-   * Aplica todos los filtros activos a la lista de juegos
-   */
   private applyFilters(): void {
+
     
     let result = [...this.juegos];
 
@@ -399,16 +379,15 @@ export class CatalogoJuegosComponent implements OnInit {
   }
 
   private sortByName(games: JuegoPlataformaGenero[], sortType: string): JuegoPlataformaGenero[] {
-    
     const sorted = [...games];
-
+    
     switch (sortType) {
       case 'name-asc':
         return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
+      
       case 'name-desc':
         return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
-
+      
       default:
         return sorted;
     }
@@ -445,5 +424,12 @@ export class CatalogoJuegosComponent implements OnInit {
   reloadCatalog(): void {
     this.clearFilters();
     this.cargarJuegos();
+  }
+
+  getEmptyMessage(): string {
+    if (this.hasActiveFilters()) {
+      return 'No se encontraron juegos con los filtros aplicados';
+    }
+    return 'No se encontraron juegos';
   }
 }

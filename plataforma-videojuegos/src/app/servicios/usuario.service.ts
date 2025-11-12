@@ -43,6 +43,16 @@ guardarUsuarioEnSesion(id:number){
   sessionStorage.setItem("idUsuario",id.toString())
 }
 
+obtenerUsuarioDeSesion(): number | null {
+  if (typeof window === 'undefined') {
+    // 🚫 Estamos en el servidor (SSR), no hay sessionStorage
+    return null;
+  }
+
+  const id = sessionStorage.getItem('idUsuario');
+  return id ? parseInt(id, 10) : null;
+}
 
 }
+
 export type { Usuario };

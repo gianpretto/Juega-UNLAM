@@ -70,9 +70,14 @@
     animation: pulse 2s ease-in-out infinite;
 }
 
+
 .stat-badge i {
     font-size: 1.2rem;
 }
+
+
+
+
 
 @keyframes pulse {
     0%, 100% {
