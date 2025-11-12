@@ -32,7 +32,7 @@ export class BibliotecaService {
    * Llama al endpoint del backend que retorna usuario_juegos y extrae solo los juegos
    * @param usuarioId - ID del usuario del cual obtener la biblioteca
    */
-  obtenerJuegos(usuarioId: number = 1): Observable<Juego[]> {
+  obtenerJuegos(usuarioId: number = 7): Observable<Juego[]> {
     const apiUrl = `${this.baseApiUrl}/usuario/${usuarioId}`;
     return this.http.get<UsuarioJuego[]>(apiUrl).pipe(
       map(usuarioJuegos => {

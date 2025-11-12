@@ -7,6 +7,7 @@ export interface JuegoPlataformaGenero{
     subtitulo?: string;
     precio: number;
     descripcion: string;
+    imagenes: string;
     desarrolladorId?: number;
     mainImagenId?: number;
     released?: string;
