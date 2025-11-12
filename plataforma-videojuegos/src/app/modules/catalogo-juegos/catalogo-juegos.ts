@@ -11,6 +11,7 @@ import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-f
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 // INTERFACES
 import { FilterOption } from "@interfaces/filter-options.interface";
+import { CarritoComponent } from "@modules/carrito-component/carrito-component";
 import { Genero } from "@interfaces/genero.interface";
 import { GeneroService } from "@servicios/genero/genero.service";
 import { PlataformaService } from "@servicios/plataforma/plataforma.service";
@@ -27,7 +28,8 @@ import { Router } from "@angular/router"
     CommonModule,
     GameSearchComponent,
     GameFiltersComponent,
-    GameGridComponent
+    GameGridComponent,
+    CarritoComponent
   ],
   templateUrl: './catalogo-juegos.html',
   styleUrls: ['./catalogo-juegos.css']

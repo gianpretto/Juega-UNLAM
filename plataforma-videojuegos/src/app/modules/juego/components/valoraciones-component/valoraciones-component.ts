@@ -7,8 +7,8 @@ import { JuegoService } from '@servicios/juego.service';
 @Component({
   selector: 'app-valoraciones-component',
   imports: [CardModule, ButtonModule],
-  templateUrl: './valoraciones-component.html',
-  styleUrl: './valoraciones-component.css'
+  templateUrl: 'valoraciones-component.html',
+  styleUrl: 'valoraciones-component.css'
 })
 export class ValoracionesComponent implements OnInit {
 

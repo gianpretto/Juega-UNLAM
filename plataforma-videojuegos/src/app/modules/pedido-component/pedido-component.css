@@ -1,0 +1,15 @@
+.container {
+  max-width: 700px;
+}
+
+.card {
+  border-radius: 1rem;
+}
+
+button.btn-success {
+  transition: transform 0.1s ease-in;
+}
+
+button.btn-success:hover {
+  transform: scale(1.05);
+}

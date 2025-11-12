@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { WishlistService } from '@servicios/wishlist.service';
 import { UsuarioService } from '@servicios/usuario.service';
-import { Juego } from '../../models/juego.model';
+import { Juego } from '@interfaces/juego.interface';
 import { Router } from '@angular/router';
 
 @Component({

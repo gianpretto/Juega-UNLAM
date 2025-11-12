@@ -1,5 +1,5 @@
 import { Usuario } from "./usuario.model";
-import { Juego } from "./juego.model";
+import { Juego } from "@interfaces/juego.interface";
 
 export class Review {
   id!: number;
