@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import { Usuario } from '@interfaces/usuario.interface';
 import { map, Observable, throwError } from 'rxjs';
 import { UsuarioMapper } from '../mapper/usuario.mapper';
 import { UsuarioRest } from '../rest/usuario.rest';
@@ -43,9 +43,14 @@ export class UsuarioService {
     sessionStorage.setItem("idUsuario", id.toString())
   }
 
+  actualizarImagenes(id: number, data: { perfilUrl?: string | null; fondoPerfilUrl?: string | null; }) {
+  return this.http.patch(`${environment.BACKEND_URL}/usuarios/${id}/imagenes`, data);
+}
+
+
+
   obtenerUsuarioDeSesion(): number | null {
     if (typeof window === 'undefined') {
-      // 🚫 Estamos en el servidor (SSR), no hay sessionStorage
       return null;
     }
 

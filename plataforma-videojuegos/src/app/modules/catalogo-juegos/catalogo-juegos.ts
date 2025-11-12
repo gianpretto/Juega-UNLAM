@@ -461,4 +461,9 @@ export class CatalogoJuegosComponent implements OnInit {
     this.clearFilters();
     this.cargarJuegos();
   }
+
+  navigateToProfile(): void {
+    this.router.navigate(['/usuario-perfil']);
+  }
+
 }

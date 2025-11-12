@@ -1,6 +1,7 @@
-/* --- WISHLIST --- */
 .wishlist-view {
   width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .wishlist-card {
@@ -9,11 +10,18 @@
   transition: all 0.3s ease;
   display: flex;
   align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .wishlist-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 18px rgba(74, 144, 226, 0.25);
+}
+
+.wishlist-img {
+  flex: 1 1 150px;
+  min-width: 120px;
 }
 
 .wishlist-img img {
@@ -26,11 +34,11 @@
 
 .wishlist-info {
   color: #fff;
-  flex: 1;
+  flex: 2 1 200px;
 }
 
 .wishlist-name {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #fff;
   margin-bottom: 0.3rem;
@@ -38,24 +46,24 @@
 
 .wishlist-subtitulo {
   color: #b0b0b0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .wishlist-descripcion {
   color: #ccc;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-top: 0.5rem;
 }
 
 .wishlist-details {
   color: #ddd;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .wishlist-price {
-     font-weight: bold;
-    color: #4a90e2;
-    font-size: x-large;
+  font-weight: bold;
+  color: #4a90e2;
+  font-size: 1.2rem;
 }
 
 .empty-state {
@@ -68,50 +76,101 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.wishlist-title{
-   font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 0.5rem 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.wishlist-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .wishlist-title i {
-   font-size: 2rem;
-    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  font-size: 1.7rem;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .header-stats {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .stat-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, rgba(53, 122, 189, 0.15) 100%);
-    border: 2px solid rgba(74, 144, 226, 0.3);
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #4a90e2;
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
-    animation: pulse 2s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, rgba(53, 122, 189, 0.15) 100%);
+  border: 2px solid rgba(74, 144, 226, 0.3);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a90e2;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+  animation: pulse 2s ease-in-out infinite;
 }
 
-
 .stat-badge i {
-    font-size: 1.2rem;
+  font-size: 1rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .wishlist-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wishlist-img {
+    width: 80%;
+    max-width: 200px;
+  }
+
+  .wishlist-info {
+    width: 90%;
+    text-align: center;
+  }
+
+  .wishlist-title {
+    font-size: 1.6rem;
+  }
+
+  .wishlist-title i {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-name {
+    font-size: 1rem;
+  }
+
+  .wishlist-subtitulo,
+  .wishlist-details,
+  .wishlist-descripcion {
+    font-size: 0.8rem;
+  }
+
+  .wishlist-price {
+    font-size: 1rem;
+  }
+
+  .stat-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .stat-badge i {
+    font-size: 0.9rem;
+  }
 }
