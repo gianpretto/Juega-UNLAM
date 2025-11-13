@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+
 import { Usuario } from '@interfaces/usuario.interface';
-import { map, Observable, throwError } from 'rxjs';
+
+
+import { BehaviorSubject, Observable, map, throwError } from 'rxjs';
+
 import { UsuarioMapper } from '../mapper/usuario.mapper';
 import { UsuarioRest } from '../rest/usuario.rest';
 import { environment } from '@evironment/environment';
@@ -11,6 +15,10 @@ import { environment } from '@evironment/environment';
 })
 export class UsuarioService {
   http = inject(HttpClient);
+  private readonly _isLoggedIn = new BehaviorSubject<boolean>(false);
+  readonly isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
+  private readonly _currentUser = new BehaviorSubject<Usuario | null>(null);
+  readonly currentUser$: Observable<Usuario | null> = this._currentUser.asObservable();
 
   constructor() { }
 
@@ -39,8 +47,17 @@ export class UsuarioService {
     return this.http.post<Usuario>(`${environment.BACKEND_URL}/usuarios/login`, { email, password });
   }
 
+  setCurrentUser(user: Usuario) {
+    if (typeof window !== 'undefined' && user && user.id !== undefined) {
+      sessionStorage.setItem('idUsuario', user.id.toString());
+    }
+    this._currentUser.next(user ?? null);
+    this._isLoggedIn.next(!!user);
+  }
+
   guardarUsuarioEnSesion(id: number) {
     sessionStorage.setItem("idUsuario", id.toString())
+    this._isLoggedIn.next(true);
   }
 
   actualizarImagenes(id: number, data: { perfilUrl?: string | null; fondoPerfilUrl?: string | null; }) {
@@ -55,7 +72,37 @@ export class UsuarioService {
     }
 
     const id = sessionStorage.getItem('idUsuario');
+    // Actualizar estado interno por si se consultó desde otro sitio
+    const has = id ? true : false;
+    this._isLoggedIn.next(has);
     return id ? parseInt(id, 10) : null;
+  }
+
+  /**
+   * Intenta restaurar el usuario completo desde sessionStorage (si hay id)
+   * Hace una llamada al backend para obtener los datos del usuario y los expone en currentUser$.
+   */
+  restoreFromSession(): void {
+    const id = this.obtenerUsuarioDeSesion();
+    if (!id) return;
+
+    this.verUsuario(id).subscribe({
+      next: (user) => {
+        this._currentUser.next(user);
+        this._isLoggedIn.next(true);
+      },
+      error: (_) => {
+        this.logout();
+      }
+    });
+  }
+
+  logout() {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('idUsuario');
+    }
+    this._isLoggedIn.next(false);
+    this._currentUser.next(null);
   }
 
   getSaldoUsuario(): Observable<number> {

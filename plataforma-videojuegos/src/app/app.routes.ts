@@ -8,48 +8,69 @@ import { UsuarioPerfilComponent } from '@modules/usuario-perfil/usuario-perfil.c
 import { WishlistComponent } from '@modules/wishlist/wishlist.component';
 import { JuegoComponent } from '@modules/juego/juego-component';
 import { PedidoComponent } from './modules/pedido-component/pedido-component';
+import { AuthGuard } from './servicios/authGuard';
+import { InicioComponent } from '@general/modules/inicio-component/inicio.component';
+import { NoAuthGuard } from './servicios/noAuthGuard';
 
 export const routes: Routes = [
     {
         path: 'home',
         component : HomeComponent
     },
+    
     {
         path: 'juego/:id',
-        component : JuegoComponent
+        component : JuegoComponent,
+      canActivate: [AuthGuard]
     },
     {
         path: '',
-        redirectTo: 'iniciar-sesion',
+        redirectTo: 'inicio',
         pathMatch: 'full'
     },
     {
+    path: 'inicio', 
+    component: InicioComponent,
+    canActivate: [NoAuthGuard]
+},
+    {
       path: 'catalogo',
-      component: CatalogoJuegosComponent
+      component: CatalogoJuegosComponent,
+      canActivate: [AuthGuard]
+
     },
     {
       path: 'mi-biblioteca',
-      component: MiBibliotecaComponent
-    },
+      component: MiBibliotecaComponent,
+      canActivate: [AuthGuard]
+          },
     {
       path: 'registro',
-      component: RegistroComponent
+      component: RegistroComponent,
+      canActivate: [NoAuthGuard]
+
     },
     {
       path: 'iniciar-sesion',
-      component: IniciarSesionComponent
+      component: IniciarSesionComponent,
+      canActivate: [NoAuthGuard]
+
     },
     {
       path: 'usuario-perfil',
-      component: UsuarioPerfilComponent
+      component: UsuarioPerfilComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'wishlist',
-      component: WishlistComponent
+      component: WishlistComponent,
+      canActivate: [AuthGuard]
+
     },
     {
       path: 'pedido',
-      component: PedidoComponent
+      component: PedidoComponent,
+      canActivate: [AuthGuard]
     },
     {
         path: '**',
