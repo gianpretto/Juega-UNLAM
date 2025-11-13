@@ -1,36 +1,9 @@
-<!-- Mostrar loader mientras carga -->
-@if (!juego) {
-<div class="loading-container">
-  <div class="loading-content">
-    <i class="pi pi-spin pi-spinner loading-icon"></i>
-    <p class="loading-text">Cargando juego...</p>
-  </div>
-</div>
-}
-
-<div *ngIf="juego" class="container bg-dark rounded p-4">
-  <h2 class="text-start mb-4">{{juego.nombre}}</h2>
-  <div class="row justify-content-center align-items-start">
-    <div class="col-md-7 d-flex justify-content-center">
-      <app-detalle-juego-component [juego]="juego"></app-detalle-juego-component>
-    </div>
-
-    <div class="col-md-5 d-flex justify-content-center">
-      <app-opciones-component [juego]="juego"></app-opciones-component>
-    </div>
-  </div>
-</div>
-
 <!-- Mostrar contenido cuando el juego esté cargado -->
 @if (juego) {
 <div class="game-page">
   <!-- Carrito Component -->
   <div class="carrito-section">
     <app-carrito-component></app-carrito-component>
-  </div>
-  <div *ngIf="juego" class="container bg-dark rounded p-4 mt-5">
-    <h3><span>Valoraciones y reseñas de {{juego.nombre}}</span></h3>
-    <app-valoraciones-component [juego]="juego"></app-valoraciones-component>
   </div>
 
   <!-- Header del Juego -->

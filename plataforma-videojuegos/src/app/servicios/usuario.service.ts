@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, map, throwError } from 'rxjs';
 import { UsuarioMapper } from '../mapper/usuario.mapper';
 import { UsuarioRest } from '../rest/usuario.rest';
 import { environment } from '@evironment/environment';
-import {Juego} from '@interfaces/juego.interface';
+import { Juego } from '@interfaces/juego.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -62,8 +62,8 @@ export class UsuarioService {
   }
 
   actualizarImagenes(id: number, data: { perfilUrl?: string | null; fondoPerfilUrl?: string | null; }) {
-  return this.http.patch(`${environment.BACKEND_URL}/usuarios/${id}/imagenes`, data);
-}
+    return this.http.patch(`${environment.BACKEND_URL}/usuarios/${id}/imagenes`, data);
+  }
 
 
 
@@ -114,12 +114,24 @@ export class UsuarioService {
       .get<{ saldo: number }>(`${environment.BACKEND_URL}/usuarios/${id}/saldo`)
       .pipe(map(res => res.saldo));
   }
+
   actualizarSaldoUsuario(monto: number) {
     const id = this.obtenerUsuarioDeSesion();
     if (!id) return throwError(() => new Error('No hay usuario logueado'));
 
-    return this.http.put(`${environment.BACKEND_URL}/usuarios/${id}/descontar-saldo`, { monto });
+    return this.http.put<{ saldo: number }>(`${environment.BACKEND_URL}/usuarios/${id}/descontar-saldo`, { monto })
+      .pipe(
+        map(res => {
+          // Actualizamos el saldo del currentUser
+          const user = this._currentUser.value;
+          if (user) {
+            this._currentUser.next({ ...user, saldo: res.saldo });
+          }
+          return res;
+        })
+      );
   }
+
 
   registrarJuegos(juegos: Juego[]): Observable<any> {
     const usuarioId = this.obtenerUsuarioDeSesion();
