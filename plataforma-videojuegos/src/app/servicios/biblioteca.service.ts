@@ -47,6 +47,7 @@ export class BibliotecaService {
     return this.http.get<UsuarioJuego[]>(apiUrl).pipe(
       map(usuarioJuegos => {
         console.log(`📦 Usuario-Juegos recibidos para usuario ${id}:`, usuarioJuegos.length);
+        console.log('📸 Primer juego con imagen:', usuarioJuegos[0]?.juego?.mainImagen);
         // Extraer solo el objeto juego de cada relación usuario-juego
         return usuarioJuegos.map(uj => uj.juego);
       }),
