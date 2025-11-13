@@ -1,8 +1,160 @@
-/* juegoComponent.component.css */
+/* ===== GAME PAGE - STEAM PREMIUM ===== */
+
 :host {
-    display: block;
-    background-color: #121212; /* Fondo oscuro */
-    color: white; /* Texto blanco para contraste */
-    font-family: 'Roboto', sans-serif; /* Tipografía moderna */
-    padding: 1.8rem;
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
+  color: #c7d5e0;
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
+
+/* ===== LOADING STATE ===== */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.loading-icon {
+  font-size: 4rem;
+  color: #66c0f4;
+}
+
+.loading-text {
+  font-size: 1.2rem;
+  color: #8f98a0;
+  margin: 0;
+}
+
+/* ===== GAME PAGE ===== */
+.game-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 5%;
+}
+
+/* ===== CARRITO SECTION ===== */
+.carrito-section {
+  margin-bottom: 2rem;
+}
+
+/* ===== GAME HEADER ===== */
+.game-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(102, 192, 244, 0.2);
+}
+
+.game-title {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  background: linear-gradient(90deg, #66c0f4 0%, #4a9fd8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(102, 192, 244, 0.3);
+}
+
+/* ===== GAME CONTENT - CENTRALIZADO ===== */
+.game-content-centered {
+  max-width: 900px;
+  margin: 0 auto 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Sección de compra (imagen + botones) */
+.game-purchase-section {
+  width: 100%;
+}
+
+/* Detalles del juego (descripción) */
+.game-details-centered {
+  width: 100%;
+}
+
+/* ===== REVIEWS SECTION ===== */
+.reviews-section {
+  background: linear-gradient(135deg, rgba(42, 71, 94, 0.3) 0%, rgba(27, 40, 56, 0.3) 100%);
+  border: 1px solid rgba(102, 192, 244, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.reviews-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #66c0f4;
+  margin: 0 0 2rem 0;
+}
+
+.reviews-title i {
+  font-size: 1.8rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .game-content-centered {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .game-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-page {
+    padding: 1.5rem 4%;
+  }
+
+  .game-title {
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+
+  .reviews-section {
+    padding: 1.5rem;
+  }
+
+  .reviews-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-page {
+    padding: 1rem 3%;
+  }
+
+  .game-title {
+    font-size: 1.5rem;
+  }
+
+  .reviews-title {
+    font-size: 1.3rem;
+  }
+
+  .reviews-section {
+    padding: 1rem;
+  }
 }

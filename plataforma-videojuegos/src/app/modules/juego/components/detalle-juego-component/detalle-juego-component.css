@@ -1,3 +1,220 @@
-.redondea-borde:hover{
-    border: 2px solid white;;
+/* ===== DETALLE JUEGO - STEAM PREMIUM ===== */
+
+.detalle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ===== GAME META (Rating y Dificultad) ===== */
+.game-meta {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.stars i {
+  color: #ffd700;
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+.rating-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #66c0f4;
+}
+
+.difficulty-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 107, 107, 0.1) 100%);
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  border-radius: 20px;
+  color: #ff6b6b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.difficulty-badge i {
+  font-size: 1.1rem;
+}
+
+/* ===== MAIN IMAGE ===== */
+.main-image-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.main-image-container:hover .main-image {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to top, rgba(27, 40, 56, 0.9) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ===== CAROUSEL ===== */
+.carousel-section {
+  margin: 0 -0.5rem;
+}
+
+::ng-deep .carousel-section .p-carousel {
+  background: transparent;
+}
+
+::ng-deep .carousel-section .p-carousel-content {
+  background: transparent;
+}
+
+::ng-deep .carousel-section .p-carousel-prev,
+::ng-deep .carousel-section .p-carousel-next {
+  background: rgba(102, 192, 244, 0.2);
+  border: 1px solid rgba(102, 192, 244, 0.4);
+  color: #66c0f4;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .carousel-section .p-carousel-prev:hover,
+::ng-deep .carousel-section .p-carousel-next:hover {
+  background: rgba(102, 192, 244, 0.4);
+  border-color: rgba(102, 192, 244, 0.6);
+}
+
+.carousel-item {
+  padding: 0.5rem;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.carousel-image:hover {
+  border-color: #66c0f4;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(102, 192, 244, 0.3);
+}
+
+/* ===== GAME INFO ===== */
+.game-info {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(42, 71, 94, 0.3) 0%, rgba(27, 40, 56, 0.3) 100%);
+  border: 1px solid rgba(102, 192, 244, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.game-subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #66c0f4;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.5px;
+}
+
+.game-description {
+  font-size: 1rem;
+  color: #8f98a0;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .game-meta {
+    gap: 1rem;
+  }
+
+  .stars i {
+    font-size: 1.1rem;
+  }
+
+  .rating-value {
+    font-size: 1.3rem;
+  }
+
+  .difficulty-badge {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .main-image-container {
+    height: 300px;
+  }
+
+  .carousel-image {
+    height: 100px;
+  }
+
+  .game-info {
+    padding: 1rem;
+  }
+
+  .game-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .game-description {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-image-container {
+    height: 250px;
+  }
+
+  .carousel-image {
+    height: 80px;
+  }
+
+  .game-subtitle {
+    font-size: 1rem;
+  }
+
+  .game-description {
+    font-size: 0.9rem;
+  }
 }

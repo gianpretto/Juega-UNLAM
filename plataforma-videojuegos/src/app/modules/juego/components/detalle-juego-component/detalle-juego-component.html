@@ -1,24 +1,25 @@
-<div>
-    <div class="d-flex align-items-center gap-5 mb-2">
-        <div class="d-flex align-items-center gap-2">
-            <i class="pi pi-star-fill text-white"></i><i class="pi pi-star-fill text-white"></i><i class="pi pi-star-fill text-white"></i><i class="pi pi-star-fill text-white"></i><i class="pi pi-star-half-fill text-white"></i>
-        </div>
-        <span class="text-white">4.7</span>
-        <span class="text-white">Dificil</span>
+<div class="detalle-container">
+  <!-- Rating y Dificultad -->
+  <div class="game-meta">
+    <div class="rating-section">
+      <div class="stars">
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-fill"></i>
+        <i class="pi pi-star-half-fill"></i>
+      </div>
+      <span class="rating-value">4.7</span>
     </div>
-    <img [src]="imagenAMostrar()" alt="Imagen del juego" class="w-full border-round shadow-2 mb-4 rounded" style="object-fit: cover; height: 300px; width: 100%;" />
-    <p-carousel [value]="imagenes" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions"
-    circular="true" [autoplayInterval]="false">
-    <ng-template let-imagen pTemplate="item">
-    <div class="p-2">
-        <img 
-            [src]="imagen" 
-            alt="Imagen del juego" 
-            class="redondea-borde w-full border-round shadow-2 rounded" 
-            style="object-fit: cover; height: 150px; width: 100%; cursor: pointer;" (click)="cambiarImagen(imagen)"/>
+    <div class="difficulty-badge">
+      <i class="pi pi-bolt"></i>
+      <span>Difícil</span>
     </div>
-    </ng-template>
-    </p-carousel>
-    <h5><span class="text-white">{{juego.subtitulo}}</span></h5>
-    <p style="color: #767c82;">{{juego.descripcion}}</p>
+  </div>
+
+  <!-- Información del Juego -->
+  <div class="game-info">
+    <h3 class="game-subtitle">{{juego.subtitulo}}</h3>
+    <p class="game-description">{{juego.descripcion}}</p>
+  </div>
 </div>

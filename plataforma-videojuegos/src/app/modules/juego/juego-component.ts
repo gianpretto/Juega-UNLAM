@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { DetalleJuegoComponent } from '@modules/juego/components/detalle-juego-component/detalle-juego-component';
 import { OpcionesComponent } from '@modules/juego/components/opciones-component/opciones-component';
 import { ValoracionesComponent } from '@modules/juego/components/valoraciones-component/valoraciones-component';
+import { CarritoComponent } from '@modules/carrito-component/carrito-component';
 import { JuegoService } from '@servicios/juego.service';
 import { ActivatedRoute } from '@angular/router';
 import { Juego } from '@interfaces/juego.interface';
-import { CarritoComponent } from '@modules/carrito-component/carrito-component';
 
 @Component({
   selector: 'app-juego-component',
-  imports: [CommonModule, DetalleJuegoComponent, OpcionesComponent,ValoracionesComponent, CarritoComponent],
+  imports: [CommonModule, DetalleJuegoComponent, OpcionesComponent, ValoracionesComponent, CarritoComponent],
   templateUrl: './juego-component.html',
   styleUrl: './juego-component.css'
 })

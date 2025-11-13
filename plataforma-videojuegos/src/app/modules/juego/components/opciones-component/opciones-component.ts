@@ -2,7 +2,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Juego } from '@interfaces/juego.interface';
-import { CurrencyPipe } from '@angular/common';
 import { JuegoService } from '@general/servicios/juego.service';
 import { CarritoService } from '@servicios/carrito.service';
 import { WishlistService } from '@general/servicios/wishlist.service';
@@ -11,7 +10,7 @@ import { WishlistService } from '@general/servicios/wishlist.service';
 @Component({
   selector: 'app-opciones-component',
   standalone: true,
-  imports: [ButtonModule, CurrencyPipe],
+  imports: [ButtonModule],
   templateUrl: './opciones-component.html',
   styleUrl: './opciones-component.css'
 })

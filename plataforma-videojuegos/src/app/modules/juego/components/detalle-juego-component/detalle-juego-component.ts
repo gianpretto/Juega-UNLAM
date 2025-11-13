@@ -29,8 +29,10 @@ export class DetalleJuegoComponent implements OnInit {
     this.obtenerImagenesDeUnJuego(this.juego.id);
     }
   }
+  
+  // Usar la primera imagen disponible o la imagen seleccionada
   imagenAMostrar = computed(() =>{
-    return this.imagenActual() || this.imagenes[0];
+    return this.imagenActual() || this.imagenes[0] || '';
   })
 
   cambiarImagen(imagen: string) {
@@ -41,8 +43,15 @@ export class DetalleJuegoComponent implements OnInit {
     this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
       next : (data) => {
         console.log("LAS IMAGENES:",data)
-        this.imagenes = data.map((img: { url: string, isMain: boolean }) => img.isMain === false ? img.url : null)
-        .filter(url => url !== null)
+        // Obtener TODAS las imágenes, priorizando la imagen principal (isMain: true)
+        const imagenPrincipal = data.find((img: { url: string, isMain: boolean }) => img.isMain === true);
+        const imagenesSecundarias = data.filter((img: { url: string, isMain: boolean }) => img.isMain === false);
+        
+        // Poner la imagen principal primero, luego las secundarias
+        this.imagenes = [
+          ...(imagenPrincipal ? [imagenPrincipal.url] : []),
+          ...imagenesSecundarias.map((img: { url: string }) => img.url)
+        ];
       },
       error : (data) => {
         console.log("ERROR AL TREAR LAS IMAGENES",data)
