@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/catalogo">
+      <img src="assets/images/juegaunlam.png" alt="Juega UNLaM" height="100" margin-left="100px">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex gap-4">
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/catalogo">Catálogo</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/mi-biblioteca">Mi biblioteca</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/wishlist">Wishlist</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" routerLink="/usuario-perfil">Perfil</a>
+  </li>
+</ul>
+
+      <!-- Usuario a la derecha -->
+      <div class="d-flex flex-column align-items-start text-light" *ngIf="currentUser$ | async as user">
+        <span class="fw-semibold mb-1">
+          Hola {{ user.nombre }}!
+        </span>
+        <div class="d-flex align-items-center">
+          <span class="me-3">
+            <i class="fa-solid fa-coins text-warning me-1"></i>
+            $ {{ user.saldo }}
+          </span>
+          <button class="btn btn-outline-light btn-sm" (click)="salir()">Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

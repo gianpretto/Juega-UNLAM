@@ -31,10 +31,8 @@ export class IniciarSesionComponent {
       .subscribe({
         next: (res) => {
           console.log('Sesión iniciada:', res);
-          const id = res.id;
-          if(id !== undefined){
-            this.usuarioService.guardarUsuarioEnSesion(id);
-          }
+          // Guardar el usuario completo y notificar al resto de la app
+          this.usuarioService.setCurrentUser(res);
           // 🔹 Redirigir al catálogo
           this.router.navigate(['/catalogo']);
         },

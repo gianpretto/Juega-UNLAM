@@ -5,6 +5,7 @@
 .btn-success {
   background-color: #2ecc71 !important;
   border: none;
+  z-index: 100;
 }
 
 .btn-success:hover {

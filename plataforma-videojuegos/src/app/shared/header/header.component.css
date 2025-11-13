@@ -1,0 +1,7 @@
+/* Simple header styles (bootstrap handles most) */
+.navbar-brand { font-weight: 700; }
+.nav-link { color: rgba(255,255,255,0.9); }
+.navbar-expand-lg{ padding-left: 10%;
+    padding-right: 10%;
+    ;
+                }
