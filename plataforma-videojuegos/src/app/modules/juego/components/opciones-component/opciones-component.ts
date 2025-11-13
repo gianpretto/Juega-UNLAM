@@ -26,7 +26,6 @@ export class OpcionesComponent implements OnInit {
 
   constructor(private wishlistService: WishlistService) {}
 
-
   carritoService = inject(CarritoService);
 
 
