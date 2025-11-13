@@ -58,6 +58,7 @@ model Wishlist {
 
   @@unique([usuarioId, juegoId])
 }
+
  
 model Carrito {
   id        Int       @id @default(autoincrement())

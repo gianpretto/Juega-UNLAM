@@ -52,8 +52,18 @@ export class GameCardComponent {
    * Obtiene la URL de la imagen del juego
    */
   getImageUrl(): string {
-    if (!this.juego.mainImagenId) return this.placeholderImage;
-    return `${environment.BACKEND_URL}/imagenes/${this.juego.mainImagenId}`;
+    // Prioridad 1: Usar mainImagen.url si existe (desde el backend)
+    if (this.juego.mainImagen?.url) {
+      return this.juego.mainImagen.url;
+    }
+    
+    // Prioridad 2: Construir URL con mainImagenId (fallback)
+    if (this.juego.mainImagenId) {
+      return `${environment.BACKEND_URL}/imagenes/${this.juego.mainImagenId}`;
+    }
+    
+    // Prioridad 3: Imagen placeholder
+    return this.placeholderImage;
   }
 
   /**

@@ -76,9 +76,17 @@ private cargarWishlist(usuarioId: number) {
 }
 
  getImageUrl(juego: Juego): string {
+  // Prioridad 1: Usar mainImagen.url si existe (desde el backend)
+  if (juego.mainImagen?.url) {
+    return juego.mainImagen.url;
+  }
+  
+  // Prioridad 2: Usar imagenes array (legacy)
   if (juego.imagenes && juego.imagenes.length > 0) {
     return juego.imagenes[0];
   }
+  
+  // Prioridad 3: Imagen por defecto
   return 'assets/images/default.jpg';
 }
 

@@ -1,5 +1,6 @@
 import { Genero } from "./genero.interface";
 import { Plataforma } from "./plataforma.interface";
+import { Imagen } from "./image.interface";
 
 export interface JuegoPlataformaGenero{
     id: number;
@@ -10,6 +11,7 @@ export interface JuegoPlataformaGenero{
     imagenes: string;
     desarrolladorId?: number;
     mainImagenId?: number;
+    mainImagen?: Imagen;  // ← Objeto completo de la imagen principal
     released?: string;
     rating?: number;
     plataforma:Plataforma[];

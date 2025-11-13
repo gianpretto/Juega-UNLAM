@@ -1,3 +1,5 @@
+import { Imagen } from "./image.interface";
+
 export interface Juego {
     id: number;
     nombre: string;
@@ -7,6 +9,7 @@ export interface Juego {
     imagenes: string;
     desarrolladorId?: number;
     mainImagenId?: number;
+    mainImagen?: Imagen;     // ← Objeto completo de la imagen principal
     released?: string;       // Opcional - puede no venir del backend
     rating?: number;         // Opcional - puede no venir del backend
 }

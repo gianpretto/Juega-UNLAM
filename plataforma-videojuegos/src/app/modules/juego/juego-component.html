@@ -1,5 +1,14 @@
 
-<div class="container bg-dark rounded p-4">
+<!-- Mostrar loader mientras carga -->
+<div *ngIf="!juego" class="container bg-dark rounded p-4 text-center">
+  <div class="spinner-border text-light" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+  <p class="text-light mt-3">Cargando juego...</p>
+</div>
+
+<!-- Mostrar contenido cuando el juego esté cargado -->
+<div *ngIf="juego" class="container bg-dark rounded p-4">
   <h2 class="text-start mb-4">{{juego.nombre}}</h2>
   <div class="row justify-content-center align-items-start">
     <div class="col-md-7 d-flex justify-content-center">
@@ -12,7 +21,7 @@
   </div>
 </div>
 
-<div class="container bg-dark rounded p-4 mt-5">
+<div *ngIf="juego" class="container bg-dark rounded p-4 mt-5">
   <h3><span>Valoraciones y reseñas de {{juego.nombre}}</span></h3>
   <app-valoraciones-component [juego] = "juego"></app-valoraciones-component>
 </div>
