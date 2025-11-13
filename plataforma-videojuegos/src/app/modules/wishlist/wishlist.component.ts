@@ -30,70 +30,80 @@ export class WishlistComponent implements OnInit {
       return;
     }
 
-  const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+    const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
 
-if (usuarioId != null) {
-  this.cargarWishlist(usuarioId);
-} else {
-  this.loading = false;
-}
+    if (usuarioId != null) {
+      this.cargarWishlist(usuarioId);
+    } else {
+      this.loading = false;
+    }
   }
-private cargarWishlist(usuarioId: number) {
-  this.wishlistService.getWishlistsByUserId(usuarioId).subscribe({
-    next: (data) => {
-      console.log('Datos wishlist:', data);
 
-      this.juegos = (data || [])
-        .map((w: any) => {
-          const juego = w.juego ?? w;
-          return {
-            ...juego,
-            imagenes: juego.imagenes?.map((img: any) => img.url) || []
-          };
-        })
-        .filter((j: any): j is Juego => !!j && !!j.nombre);
+  private cargarWishlist(usuarioId: number) {
+    this.wishlistService.getWishlistsByUserId(usuarioId).subscribe({
+      next: (data) => {
+        console.log('Datos wishlist:', data);
 
-      console.log('Juegos cargados:', this.juegos);
-      this.loading = false;
-    },
-    error: (error) => {
-      console.error('Error al obtener wishlist:', error);
-      this.loading = false;
-    },
-  });
-}
+        this.juegos = (data || [])
+          .map((w: any) => {
+            const juego = w.juego ?? w;
+            return {
+              ...juego,
+              imagenes: juego.imagenes?.map((img: any) => img.url) || []
+            };
+          })
+          .filter((j: any): j is Juego => !!j && !!j.nombre);
+
+        console.log('Juegos cargados:', this.juegos);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al obtener wishlist:', error);
+        this.loading = false;
+      },
+    });
+  }
 
   eliminarJuego(juegoId: number) {
-  const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
-  if (!usuarioId) return;
+    const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+    if (!usuarioId) return;
 
-  this.wishlistService.borrarDeLaWishlist(juegoId).subscribe({
-    next: () => {
-      this.juegos = this.juegos.filter((j: Juego) => j.id !== juegoId);
-    },
-    error: (err) => console.error('❌ Error al eliminar de la wishlist:', err)
-  });
-}
+    this.wishlistService.borrarDeLaWishlist(juegoId).subscribe({
+      next: () => {
+        this.juegos = this.juegos.filter((j: Juego) => j.id !== juegoId);
+      },
+      error: (err) => console.error('❌ Error al eliminar de la wishlist:', err)
+    });
+  }
 
- getImageUrl(juego: Juego): string {
-  // Prioridad 1: Usar mainImagen.url si existe (desde el backend)
-  if (juego.mainImagen?.url) {
-    return juego.mainImagen.url;
+  getImageUrl(juego: Juego): string {
+    // Prioridad 1: Usar mainImagen.url si existe (desde el backend)
+    if (juego.mainImagen?.url) {
+      return juego.mainImagen.url;
+    }
+    
+    // Prioridad 2: Usar imagenes array (legacy)
+    if (juego.imagenes && juego.imagenes.length > 0) {
+      return juego.imagenes[0];
+    }
+    
+    // Prioridad 3: Imagen por defecto
+    return 'assets/images/default.jpg';
   }
-  
-  // Prioridad 2: Usar imagenes array (legacy)
-  if (juego.imagenes && juego.imagenes.length > 0) {
-    return juego.imagenes[0];
+
+  getTotalPrice(): number {
+    return this.juegos.reduce((total, juego) => total + (juego.precio || 0), 0);
   }
-  
-  // Prioridad 3: Imagen por defecto
-  return 'assets/images/default.jpg';
-}
+
+  navigateToGame(juegoId: number | undefined) {
+    if (juegoId) {
+      this.router.navigate(['/juego', juegoId]);
+    }
+  }
 
   navigateToCatalogo() {
-      this.router.navigate(['/catalogo']);
+    this.router.navigate(['/catalogo']);
   }
-
 }
 
 

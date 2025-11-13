@@ -1,79 +1,113 @@
-<div class="catalogo-container wishlist-container">
+<div class="wishlist-page">
   <!-- HEADER -->
-  <div class="catalogo-header">
-    <div class="title-container">
-      <h1 class="wishlist-title">
-        <i class="pi pi-heart text-pink-400"></i>
-        Tu Lista de Deseados
-      </h1>
-      <p class="catalogo-subtitle">Todos los juegos que agregaste a tu lista de deseos</p>
-          <div class="header-actions flex align-items-center gap-3">
-      <div *ngIf="juegos.length > 0" class="header-stats">
-        <span class="stat-badge">
-          <i class="pi pi-trophy"></i>
-          {{ juegos.length }} Juegos Deseados
-        </span>
+  <div class="wishlist-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="wishlist-title">
+          <i class="pi pi-heart"></i>
+          <span>LISTA DE DESEOS</span>
+        </h1>
+        <p class="wishlist-subtitle">Tus juegos favoritos guardados para más tarde</p>
       </div>
-    </div>
 
-       
-
-
-
-    </div>
-
-  <!-- LOADING -->
-  <div *ngIf="loading" class="text-center mt-5">
-    <i class="pi pi-spin pi-spinner text-5xl text-gray-500"></i>
-    <p>Cargando tu wishlist...</p>
-  </div>
-
-  <p-dataview *ngIf="!loading && juegos.length > 0" [value]="juegos" layout="list" class="wishlist-view">
-    <ng-template #list let-items>
-      <div class="flex flex-col gap-4 p-4">
-        <div *ngFor="let item of items" class="wishlist-card flex align-items-center gap-4 p-3 border-round">
-          
-          <div class="wishlist-img">
-            <img [src]="getImageUrl(item)" [alt]="item.nombre" />
+      @if (juegos.length > 0) {
+        <div class="header-stats">
+          <div class="stat-card">
+            <i class="pi pi-heart stat-icon"></i>
+            <div class="stat-info">
+              <span class="stat-value">{{ juegos.length }}</span>
+              <span class="stat-label">Juegos</span>
+            </div>
           </div>
-
-          <div class="wishlist-info flex flex-column justify-content-between">
-            <div>
-              <h3 class="wishlist-name">{{ item.nombre }}</h3>
-              <p class="wishlist-subtitulo">{{ item.subtitulo }}</p>
-              <p class="wishlist-descripcion">{{ item.descripcion }}</p>
+          <div class="stat-card">
+            <i class="pi pi-dollar stat-icon"></i>
+            <div class="stat-info">
+              <span class="stat-value">${{ getTotalPrice() }}</span>
+              <span class="stat-label">Total</span>
             </div>
-
-            <div class="wishlist-details flex align-items-center gap-3 mt-2">
-              <span class="wishlist-price">💲{{ item.precio }}</span>
-            </div>
-
-           <div>
-              <p-button
-                icon="pi pi-trash"
-                label="Eliminar"
-                (onClick)="eliminarJuego(item.id)"
-              ></p-button>
-            
-</div>
-
           </div>
         </div>
-      </div>
-    </ng-template>
-  </p-dataview>
-   <button
-      pButton
-      label="Volver al Catálogo"
-      icon="pi pi-arrow-left"
-      class="p-button-outlined p-button-lg mt-3"
-      (click)="navigateToCatalogo()"
-    ></button>
-
-  <div *ngIf="!loading && juegos.length === 0" class="empty-state text-center mt-5">
-    <i class="pi pi-heart text-5xl text-gray-500 mb-3"></i>
-    <h3>No tienes juegos en tu lista de deseos</h3>
-    <p>Agrega juegos desde el catálogo para verlos aquí.</p>
-   
+      }
+    </div>
   </div>
+
+  <!-- LOADING -->
+  @if (loading) {
+    <div class="loading-state">
+      <i class="pi pi-spin pi-spinner loading-icon"></i>
+      <p class="loading-text">Cargando tu lista de deseos...</p>
+    </div>
+  }
+
+  <!-- WISHLIST GRID -->
+  @if (!loading && juegos.length > 0) {
+    <div class="wishlist-grid">
+      @for (juego of juegos; track juego.id) {
+        <div class="wishlist-card">
+          <!-- Imagen -->
+          <div class="card-image">
+            <img [src]="getImageUrl(juego)" [alt]="juego.nombre" />
+            <div class="image-overlay">
+              <button class="btn-remove" (click)="eliminarJuego(juego.id)" title="Eliminar de la lista">
+                <i class="pi pi-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div class="card-content">
+            <h3 class="game-title">{{ juego.nombre }}</h3>
+            
+            @if (juego.subtitulo) {
+              <p class="game-subtitle">{{ juego.subtitulo }}</p>
+            }
+
+            @if (juego.descripcion) {
+              <p class="game-description">{{ juego.descripcion }}</p>
+            }
+
+            <!-- Footer -->
+            <div class="card-footer">
+              <div class="price-section">
+                <span class="price-label">Precio</span>
+                <span class="price-value">${{ juego.precio }}</span>
+              </div>
+
+              <div class="card-actions">
+                <button class="btn-view" (click)="navigateToGame(juego.id)" title="Ver detalles">
+                  <i class="pi pi-eye"></i>
+                  <span>Ver Juego</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Botón Volver -->
+    <div class="actions-section">
+      <button class="btn-back" (click)="navigateToCatalogo()">
+        <i class="pi pi-arrow-left"></i>
+        <span>Volver al Catálogo</span>
+      </button>
+    </div>
+  }
+
+  <!-- EMPTY STATE -->
+  @if (!loading && juegos.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="pi pi-heart-fill"></i>
+      </div>
+      <h2 class="empty-title">Tu lista de deseos está vacía</h2>
+      <p class="empty-description">
+        Explora nuestro catálogo y agrega juegos que te interesen para guardarlos aquí
+      </p>
+      <button class="btn-catalog" (click)="navigateToCatalogo()">
+        <i class="pi pi-th-large"></i>
+        <span>Explorar Catálogo</span>
+      </button>
+    </div>
+  }
 </div>

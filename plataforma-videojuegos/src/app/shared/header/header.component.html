@@ -1,44 +1,120 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/catalogo">
-      <img src="assets/images/juegaunlam.png" alt="Juega UNLaM" height="100" margin-left="100px">
-    </a>
+<header class="steam-header">
+  <nav class="header-container">
+    <!-- Logo -->
+    <div class="header-logo">
+      <a routerLink="/catalogo" class="logo-link">
+        <img src="assets/images/juegaunlam.png" alt="Juega UNLaM" class="logo-img">
+      </a>
+    </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Navigation Menu -->
+    <div class="header-nav">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a routerLink="/catalogo" routerLinkActive="active" class="nav-link">
+            <i class="pi pi-th-large"></i>
+            <span>Catálogo</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/mi-biblioteca" routerLinkActive="active" class="nav-link">
+            <i class="pi pi-book"></i>
+            <span>Mi Biblioteca</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/wishlist" routerLinkActive="active" class="nav-link">
+            <i class="pi pi-heart"></i>
+            <span>Wishlist</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <!-- User Section -->
+    @if (currentUser$ | async; as user) {
+      <div class="header-user">
+        <!-- Balance -->
+        <div class="user-balance">
+          <i class="pi pi-wallet balance-icon"></i>
+          <span class="balance-amount">${{ user.saldo }}</span>
+        </div>
 
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 d-flex gap-4">
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/catalogo">Catálogo</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/mi-biblioteca">Mi biblioteca</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/wishlist">Wishlist</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="/usuario-perfil">Perfil</a>
-  </li>
-</ul>
+        <!-- User Menu -->
+        <div class="user-menu">
+          <div class="user-info">
+            <div class="user-avatar">
+              <i class="pi pi-user"></i>
+            </div>
+            <div class="user-details">
+              <span class="user-name">{{ user.nombre }}</span>
+              <span class="user-email">{{ user.email }}</span>
+            </div>
+          </div>
 
-      <!-- Usuario a la derecha -->
-      <div class="d-flex flex-column align-items-start text-light" *ngIf="currentUser$ | async as user">
-        <span class="fw-semibold mb-1">
-          Hola {{ user.nombre }}!
-        </span>
-        <div class="d-flex align-items-center">
-          <span class="me-3">
-            <i class="fa-solid fa-coins text-warning me-1"></i>
-            $ {{ user.saldo }}
-          </span>
-          <button class="btn btn-outline-light btn-sm" (click)="salir()">Cerrar sesión</button>
+          <div class="user-dropdown">
+            <button class="dropdown-item" routerLink="/usuario-perfil">
+              <i class="pi pi-user"></i>
+              <span>Mi Perfil</span>
+            </button>
+            <button class="dropdown-item logout" (click)="salir()">
+              <i class="pi pi-sign-out"></i>
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    }
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-toggle" (click)="toggleMobileMenu()">
+      <i class="pi" [ngClass]="mobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" [class.open]="mobileMenuOpen">
+    <ul class="mobile-menu">
+      <li class="mobile-item">
+        <a routerLink="/catalogo" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <i class="pi pi-th-large"></i>
+          <span>Catálogo</span>
+        </a>
+      </li>
+      <li class="mobile-item">
+        <a routerLink="/mi-biblioteca" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <i class="pi pi-book"></i>
+          <span>Mi Biblioteca</span>
+        </a>
+      </li>
+      <li class="mobile-item">
+        <a routerLink="/wishlist" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <i class="pi pi-heart"></i>
+          <span>Wishlist</span>
+        </a>
+      </li>
+      <li class="mobile-item">
+        <a routerLink="/usuario-perfil" routerLinkActive="active" class="mobile-link" (click)="closeMobileMenu()">
+          <i class="pi pi-user"></i>
+          <span>Mi Perfil</span>
+        </a>
+      </li>
+      
+      @if (currentUser$ | async; as user) {
+        <li class="mobile-divider"></li>
+        <li class="mobile-item mobile-user">
+          <div class="mobile-balance">
+            <i class="pi pi-wallet"></i>
+            <span>Saldo: ${{ user.saldo }}</span>
+          </div>
+        </li>
+        <li class="mobile-item">
+          <button class="mobile-logout" (click)="salir()">
+            <i class="pi pi-sign-out"></i>
+            <span>Cerrar Sesión</span>
+          </button>
+        </li>
+      }
+    </ul>
   </div>
-</nav>
+</header>

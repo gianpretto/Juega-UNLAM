@@ -12,6 +12,7 @@ import { UsuarioService } from '../../servicios/usuario.service';
 })
 export class HeaderComponent {
   readonly currentUser$;
+  mobileMenuOpen = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -20,8 +21,17 @@ export class HeaderComponent {
     this.currentUser$ = this.usuarioService.currentUser$;
   }
 
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
+  }
+
   salir() {
     this.usuarioService.logout();
+    this.closeMobileMenu();
     this.router.navigate(['/iniciar-sesion']);
   }
 }
