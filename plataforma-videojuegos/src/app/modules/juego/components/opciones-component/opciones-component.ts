@@ -2,17 +2,17 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Juego } from '@interfaces/juego.interface';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { JuegoService } from '@general/servicios/juego.service';
 import { CarritoService } from '@servicios/carrito.service';
 import { WishlistService } from '@general/servicios/wishlist.service';
 import { BibliotecaService } from '@general/servicios/biblioteca.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-opciones-component',
   standalone: true,
-  imports: [ButtonModule, CurrencyPipe],
+  imports: [ButtonModule, CurrencyPipe, CommonModule],
   templateUrl: './opciones-component.html',
   styleUrl: './opciones-component.css'
 })
@@ -28,7 +28,7 @@ export class OpcionesComponent implements OnInit {
 
   @Input() juego!: Juego;
 
-  constructor(private wishlistService: WishlistService, private bibliotecaService: BibliotecaService) { }
+  constructor(private wishlistService: WishlistService, private bibliotecaService: BibliotecaService,  private router: Router) { }
 
 
   carritoService = inject(CarritoService);
@@ -75,4 +75,8 @@ export class OpcionesComponent implements OnInit {
       error: () => this.juegoComprado = false
     });
   }
+
+  irABiblioteca() {
+  this.router.navigate(['/mi-biblioteca']);
+}
 }
