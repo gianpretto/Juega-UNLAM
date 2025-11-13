@@ -1,14 +1,18 @@
-
 <div class="mt-5">
-         <img [src] = "imagen" alt="Imagen del juego" class="w-full border-round shadow-2 mb-4 rounded" style="object-fit: cover; height: 200px; width: 100%;" />
+        <img [src]="imagen" alt="Imagen del juego" class="w-full border-round shadow-2 mb-4 rounded"
+                style="object-fit: cover; height: 200px; width: 100%;" />
         <div class="d-flex flex-column gap-3">
                 <span>{{juego.precio | currency:'USD':'code'}}</span>
-                <button class="buy-btn btn btn-info btn-lg w-100 rounded">Comprar</button>
-
-                <button (click)="agregarAlCarrito()" class="cart-btn btn btn-lg w-100 rounded text-white"
-                        style="background-color: #4d4848;">Agregar al carrito</button>
+                <!-- <button class="buy-btn btn btn-info btn-lg w-100 rounded">Comprar</button> -->
+                <button (click)="agregarAlCarrito()" class="buy-btn btn btn-info btn-lg w-100 rounded"
+                        [disabled]="juegoComprado">
+                        {{ juegoComprado ? 'Ya comprado' : 'Agregar al carrito' }}
+                </button>
+                <!-- <button (click)="agregarAlCarrito()" class="buy-btn btn btn-info btn-lg w-100 rounded"
+                        style="background-color: #4d4848;">Agregar al carrito</button> -->
                 <button (click)="agregarAWishlist(juego.id)" class="wishlist-btn btn btn-lg w-100 rounded text-white"
-                        style="background-color: #4d4848;">A la lista de deseos</button>
+                        style="background-color: #4d4848;" [disabled]="juegoComprado">
+                        {{ juegoComprado ? 'Comprado' : 'A la lista de deseos' }}
+                </button>
         </div>
 </div>
-

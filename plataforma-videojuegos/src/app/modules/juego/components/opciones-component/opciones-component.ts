@@ -6,6 +6,7 @@ import { CurrencyPipe } from '@angular/common';
 import { JuegoService } from '@general/servicios/juego.service';
 import { CarritoService } from '@servicios/carrito.service';
 import { WishlistService } from '@general/servicios/wishlist.service';
+import { BibliotecaService } from '@general/servicios/biblioteca.service';
 
 
 @Component({
@@ -18,29 +19,31 @@ import { WishlistService } from '@general/servicios/wishlist.service';
 
 
 export class OpcionesComponent implements OnInit {
+  juegoComprado: boolean = false;
 
   ngOnInit(): void {
     this.obtenerImagenDePortada();
+    this.verificarJuegoComprado();
   }
 
   @Input() juego!: Juego;
 
-  constructor(private wishlistService: WishlistService) {}
+  constructor(private wishlistService: WishlistService, private bibliotecaService: BibliotecaService) { }
 
 
   carritoService = inject(CarritoService);
 
 
-  imagen:string = '';
+  imagen: string = '';
 
   juegoService = inject(JuegoService);
 
-  obtenerImagenDePortada(){
+  obtenerImagenDePortada() {
     this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
-      next : (data) => {
+      next: (data) => {
         this.imagen = data[0].url;
       },
-      error : (data) => {
+      error: (data) => {
         console.log("COMPONENTE OPCIONES NO PUDO OBTENER LA IMAGEN")
       }
     })
@@ -52,19 +55,24 @@ export class OpcionesComponent implements OnInit {
       console.warn('⚠️ No se pudo agregar a la wishlist: juegoId indefinido');
       return;
     }
-
-    this.wishlistService.añadirAWishlist(juegoId).subscribe({
-      next: (data) => {
-        console.log('Juego agregado a la wishlist:', data);
-      },
-      error: (error) => {
-        alert('El juego ya está en tu wishlist');
-      }
+    if (!this.juegoComprado) {
+      this.wishlistService.añadirAWishlist(juegoId).subscribe({
+        next: (data) => {
+          console.log('Juego agregado a la wishlist:', data);
+        },
+        error: (error) => {
+          alert('El juego ya está en tu wishlist');
+        }
+      });
+    }
+  }
+  agregarAlCarrito() {
+    if (!this.juegoComprado) this.carritoService.agregarJuego(this.juego);
+  }
+  verificarJuegoComprado() {
+    this.bibliotecaService.estaComprado(this.juego.id).subscribe({
+      next: (comprado) => this.juegoComprado = comprado,
+      error: () => this.juegoComprado = false
     });
   }
-
-  agregarAlCarrito() {
-    this.carritoService.agregarJuego(this.juego);
-  }
-
 }

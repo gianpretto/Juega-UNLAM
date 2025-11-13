@@ -48,11 +48,22 @@ export class PedidoComponent implements OnInit {
       return;
     }
 
-    // Simula compra exitosa
-    this.saldoUsuario -= this.total;
-    this.carritoService.vaciarCarrito();
-    this.total = 0;
-    this.juegos = [];
-    this.mensaje = '🎉 ¡Compra realizada con éxito!';
+    this.usuarioService.actualizarSaldoUsuario(this.total).subscribe({
+      next: () => {
+        this.saldoUsuario -= this.total;
+
+        // 2️⃣ Registrar los juegos comprados (uno o varios)
+        this.usuarioService.registrarJuegos(this.juegos).subscribe({
+          next: () => {
+            this.carritoService.vaciarCarrito();
+            this.total = 0;
+            this.juegos = [];
+            this.mensaje = '🎉 ¡Compra realizada con éxito!';
+          },
+          error: () => this.mensaje = '❌ Error al registrar la compra'
+        });
+      },
+      error: () => this.mensaje = '❌ Error al procesar la compra.'
+    });
   }
 }

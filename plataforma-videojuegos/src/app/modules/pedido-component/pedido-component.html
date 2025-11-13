@@ -18,7 +18,7 @@
   <!-- Carrito vacío -->
   <div *ngIf="juegos.length === 0 && !mensaje" class="text-center mt-5">
     <p class="fs-5 text-muted">Tu carrito está vacío 🕊️</p>
-    <a routerLink="/catalogo" class="btn btn-outline-primary mt-2">Ver juegos</a>
+    <button class="btn btn-primary" (click)="irACatalogo()">Seguir navegando 🎮</button>
   </div>
 
   <!-- Lista de juegos -->
