@@ -1,9 +1,11 @@
+/* 🎮 BIBLIOTECA ESTILO STEAM */
 .biblioteca-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
     min-height: 100vh;
+    background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
 }
 
 /* Header de la biblioteca */
@@ -12,8 +14,11 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    padding: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 2px solid #2c2c2c;
+    border-bottom: 1px solid rgba(102, 192, 244, 0.2);
+    background: linear-gradient(90deg, rgba(27, 40, 56, 0.8) 0%, rgba(23, 26, 33, 0.4) 100%);
+    border-radius: 8px;
 }
 
 .title-container {
@@ -22,16 +27,18 @@
 
 .biblioteca-title {
     font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 800;
     margin: 0 0 0.5rem 0;
     display: flex;
     align-items: center;
     gap: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     background: linear-gradient(135deg, #26de81 0%, #20bf6b 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 4px 20px rgba(38, 222, 129, 0.3);
 }
 
 .biblioteca-title i {
@@ -40,33 +47,40 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(38, 222, 129, 0.4));
 }
 
 .biblioteca-subtitle {
-    font-size: 1.1rem;
-    color: #b0b0b0;
+    font-size: 1rem;
+    color: #c7d5e0;
     margin: 0;
-    font-weight: 400;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Badge de ID de usuario (debug) */
+/* 🎯 Badge de ID de usuario (debug) */
 .user-id-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    margin-top: 0.5rem;
-    background: rgba(74, 144, 226, 0.15);
-    border: 1px solid rgba(74, 144, 226, 0.3);
-    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    margin-top: 0.75rem;
+    background: linear-gradient(135deg, rgba(102, 192, 244, 0.15) 0%, rgba(74, 144, 226, 0.1) 100%);
+    border: 1px solid rgba(102, 192, 244, 0.3);
+    border-radius: 4px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #4a90e2;
-    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.2);
+    color: #66c0f4;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    letter-spacing: 0.5px;
 }
 
 .user-id-badge i {
     font-size: 0.9rem;
+    filter: drop-shadow(0 0 4px rgba(102, 192, 244, 0.4));
 }
 
 .header-stats {
@@ -75,22 +89,28 @@
     gap: 1rem;
 }
 
+/* 🏆 Badge de estadísticas */
 .stat-badge {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, rgba(38, 222, 129, 0.15) 0%, rgba(32, 191, 107, 0.15) 100%);
-    border: 2px solid rgba(38, 222, 129, 0.3);
-    border-radius: 25px;
+    padding: 0.85rem 1.75rem;
+    background: linear-gradient(135deg, rgba(38, 222, 129, 0.15) 0%, rgba(32, 191, 107, 0.1) 100%);
+    border: 1px solid rgba(38, 222, 129, 0.3);
+    border-radius: 4px;
     font-size: 1rem;
     font-weight: 600;
     color: #26de81;
-    box-shadow: 0 4px 12px rgba(38, 222, 129, 0.2);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .stat-badge i {
     font-size: 1.2rem;
+    filter: drop-shadow(0 0 6px rgba(38, 222, 129, 0.5));
 }
 
 .favorite-badge {

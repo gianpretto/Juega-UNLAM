@@ -1,55 +1,72 @@
+/* 🎮 GAME CARD ESTILO STEAM - BIBLIOTECA */
 .game-card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-    border: 2px solid #2c2c2c;
-    border-radius: 12px;
-    overflow: hidden;
+    background: linear-gradient(135deg, rgba(27, 40, 56, 0.6) 0%, rgba(23, 26, 33, 0.8) 100%);
+    border: 1px solid rgba(102, 192, 244, 0.2);
+    border-radius: 8px;
+    overflow: visible; /* ← Cambiado para que la imagen no se recorte */
     transition: all 0.3s ease;
     cursor: pointer;
     height: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 
 .game-card:hover {
-    transform: translateY(-8px);
-    border-color: #4a90e2;
-    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
+    transform: translateY(-4px);
+    border-color: rgba(102, 192, 244, 0.5);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.7),
+        0 0 20px rgba(102, 192, 244, 0.2);
 }
 
-/* Contenedor de imagen */
+/* 🖼️ Contenedor de imagen mejorado */
 .game-image-container {
     position: relative;
     width: 100%;
-    height: 200px;
-    overflow: hidden;
+    height: 240px;
+    overflow: hidden; /* ← Overflow solo en el contenedor de imagen */
+    background: linear-gradient(135deg, #1b2838 0%, #0d1116 100%);
+    border-radius: 8px 8px 0 0; /* ← Border radius solo arriba */
 }
 
 .game-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    object-position: center;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+    display: block;
+    z-index: 1;
+    border-radius: 8px 8px 0 0; /* ← Border radius para la imagen también */
 }
 
 .game-card:hover .game-image {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    opacity: 0.9;
 }
 
-/* Overlay con botones de acción */
+/* ✨ Overlay mejorado con gradiente sutil */
 .game-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.9) 100%);
+    background: linear-gradient(
+        to bottom, 
+        rgba(0, 0, 0, 0) 0%, 
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
     display: flex;
     align-items: flex-end;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-    padding: 1rem;
+    padding: 1.25rem;
+    z-index: 2;
 }
 
 .game-card:hover .game-overlay {
@@ -59,7 +76,7 @@
 .overlay-actions {
     display: flex;
     gap: 0.75rem;
-    transform: translateY(10px);
+    transform: translateY(15px);
     transition: transform 0.3s ease;
 }
 
@@ -67,25 +84,38 @@
     transform: translateY(0);
 }
 
-/* Botones de acción */
+/* 🔘 Botones de acción estilo Steam */
 .action-button {
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, rgba(102, 192, 244, 0.9) 0%, rgba(65, 122, 155, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
 }
 
 .action-button i {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    color: #ffffff;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .action-button:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
+    background: linear-gradient(135deg, rgba(120, 201, 247, 1) 0%, rgba(90, 155, 196, 1) 100%);
+    box-shadow: 
+        0 6px 20px rgba(102, 192, 244, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .action-button:active {
-    transform: scale(0.95);
+    transform: scale(1.05);
 }
 
 /* Estados especiales de botones */
@@ -186,7 +216,7 @@
     font-size: 0.9rem;
 }
 
-/* Placeholder de imagen */
+/* 📦 Placeholder de imagen mejorado */
 .game-placeholder {
     width: 100%;
     height: 100%;
@@ -194,40 +224,49 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-    color: #666;
-    font-size: 3rem;
+    background: linear-gradient(135deg, #1b2838 0%, #171a21 100%);
+    color: #4f5a63;
+    font-size: 3.5rem;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
+    border: 2px dashed rgba(102, 192, 244, 0.2);
+}
+
+.game-placeholder i {
+    opacity: 0.3;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .game-placeholder p {
-    font-size: 0.9rem;
-    color: #888;
+    font-size: 0.95rem;
+    color: #66c0f4;
     margin: 0;
-    font-weight: 500;
-    max-width: 80%;
+    font-weight: 600;
+    max-width: 90%;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Información del juego */
+/* 📝 Información del juego */
 .game-info {
-    padding: 1rem;
+    padding: 1.25rem;
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    background: linear-gradient(180deg, rgba(13, 17, 22, 0.4) 0%, rgba(13, 17, 22, 0.7) 100%);
+    border-radius: 0 0 8px 8px; /* ← Border radius solo abajo */
 }
 
 .game-title {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: #ffffff;
     margin: 0;
     overflow: hidden;
@@ -236,8 +275,10 @@
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-height: 1.4;
-    min-height: 2.8rem;
+    line-height: 1.5;
+    min-height: 3rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.3px;
 }
 
 .game-release-date {
@@ -254,17 +295,17 @@
     font-size: 0.95rem;
 }
 
-/* Descripción del juego */
+/* 📄 Descripción del juego */
 .game-description {
-    font-size: 0.85rem;
-    color: #999;
+    font-size: 0.9rem;
+    color: #8f98a0;
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
 }
 

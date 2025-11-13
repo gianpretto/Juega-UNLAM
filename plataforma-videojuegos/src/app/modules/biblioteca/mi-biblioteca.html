@@ -29,17 +29,6 @@
         (onSearch)="handleSearch($event)"
     ></app-game-search>
 
-    <!-- Componente de filtros -->
-    <app-game-filters
-        [filters]="filters"
-        [sortOptions]="sortOptions"
-        [genreOptions]="[]"
-        [platformOptions]="[]"
-        [disabled]="loading"
-        (onFilterChange)="handleFilterChange($event)"
-        (onClearFilters)="clearFilters()"
-    ></app-game-filters>
-
     <!-- Componente de grilla de juegos -->
     <app-game-grid
         [juegos]="filteredJuegos"

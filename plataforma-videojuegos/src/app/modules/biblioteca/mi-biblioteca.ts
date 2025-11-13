@@ -2,13 +2,11 @@ import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { Juego } from "@interfaces/juego.interface";
-import { GameFilter } from "@interfaces/game-filter.interface";
 import { BibliotecaService } from "@servicios/biblioteca.service";
 import { UsuarioService } from "@servicios/usuario.service";
 
 // Componentes hijos reutilizables
 import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
-import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 
 /**
@@ -17,13 +15,13 @@ import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid
  * RESPONSABILIDADES:
  * - Obtener juegos guardados del servicio de biblioteca
  * - Gestionar estado (loading, error, vacío)
- * - Aplicar lógica de filtros y búsqueda
+ * - Aplicar lógica de búsqueda
  * - Coordinar componentes hijos
  * - Gestionar favoritos y eliminación de juegos
  *
  * NO hace:
  * - Renderizar tarjetas directamente
- * - Manejar UI de filtros
+ * - Manejar UI de búsqueda
  * - Estilos visuales complejos
  */
 @Component({
@@ -32,7 +30,6 @@ import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid
   imports: [
     CommonModule,
     GameSearchComponent,
-    GameFiltersComponent,
     GameGridComponent
   ],
   templateUrl: './mi-biblioteca.html',
@@ -61,29 +58,6 @@ export class MiBibliotecaComponent implements OnInit {
 
   /** Término de búsqueda actual */
   searchTerm: string = '';
-
-  // ========================================
-  // OPCIONES PARA FILTROS
-  // ========================================
-
-  /** Filtros actuales en formato para componente hijo */
-  filters: GameFilter = {
-    sortBy: '',
-    genero: '',
-    plataforma: ''
-  };
-
-  /** Opciones para el dropdown de ordenamiento */
-  sortOptions: { label: string; value: string }[] = [
-    { label: 'Nombre A-Z', value: 'name-asc' },
-    { label: 'Nombre Z-A', value: 'name-desc' },
-    { label: 'Agregado recientemente', value: 'date-desc' },
-    { label: 'Agregado hace tiempo', value: 'date-asc' },
-    { label: 'Mejor valorados', value: 'rating-desc' }
-  ];
-
-  /** Ordenamiento seleccionado */
-  selectedSort: string = '';
 
   // ========================================
   // SERVICIOS INYECTADOS
@@ -183,34 +157,6 @@ export class MiBibliotecaComponent implements OnInit {
   }
 
   /**
-   * Maneja cambios en los filtros
-   */
-  handleFilterChange(filters: GameFilter): void {
-    console.log('🎛️ Filtros cambiados:', filters);
-
-    this.filters = filters;
-    this.selectedSort = filters.sortBy;
-    // TODO: Implementar filtros de género y plataforma cuando estén disponibles desde el backend
-
-    this.applyFilters();
-  }
-
-  /**
-   * Limpia todos los filtros activos
-   */
-  clearFilters(): void {
-    console.log('🗑️ Limpiar filtros de biblioteca');
-    this.searchTerm = '';
-    this.selectedSort = '';
-    this.filters = {
-      sortBy: '',
-      genero: '',
-      plataforma: ''
-    };
-    this.applyFilters();
-  }
-
-  /**
    * Maneja el clic en una tarjeta de juego
    */
   handleGameClick(juego: Juego): void {
@@ -258,12 +204,12 @@ export class MiBibliotecaComponent implements OnInit {
   // ========================================
 
   /**
-   * Aplica todos los filtros activos
+   * Aplica búsqueda por texto
    */
   private applyFilters(): void {
     let result = [...this.juegos];
 
-    // 1. Aplicar búsqueda por texto
+    // Aplicar búsqueda por texto
     if (this.searchTerm.trim()) {
       const term = this.searchTerm.toLowerCase();
       result = result.filter(juego =>
@@ -271,54 +217,9 @@ export class MiBibliotecaComponent implements OnInit {
       );
     }
 
-    // TODO: Implementar filtros de género y plataforma cuando estén disponibles desde el backend
-
-    // 2. Aplicar ordenamiento
-    if (this.selectedSort) {
-      result = this.sortGames(result, this.selectedSort);
-    }
-
     this.filteredJuegos = result;
 
-    console.log(`📋 Filtros aplicados en biblioteca: ${result.length} de ${this.juegos.length} juegos`);
-  }
-
-  /**
-   * Ordena la lista de juegos
-   */
-  private sortGames(games: Juego[], sortType: string): Juego[] {
-    const sorted = [...games];
-
-    switch (sortType) {
-      case 'name-asc':
-        return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
-      case 'name-desc':
-        return sorted.sort((a, b) => b.nombre.localeCompare(a.nombre));
-        
-
-      case 'date-desc':
-        return sorted.sort((a, b) => {
-          if (!a.released || !b.released) return 0;
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateB - dateA;
-        });
-
-      case 'date-asc':
-        return sorted.sort((a, b) => {
-          if (!a.released || !b.released) return 0;
-          const dateA = new Date(a.released).getTime();
-          const dateB = new Date(b.released).getTime();
-          return dateA - dateB;
-        });
-
-      case 'rating-desc':
-        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-
-      default:
-        return sorted;
-    }
+    console.log(`📋 Búsqueda aplicada en biblioteca: ${result.length} de ${this.juegos.length} juegos`);
   }
 
   // ========================================
@@ -326,24 +227,10 @@ export class MiBibliotecaComponent implements OnInit {
   // ========================================
 
   /**
-   * Verifica si hay filtros activos
+   * Verifica si hay búsqueda activa
    */
   hasActiveFilters(): boolean {
-    return !!(
-      this.searchTerm.trim() ||
-      this.selectedSort
-    );
-  }
-
-  /**
-   * Cuenta cuántos filtros están activos
-   */
-  getActiveFiltersCount(): number {
-    let count = 0;
-    if (this.searchTerm.trim()) count++;
-    if (this.selectedSort) count++;
-    // TODO: Agregar conteo de género y plataforma cuando estén implementados
-    return count;
+    return !!this.searchTerm.trim();
   }
 
   /**
@@ -352,7 +239,6 @@ export class MiBibliotecaComponent implements OnInit {
   getStats() {
     return {
       total: this.juegos.length
-      // TODO: Agregar estadísticas de géneros y plataformas cuando estén implementados
     };
   }
 
@@ -360,7 +246,7 @@ export class MiBibliotecaComponent implements OnInit {
    * Recarga la biblioteca completa
    */
   reloadBiblioteca(): void {
-    this.clearFilters();
+    this.searchTerm = '';
     this.cargarBiblioteca();
   }
 }
