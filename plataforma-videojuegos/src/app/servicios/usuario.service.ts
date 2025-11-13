@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable, map, throwError } from 'rxjs';
 import { UsuarioMapper } from '../mapper/usuario.mapper';
 import { UsuarioRest } from '../rest/usuario.rest';
 import { environment } from '@evironment/environment';
+import {Juego} from '@interfaces/juego.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -113,7 +114,23 @@ export class UsuarioService {
       .get<{ saldo: number }>(`${environment.BACKEND_URL}/usuarios/${id}/saldo`)
       .pipe(map(res => res.saldo));
   }
+  actualizarSaldoUsuario(monto: number) {
+    const id = this.obtenerUsuarioDeSesion();
+    if (!id) return throwError(() => new Error('No hay usuario logueado'));
 
+    return this.http.put(`${environment.BACKEND_URL}/usuarios/${id}/descontar-saldo`, { monto });
+  }
+
+  registrarJuegos(juegos: Juego[]): Observable<any> {
+    const usuarioId = this.obtenerUsuarioDeSesion();
+    if (!usuarioId) return throwError(() => new Error('No hay usuario logueado'));
+
+    const juegosIds = juegos.map(j => j.id); // siempre enviamos un array
+    return this.http.post(`${environment.BACKEND_URL}/usuario-juego/agregar`, {
+      usuarioId,
+      juegos: juegosIds
+    });
+  }
 }
 
 export type { Usuario };

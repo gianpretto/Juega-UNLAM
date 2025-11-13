@@ -1,33 +1,24 @@
+<div class="mt-5">
+        <img [src]="imagen" alt="Imagen del juego" class="w-full border-round shadow-2 mb-4 rounded"
+                style="object-fit: cover; height: 200px; width: 100%;" />
+        <div class="d-flex flex-column gap-3">
+                <span>{{juego.precio | currency:'USD':'code'}}</span>
+                <!-- <button class="buy-btn btn btn-info btn-lg w-100 rounded">Comprar</button> -->
+                <!-- Si el juego ya está comprado -->
+                <button *ngIf="juegoComprado" class="btn btn-success btn-lg w-100 rounded" (click)="irABiblioteca()">
+                        Ver en biblioteca
+                </button>
 
-<div class="opciones-container">
-  <!-- Imagen de portada del juego -->
-  @if(imagen) {
-    <img [src]="imagen" alt="{{juego.nombre}}" class="game-cover-image" />
-  }
-  
-  <div class="opciones-content">
-    <!-- Precio -->
-    <div class="price-section">
-      <span class="price-label">Precio</span>
-      <span class="price-value">${{juego.precio}}</span>
-    </div>
-
-    <!-- Botones de acción -->
-    <div class="action-buttons">
-      <!-- <button class="btn-buy">
-        <i class="pi pi-shopping-bag"></i>
-        <span>Comprar Ahora</span>
-      </button> -->
-
-      <button (click)="agregarAlCarrito()" class="btn-cart">
-        <i class="pi pi-shopping-cart"></i>
-        <span>Agregar al Carrito</span>
-      </button>
-
-      <button (click)="agregarAWishlist(juego.id)" class="btn-wishlist">
-        <i class="pi pi-heart"></i>
-        <span>Lista de Deseos</span>
-      </button>
-    </div>
-  </div>
+                <!-- Si el juego NO está comprado -->
+                <ng-container *ngIf="!juegoComprado">
+                        <button (click)="agregarAlCarrito()" class="buy-btn btn btn-info btn-lg w-100 rounded">
+                                Agregar al carrito
+                        </button>
+                        <button (click)="agregarAWishlist(juego.id)"
+                                class="wishlist-btn btn btn-lg w-100 rounded text-white"
+                                style="background-color: #4d4848;">
+                                A la lista de deseos
+                        </button>
+                </ng-container>
+        </div>
 </div>

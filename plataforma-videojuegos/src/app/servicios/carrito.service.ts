@@ -1,61 +1,74 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Juego } from '@interfaces/juego.interface';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
-import { error } from 'console';
+import { Juego } from '@interfaces/juego.interface';
+import { environment } from '@evironment/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CarritoService {
-
-  private juegos: Juego[] = [];
   private carritoSubject = new BehaviorSubject<Juego[]>([]);
   carrito$ = this.carritoSubject.asObservable();
-  private esNavegador: boolean;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    this.esNavegador = isPlatformBrowser(this.platformId);
+  http = inject(HttpClient);
 
-    if (this.esNavegador) {  // 👈 solo en navegador
-      const carritoGuardado = localStorage.getItem('carrito');
-      if (carritoGuardado) {
-        this.juegos = JSON.parse(carritoGuardado);
-        this.carritoSubject.next(this.juegos);
-      }
-    }
-  }
+  constructor() { }
 
-  private guardarEnLocalStorage() {
-    localStorage.setItem('carrito', JSON.stringify(this.juegos));
+  cargarCarrito() {
+    const usuarioId = sessionStorage.getItem('idUsuario');
+    if (!usuarioId) return;
+
+    this.http.get<Juego[]>(`${environment.BACKEND_URL}/carrito/${usuarioId}`)
+      .subscribe({
+        next: (juegos) => this.carritoSubject.next(juegos),
+        error: (err) => console.error('Error al cargar carrito:', err)
+      });
   }
 
   agregarJuego(juego: Juego) {
-    // Verifica si ya existe en el carrito
-    const yaExiste = this.juegos.some(j => j.id === juego.id); // ✅ comparar por id
+    const usuarioId = sessionStorage.getItem('idUsuario');
+    if (!usuarioId) return;
 
-    if (!yaExiste) {
-      this.juegos.push(juego);
-      this.carritoSubject.next([...this.juegos]);
-      this.guardarEnLocalStorage();
-    } else {
-      console.warn(`El juego "${juego.nombre}" ya está en el carrito.`);
+    // ✅ Verificar si ya está en el carrito actual
+    const carritoActual = this.carritoSubject.value;
+    const yaEnCarrito = carritoActual.some(j => j.id === juego.id);
+    if (yaEnCarrito) {
+      console.warn('El juego ya está en el carrito.');
+      return;
     }
+
+    this.http.post<Juego[]>(`${environment.BACKEND_URL}/carrito/${usuarioId}/agregar`, { juegoId: juego.id })
+      .subscribe({
+        next: (juegos) => this.carritoSubject.next(juegos),
+        error: (err) => console.error('Error al agregar al carrito:', err)
+      });
+
   }
 
   eliminarJuego(juego: Juego) {
-    this.juegos = this.juegos.filter(j => j.id !== juego.id); // ✅ eliminar por id
-    this.carritoSubject.next([...this.juegos]);
-    this.guardarEnLocalStorage();
-  }
+    const usuarioId = sessionStorage.getItem('idUsuario');
+    if (!usuarioId) return;
 
-  obtenerTotal(): number {
-    return this.juegos.reduce((sum, j) => sum + j.precio, 0);
+    // Usamos body porque Express espera recibir el juegoId en el body
+    this.http.delete<Juego[]>(`${environment.BACKEND_URL}/carrito/${usuarioId}/eliminar/${juego.id}`)
+      .subscribe({
+        next: (juegos) => this.carritoSubject.next(juegos),
+        error: (err) => console.error('Error al eliminar juego del carrito:', err)
+      });
+
   }
 
   vaciarCarrito() {
-    this.juegos = [];
-    this.carritoSubject.next([]);
-    this.guardarEnLocalStorage();
+    const usuarioId = sessionStorage.getItem('idUsuario');
+    if (!usuarioId) return;
+
+    this.http.delete(`${environment.BACKEND_URL}/carrito/${usuarioId}/vaciar`)
+      .subscribe({
+        next: () => this.carritoSubject.next([]),
+        error: (err) => console.error('Error al vaciar carrito:', err)
+      });
+  }
+
+  obtenerTotal(): number {
+    return this.carritoSubject.value.reduce((sum, j) => sum + j.precio, 0);
   }
 }

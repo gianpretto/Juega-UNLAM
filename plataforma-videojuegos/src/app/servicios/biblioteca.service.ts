@@ -37,7 +37,7 @@ export class BibliotecaService {
   obtenerJuegos(usuarioId?: number): Observable<Juego[]> {
     // Obtener ID de sesión si no se proporciona
     const id = usuarioId ?? this.usuarioService.obtenerUsuarioDeSesion();
-    
+
     // Validar que hay un usuario autenticado
     if (!id) {
       return throwError(() => new Error('Debes iniciar sesión para ver tu biblioteca'));
@@ -176,4 +176,12 @@ export class BibliotecaService {
     console.error('Error en BibliotecaService:', error);
     return throwError(() => new Error('Error al cargar los juegos. Por favor, intenta nuevamente.'));
   }
+
+  estaComprado(juegoId: number): Observable<boolean> {
+    return this.obtenerJuegos().pipe(
+      map(juegos => juegos.some(j => j.id === juegoId)),
+      catchError(() => of(false)) // si hay error, asumimos que no está comprado
+    );
+  }
+
 }

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrito-component',
-  standalone:true,
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './carrito-component.html',
   styleUrl: './carrito-component.css'
@@ -20,6 +20,7 @@ export class CarritoComponent implements OnInit {
   router = inject(Router);
 
   ngOnInit() {
+    this.carritoService.cargarCarrito(); // 👈 carga desde la BD
     this.carritoService.carrito$.subscribe(juegos => {
       this.juegos = juegos;
       this.total = this.carritoService.obtenerTotal();
