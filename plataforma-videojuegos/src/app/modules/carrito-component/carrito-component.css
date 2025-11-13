@@ -2,6 +2,10 @@
   border-radius: 15px;
 }
 
+.btn-success.position-fixed {
+  z-index: 9999 !important;
+}
+
 .btn-success {
   background-color: #2ecc71 !important;
   border: none;
