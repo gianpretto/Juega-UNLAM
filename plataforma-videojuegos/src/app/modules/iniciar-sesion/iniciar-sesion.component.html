@@ -1,22 +1,71 @@
-<div class="inicio-container">
-  <h1>Iniciar Sesión</h1>
+<div class="login-page">
+  <div class="login-container">
+    <!-- Header -->
+    <div class="login-header">
+      <i class="pi pi-gamepad login-icon"></i>
+      <h1 class="login-title">INICIAR SESIÓN</h1>
+      <p class="login-subtitle">Accede a tu cuenta de Juega UNLAM</p>
+    </div>
 
-  <form (ngSubmit)="onSubmit()">
-    <div>
-      <label for="email">Correo Electrónico:</label><br>
-      <input id="email" type="email" pInputText [(ngModel)]="email" name="email" required />
-    </div>
-    <br>
-    <div>
-      <label for="contraseña">Contraseña:</label><br>
-      <input id="contraseña" type="password" pInputText [(ngModel)]="password" name="contraseña" required />
-    </div>
-    <br>
+    <!-- Formulario -->
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">
+          <i class="pi pi-envelope"></i>
+          Correo Electrónico
+        </label>
+        <input 
+          id="email" 
+          type="email" 
+          pInputText 
+          [(ngModel)]="email" 
+          name="email" 
+          required 
+          class="form-input"
+          placeholder="nombre@ejemplo.com"
+        />
+      </div>
 
-    <div style="text-align: center; display: flex; flex-direction: column; gap: 10px; align-items: center;">
-      <button pButton type="submit" label="Iniciar Sesión"></button>
-      <!-- Botón para ir a registro -->
-      <button pButton type="button" label="Ir a Registro" (click)="irARegistro()"></button>
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="contraseña" class="form-label">
+          <i class="pi pi-lock"></i>
+          Contraseña
+        </label>
+        <input 
+          id="contraseña" 
+          type="password" 
+          pInputText 
+          [(ngModel)]="password" 
+          name="contraseña" 
+          required 
+          class="form-input"
+          placeholder="Ingresa tu contraseña"
+        />
+      </div>
+
+      <!-- Botones -->
+      <div class="form-actions">
+        <button pButton type="submit" class="btn-primary">
+          <i class="pi pi-sign-in"></i>
+          <span>Iniciar Sesión</span>
+        </button>
+        
+        <div class="divider">
+          <span>o</span>
+        </div>
+        
+        <button pButton type="button" class="btn-secondary" (click)="irARegistro()">
+          <i class="pi pi-user-plus"></i>
+          <span>Crear Cuenta Nueva</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="login-footer">
+      <p>¿Olvidaste tu contraseña? <a href="#">Recuperar</a></p>
     </div>
-  </form>
+  </div>
 </div>

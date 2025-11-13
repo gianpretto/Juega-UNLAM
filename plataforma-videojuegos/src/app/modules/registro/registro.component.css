@@ -1,30 +1,258 @@
-.registro-container {
-  max-width: 400px;      /* ancho del formulario */
-  margin: 50px auto;      /* centrado horizontal y con espacio arriba */
-  padding: 30px;
-  background-color: #ffffff; /* fondo blanco del formulario */
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra sutil */
+/* 🎮 PÁGINA DE REGISTRO ESTILO STEAM */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
+  background-attachment: fixed;
 }
 
-input, button {
+/* 📦 CONTENEDOR PRINCIPAL */
+.register-container {
+  max-width: 550px;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  background: linear-gradient(135deg, rgba(27, 40, 56, 0.95) 0%, rgba(23, 26, 33, 0.95) 100%);
+  border: 1px solid rgba(102, 192, 244, 0.2);
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* 🎯 HEADER */
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(102, 192, 244, 0.2);
+}
+
+.register-icon {
+  font-size: 3rem;
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(102, 192, 244, 0.4));
+  margin-bottom: 1rem;
+}
+
+.register-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 20px rgba(102, 192, 244, 0.3);
+}
+
+.register-subtitle {
+  font-size: 0.95rem;
+  color: #8f98a0;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* 📝 FORMULARIO */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 📐 FILA DE FORMULARIO (2 columnas) */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c7d5e0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-label i {
+  color: #66c0f4;
+  font-size: 0.85rem;
+}
+
+/* 🔤 INPUTS ESTILO STEAM */
+.form-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: rgba(13, 17, 22, 0.7);
+  border: 1px solid rgba(102, 192, 244, 0.2);
   border-radius: 4px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-    background-color: #727f73;
-
+  color: #c7d5e0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
+.form-input::placeholder {
+  color: #4f5a63;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #66c0f4;
+  background: rgba(13, 17, 22, 0.9);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.4),
+    0 0 0 3px rgba(102, 192, 244, 0.15);
+}
+
+.form-input:hover {
+  border-color: rgba(102, 192, 244, 0.4);
+}
+
+/* 🎯 ACCIONES DEL FORMULARIO */
+.form-actions {
+  margin-top: 1rem;
+}
+
+/* 🔵 BOTÓN PRIMARY (Crear Cuenta) */
+.btn-primary {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #66c0f4 0%, #417a9b 100%);
+  border: 1px solid rgba(102, 192, 244, 0.4);
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
-button:hover {
-  background-color: #45a049;
+.btn-primary:hover {
+  background: linear-gradient(135deg, #78c9f7 0%, #5a9bc4 100%);
+  border-color: rgba(102, 192, 244, 0.7);
+  box-shadow: 
+    0 6px 20px rgba(102, 192, 244, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary i {
+  font-size: 1.1rem;
+}
+
+/* 📌 FOOTER */
+.register-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(102, 192, 244, 0.2);
+  text-align: center;
+}
+
+.register-footer p {
+  font-size: 0.85rem;
+  color: #8f98a0;
+  margin: 0;
+}
+
+.register-footer a {
+  color: #66c0f4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.register-footer a:hover {
+  color: #78c9f7;
+  text-decoration: underline;
+}
+
+/* 🎬 ANIMACIÓN */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 2rem;
+  }
+
+  .register-title {
+    font-size: 1.75rem;
+  }
+
+  .register-icon {
+    font-size: 2.5rem;
+  }
+
+  /* Convertir grid a columna en móviles */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-page {
+    padding: 1rem;
+  }
+
+  .register-container {
+    padding: 1.5rem;
+  }
+
+  .register-title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .register-icon {
+    font-size: 2rem;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.9rem;
+  }
 }

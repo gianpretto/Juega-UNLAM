@@ -1,41 +1,117 @@
+<div class="register-page">
+  <div class="register-container">
+    <!-- Header -->
+    <div class="register-header">
+      <i class="pi pi-user-plus register-icon"></i>
+      <h1 class="register-title">CREAR CUENTA</h1>
+      <p class="register-subtitle">Únete a la comunidad de Juega UNLAM</p>
+    </div>
 
-<div class="registro-container">
+    <!-- Formulario -->
+    <form (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Nombre y Apellido en grid -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre" class="form-label">
+            <i class="pi pi-user"></i>
+            Nombre
+          </label>
+          <input 
+            id="nombre" 
+            type="text" 
+            pInputText 
+            [(ngModel)]="nombre" 
+            name="nombre" 
+            required 
+            class="form-input"
+            placeholder="Tu nombre"
+          />
+        </div>
 
-<h1>Registro de Usuario</h1>
+        <div class="form-group">
+          <label for="apellido" class="form-label">
+            <i class="pi pi-user"></i>
+            Apellido
+          </label>
+          <input 
+            id="apellido" 
+            type="text" 
+            pInputText 
+            [(ngModel)]="apellido" 
+            name="apellido" 
+            required 
+            class="form-input"
+            placeholder="Tu apellido"
+          />
+        </div>
+      </div>
 
-<form (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nombre">Nombre:</label><br>
-    <input id="nombre" type="text" pInputText [(ngModel)]="nombre" name="nombre" required />
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">
+          <i class="pi pi-envelope"></i>
+          Correo Electrónico
+        </label>
+        <input 
+          id="email" 
+          type="email" 
+          pInputText 
+          [(ngModel)]="email" 
+          name="email" 
+          required 
+          class="form-input"
+          placeholder="nombre@ejemplo.com"
+        />
+      </div>
+
+      <!-- Dirección -->
+      <div class="form-group">
+        <label for="direccion" class="form-label">
+          <i class="pi pi-map-marker"></i>
+          Dirección
+        </label>
+        <input 
+          id="direccion" 
+          type="text" 
+          pInputText 
+          [(ngModel)]="direccion" 
+          name="direccion" 
+          required 
+          class="form-input"
+          placeholder="Tu dirección"
+        />
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="contraseña" class="form-label">
+          <i class="pi pi-lock"></i>
+          Contraseña
+        </label>
+        <input 
+          id="contraseña" 
+          type="password" 
+          pInputText 
+          [(ngModel)]="password" 
+          name="contraseña" 
+          required 
+          class="form-input"
+          placeholder="Crea una contraseña segura"
+        />
+      </div>
+
+      <!-- Botón de Registro -->
+      <div class="form-actions">
+        <button pButton type="submit" class="btn-primary">
+          <i class="pi pi-check"></i>
+          <span>Crear Cuenta</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="register-footer">
+      <p>¿Ya tienes cuenta? <a href="/iniciar-sesion">Iniciar Sesión</a></p>
+    </div>
   </div>
-  <br>
-
-  <div>
-    <label for="apellido">Apellido:</label><br>
-    <input id="apellido" type="text" pInputText [(ngModel)]="apellido" name="apellido" required />
-  </div>
-  <br>
-
-  <div>
-    <label for="email">Correo Electrónico:</label><br>
-    <input id="email" type="email" pInputText [(ngModel)]="email" name="email" required />
-  </div>
-  <br>
-
-  <div>
-    <label for="direccion">Dirección:</label><br>
-    <input id="direccion" type="text" pInputText [(ngModel)]="direccion" name="direccion" required />
-  </div>
-  <br>
-
-  <div>
-    <label for="contraseña">Contraseña:</label><br>
-<input id="contraseña" type="password" pInputText [(ngModel)]="password" name="contraseña" required />
-  </div>
-  <br>
-
-  <div>
-    <button pButton type="submit" label="Registrarme"></button>
-  </div>
-</form>
 </div>

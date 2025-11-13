@@ -1,31 +1,316 @@
-
-
-.inicio-container {
-  max-width: 400px;      /* ancho del formulario */
-  margin: 50px auto;      /* centrado horizontal y con espacio arriba */
-  padding: 30px;
-  background-color: #ffffff; /* fondo blanco del formulario */
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* sombra sutil */
+/* 🎮 PÁGINA DE LOGIN ESTILO STEAM */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
+  background-attachment: fixed;
 }
 
-input, button {
+/* 📦 CONTENEDOR PRINCIPAL */
+.login-container {
+  max-width: 450px;
   width: 100%;
-  padding: 10px;
-  margin: 10px 0;
+  background: linear-gradient(135deg, rgba(27, 40, 56, 0.95) 0%, rgba(23, 26, 33, 0.95) 100%);
+  border: 1px solid rgba(102, 192, 244, 0.2);
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* 🎯 HEADER */
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(102, 192, 244, 0.2);
+}
+
+.login-icon {
+  font-size: 3rem;
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(102, 192, 244, 0.4));
+  margin-bottom: 1rem;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 20px rgba(102, 192, 244, 0.3);
+}
+
+.login-subtitle {
+  font-size: 0.95rem;
+  color: #8f98a0;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* 📝 FORMULARIO */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c7d5e0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-label i {
+  color: #66c0f4;
+  font-size: 0.85rem;
+}
+
+/* 🔤 INPUTS ESTILO STEAM */
+.form-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: rgba(13, 17, 22, 0.7);
+  border: 1px solid rgba(102, 192, 244, 0.2);
   border-radius: 4px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-    background-color: #727f73;
+  color: #c7d5e0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-button {
-   background-color: #4caf50;
-  color: white;
-  border: none;
+.form-input::placeholder {
+  color: #4f5a63;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #66c0f4;
+  background: rgba(13, 17, 22, 0.9);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.4),
+    0 0 0 3px rgba(102, 192, 244, 0.15);
+}
+
+.form-input:hover {
+  border-color: rgba(102, 192, 244, 0.4);
+}
+
+/* 🎯 ACCIONES DEL FORMULARIO */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* 🔵 BOTÓN PRIMARY (Iniciar Sesión) */
+.btn-primary {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #66c0f4 0%, #417a9b 100%);
+  border: 1px solid rgba(102, 192, 244, 0.4);
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
 
-button:hover {
-  background-color: #45a049;
+.btn-primary:hover {
+  background: linear-gradient(135deg, #78c9f7 0%, #5a9bc4 100%);
+  border-color: rgba(102, 192, 244, 0.7);
+  box-shadow: 
+    0 6px 20px rgba(102, 192, 244, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary i {
+  font-size: 1.1rem;
+}
+
+/* ⚪ DIVISOR */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(102, 192, 244, 0.2);
+}
+
+.divider span {
+  padding: 0 1rem;
+  color: #8f98a0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ⚫ BOTÓN SECONDARY (Registro) */
+.btn-secondary {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, rgba(27, 40, 56, 0.6) 0%, rgba(23, 26, 33, 0.6) 100%);
+  border: 1px solid rgba(102, 192, 244, 0.3);
+  border-radius: 4px;
+  color: #66c0f4;
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, rgba(102, 192, 244, 0.15) 0%, rgba(74, 144, 226, 0.1) 100%);
+  border-color: rgba(102, 192, 244, 0.5);
+  box-shadow: 
+    0 4px 16px rgba(102, 192, 244, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.btn-secondary i {
+  font-size: 1.1rem;
+}
+
+/* 📌 FOOTER */
+.login-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(102, 192, 244, 0.2);
+  text-align: center;
+}
+
+.login-footer p {
+  font-size: 0.85rem;
+  color: #8f98a0;
+  margin: 0;
+}
+
+.login-footer a {
+  color: #66c0f4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login-footer a:hover {
+  color: #78c9f7;
+  text-decoration: underline;
+}
+
+/* 🎬 ANIMACIÓN */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 2rem;
+  }
+
+  .login-title {
+    font-size: 1.75rem;
+  }
+
+  .login-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 1rem;
+  }
+
+  .login-container {
+    padding: 1.5rem;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .login-icon {
+    font-size: 2rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.9rem;
+  }
 }

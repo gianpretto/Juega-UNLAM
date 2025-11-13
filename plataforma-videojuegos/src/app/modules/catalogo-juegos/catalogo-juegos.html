@@ -11,7 +11,7 @@
       </p>
     </div>
 
-    <div class="header-actions flex align-items-center gap-3">
+    <div class="header-actions">
       <div *ngIf="juegos.length > 0" class="header-stats">
         <span class="stat-badge">
           <i class="pi pi-trophy"></i>
@@ -19,20 +19,20 @@
         </span>
       </div>
 
+      <!-- Botón Lista de Deseos -->
+      <button
+        (click)="navigateToWishlist()"
+        class="wishlist-button"
+      >
+        <i class="pi pi-heart"></i>
+        <span>Mi Lista de Deseos</span>
+      </button>
 
+      <!-- Carrito -->
+      <app-carrito-component></app-carrito-component>
     </div>
 
   </div>
-<button
-  (click)="navigateToWishlist()"
-  class="flex items-center gap-2 bg-gradient-to-r from-sky-400 to-cyan-500 text-white font-semibold px-5 py-2 rounded-full shadow-md hover:shadow-lg hover:brightness-110 transition-all duration-300"
->
-  <i class="pi pi-heart text-white"></i>
-  <span>Mi Lista de Deseos</span>
-</button>
-
-<app-carrito-component></app-carrito-component>
-
  
   <!-- BUSCADOR -->
   <app-game-search

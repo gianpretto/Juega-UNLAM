@@ -1,9 +1,11 @@
+/* 🎮 ESTILO STEAM - FONDO OSCURO MODERNO */
 .catalogo-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
     min-height: 100vh;
+    background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
 }
 
 /* Header del catálogo */
@@ -13,40 +15,63 @@
     align-items: center;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 2px solid #2c2c2c;
+    border-bottom: 2px solid rgba(102, 192, 244, 0.2);
+    background: linear-gradient(90deg, rgba(27, 40, 56, 0.8) 0%, rgba(23, 26, 33, 0.4) 100%);
+    padding: 1.5rem;
+    border-radius: 8px;
 }
 
 .title-container {
     flex: 1;
 }
 
+/* 🌟 TÍTULO ESTILO STEAM */
 .catalogo-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-size: 3rem;
+    font-weight: 800;
     margin: 0 0 0.5rem 0;
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 50%, #2a75bb 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 4px 20px rgba(102, 192, 244, 0.3);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    position: relative;
+}
+
+.catalogo-title::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #66c0f4, transparent);
+    border-radius: 2px;
 }
 
 .catalogo-title i {
-    font-size: 2rem;
-    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(102, 192, 244, 0.4));
 }
 
+/* Subtítulo con mejor contraste */
 .catalogo-subtitle {
     font-size: 1.1rem;
-    color: #b0b0b0;
+    color: #c7d5e0;
     margin: 0;
-    font-weight: 400;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .header-stats {
@@ -55,36 +80,151 @@
     gap: 1rem;
 }
 
+/* 📦 Contenedor de acciones del header */
+.header-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+/* 🏆 BADGE ESTILO STEAM */
 .stat-badge {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, rgba(53, 122, 189, 0.15) 100%);
-    border: 2px solid rgba(74, 144, 226, 0.3);
-    border-radius: 25px;
+    padding: 0.85rem 1.75rem;
+    background: linear-gradient(135deg, rgba(102, 192, 244, 0.15) 0%, rgba(74, 144, 226, 0.1) 100%);
+    border: 1px solid rgba(102, 192, 244, 0.3);
+    border-radius: 4px;
     font-size: 1rem;
     font-weight: 600;
-    color: #4a90e2;
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
-    animation: pulse 2s ease-in-out infinite;
+    color: #66c0f4;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+.stat-badge:hover {
+    background: linear-gradient(135deg, rgba(102, 192, 244, 0.25) 0%, rgba(74, 144, 226, 0.2) 100%);
+    border-color: rgba(102, 192, 244, 0.5);
+    box-shadow: 
+        0 4px 16px rgba(102, 192, 244, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
 
 .stat-badge i {
     font-size: 1.2rem;
+    color: #66c0f4;
+    filter: drop-shadow(0 0 6px rgba(102, 192, 244, 0.5));
+}
+
+/* 💖 BOTÓN WISHLIST ESTILO STEAM */
+.wishlist-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.75rem;
+    background: linear-gradient(135deg, rgba(232, 65, 97, 0.15) 0%, rgba(186, 26, 56, 0.1) 100%);
+    border: 1px solid rgba(232, 65, 97, 0.3);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e84161;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.wishlist-button:hover {
+    background: linear-gradient(135deg, rgba(232, 65, 97, 0.25) 0%, rgba(186, 26, 56, 0.2) 100%);
+    border-color: rgba(232, 65, 97, 0.5);
+    box-shadow: 
+        0 4px 16px rgba(232, 65, 97, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.wishlist-button:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.wishlist-button i {
+    font-size: 1.2rem;
+    color: #e84161;
+    filter: drop-shadow(0 0 6px rgba(232, 65, 97, 0.5));
+}
+
+/* 🎨 BOTONES ESTILO STEAM */
+button {
+    background: linear-gradient(135deg, #66c0f4 0%, #417a9b 100%);
+    border: 1px solid rgba(102, 192, 244, 0.4);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #78c9f7 0%, #5a9bc4 100%);
+    border-color: rgba(102, 192, 244, 0.7);
+    box-shadow: 
+        0 4px 16px rgba(102, 192, 244, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Asegurar que el texto sea legible en todo el contenedor */
+.catalogo-container * {
+    color: inherit;
+}
+
+.catalogo-container p,
+.catalogo-container span,
+.catalogo-container label {
+    color: #c7d5e0;
 }
 
 
 
 
-
+/* Animación sutil de glow */
 @keyframes pulse {
     0%, 100% {
-        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        box-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
     50% {
-        box-shadow: 0 4px 16px rgba(74, 144, 226, 0.4);
+        box-shadow: 
+            0 4px 16px rgba(102, 192, 244, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 }
 
@@ -95,7 +235,7 @@
     }
 
     .catalogo-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     .catalogo-title i {
@@ -113,7 +253,7 @@
         align-items: flex-start;
         gap: 1rem;
         margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
+        padding: 1rem;
     }
 
     .catalogo-title {
@@ -128,6 +268,11 @@
         font-size: 1rem;
     }
 
+    .header-actions {
+        width: 100%;
+        align-items: stretch;
+    }
+
     .header-stats {
         width: 100%;
         justify-content: flex-start;
@@ -136,9 +281,22 @@
     .stat-badge {
         padding: 0.65rem 1.25rem;
         font-size: 0.95rem;
+        width: 100%;
+        justify-content: center;
     }
 
     .stat-badge i {
+        font-size: 1.1rem;
+    }
+
+    .wishlist-button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    .wishlist-button i {
         font-size: 1.1rem;
     }
 }
