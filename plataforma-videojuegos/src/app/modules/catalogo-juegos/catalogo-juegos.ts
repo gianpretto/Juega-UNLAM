@@ -377,10 +377,16 @@ export class CatalogoJuegosComponent implements OnInit {
     this.cargarJuegos();
   }
 
+
   getEmptyMessage(): string {
     if (this.hasActiveFilters()) {
       return 'No se encontraron juegos con los filtros aplicados';
     }
     return 'No se encontraron juegos';
   }
+
+  navigateToProfile(): void {
+    this.router.navigate(['/usuario-perfil']);
+  }
+
 }

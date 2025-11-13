@@ -52,7 +52,7 @@
               <p-button
                 icon="pi pi-trash"
                 label="Eliminar"
-D                (onClick)="eliminarJuego(item.id)"
+                (onClick)="eliminarJuego(item.id)"
               ></p-button>
             
 </div>
@@ -70,7 +70,6 @@ D                (onClick)="eliminarJuego(item.id)"
       (click)="navigateToCatalogo()"
     ></button>
 
-  <!-- ESTADO VACÍO -->
   <div *ngIf="!loading && juegos.length === 0" class="empty-state text-center mt-5">
     <i class="pi pi-heart text-5xl text-gray-500 mb-3"></i>
     <h3>No tienes juegos en tu lista de deseos</h3>

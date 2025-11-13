@@ -4,6 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AvatarModule } from 'primeng/avatar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CardModule } from 'primeng/card';
+import { Usuario } from '@interfaces/usuario.interface';
+import { UsuarioService } from '@servicios/usuario.service';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -15,30 +20,95 @@ import { CardModule } from 'primeng/card';
 })
 export class UsuarioPerfilComponent {
 
+
    imagenPerfil: string | ArrayBuffer | null = 'https://www.w3schools.com/howto/img_avatar.png';
   imagenFondo: string | ArrayBuffer | null = '';
 
-    onPerfilUpload(event: any) {
-    const file = event.files[0];
-    const reader = new FileReader();
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
 
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      this.imagenPerfil = event.target?.result || null;
-    };
 
-    reader.readAsDataURL(file);
+  usuario: Usuario | null = null;
+  
+ngOnInit() {
+  const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+  if (!usuarioId) return;
+
+  this.usuarioService.verUsuario(usuarioId).subscribe({
+    next: (data) => {
+      this.usuario = data;
+      this.imagenPerfil = data.perfilUrl || 'https://www.w3schools.com/howto/img_avatar.png';
+      this.imagenFondo = data.fondoPerfilUrl || '';
+    },
+    error: (error) => {
+      console.error('Error al obtener datos del usuario:', error);
+    }
+  });
+}
+
+onPerfilUpload(event: any) {
+  const file = event.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+    if (!usuarioId) return;
+
+    const perfilUrl = reader.result?.toString() || null;
+    const fondoPerfilUrl = this.imagenFondo?.toString() || null;
+
+    this.usuarioService.actualizarImagenes(usuarioId, { perfilUrl, fondoPerfilUrl })
+      .subscribe({
+        next: () => {
+          this.imagenPerfil = perfilUrl;
+          alert('Imagen de perfil actualizada');
+        },
+        error: (err) => {
+          console.error('Error al actualizar imagen de perfil', err);
+          alert('Error al actualizar imagen de perfil');
+        }
+      });
+  };
+
+  reader.readAsDataURL(file);
+}
+
+onFondoUpload(event: any) {
+  const file = event.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    const usuarioId = this.usuarioService.obtenerUsuarioDeSesion();
+    if (!usuarioId) return;
+
+    const fondoPerfilUrl = reader.result?.toString() || null;
+    const perfilUrl = this.imagenPerfil?.toString() || null;
+
+    this.usuarioService.actualizarImagenes(usuarioId, { perfilUrl, fondoPerfilUrl })
+      .subscribe({
+        next: () => {
+          this.imagenFondo = fondoPerfilUrl;
+          alert('Fondo de perfil actualizado');
+        },
+        error: (err) => {
+          console.error('Error al actualizar fondo de perfil', err);
+          alert('Error al actualizar fondo de perfil');
+        }
+      });
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+  navigateToCatalogo() {
+    this.router.navigate(['/catalogo']);
+
   }
 
-  
-  onFondoUpload(event: any) {
-    const file = event.files[0];
-    const reader = new FileReader();
 
-    reader.onload = (event: ProgressEvent<FileReader>) => {
-      this.imagenFondo = event.target?.result || null;
-    };
-    reader.readAsDataURL(file);
-}
 
 }
 

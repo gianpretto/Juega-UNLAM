@@ -5,17 +5,19 @@ import { Wishlist } from "@interfaces/wishlist.interface";
 import { Carrito } from "@interfaces/carrito.interface";
 
 export interface Usuario {
-  id: number;
+  id?: number;
   email: string;
   password: string;
   nombre?: string;
   apellido?: string;
   direccion?: string;
-  saldo: number;
+  saldo?: number;
   tipoUsuarioId?: number;
   tipoUsuario?: TipoUsuario;
   reviews?: Review[];
   usuario_juegos?: UsuarioJuego[];
   wishlists?: Wishlist[];
   carritos?: Carrito[];
+  perfilUrl?: string | null;
+  fondoPerfilUrl?: string | null;
 }

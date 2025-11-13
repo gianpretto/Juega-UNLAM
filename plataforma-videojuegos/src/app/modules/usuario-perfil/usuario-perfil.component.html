@@ -14,18 +14,19 @@
       />
     </div>
 
-    <div class="perfil-datos">
+    <div  *ngIf="usuario != null"  class="perfil-datos">
       <div class="fila">
         <div class="columna">
-          <p><strong>Nombre:</strong> Juan</p>
-          <p><strong>Email:</strong> juan@gmail.com</p>
+          <p><strong>Nombre:</strong> {{usuario.nombre}}</p>
+          <p><strong>Email:</strong> {{usuario.email}}</p>
         </div>
         <div class="columna">
-          <p><strong>Apellido:</strong> Pérez</p>
-          <p><strong>Dirección:</strong> Av. Siempre Viva 742</p>
+          <p><strong>Apellido:</strong> {{usuario.apellido}}</p>
+          <p><strong>Dirección:</strong> {{usuario.direccion}}</p>
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="upload-section">
@@ -49,4 +50,15 @@
       customUpload="true"
     ></p-fileUpload>
   </div>
+<button
+pButton
+      class="p-button-outlined p-button-lg mt-3 mi-boton-verde"
+        icon="pi pi-arrow-left"
+      label="Volver al Catálogo"
+  (click)="navigateToCatalogo()"
+>
+  
+  Volver al Catálogo
+</button>
+
 </div>
