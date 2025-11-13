@@ -1,36 +1,87 @@
+/* ===== PERFIL USUARIO - STEAM THEME ===== */
+
 .perfil-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-color: #eef2f7;
-  transition: background-image 0.3s ease-in-out;
+  padding: 2rem 1rem;
+  background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
 }
 
-.perfil-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.perfil-header {
+  text-align: center;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
+}
+
+.perfil-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #66c0f4 0%, #4a9fd8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(102, 192, 244, 0.3);
+  margin: 0;
+}
+
+.perfil-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== AVATAR SECTION ===== */
+.perfil-avatar-section {
+  background: linear-gradient(135deg, #2a475e 0%, #1b2838 100%);
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  position: relative;
+}
+
+.perfil-avatar-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(27, 40, 56, 0.85);
+  border-radius: 12px;
+  z-index: 0;
+}
+
+.perfil-avatar-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 .perfil-avatar {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  background-color: #ccc;
+  border: 4px solid #66c0f4;
+  box-shadow: 0 8px 24px rgba(102, 192, 244, 0.3),
+              0 0 40px rgba(102, 192, 244, 0.2);
+  background: linear-gradient(135deg, #2a475e 0%, #1b2838 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.perfil-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(102, 192, 244, 0.4),
+              0 0 60px rgba(102, 192, 244, 0.3);
 }
 
 .avatar-img {
@@ -39,104 +90,240 @@
   object-fit: cover;
 }
 
-.perfil-datos {
-  background-color: #fff;
-  border: 2px solid #000;
-  padding: 1.5rem 2rem;
-  width: 100%;
-  max-width: 500px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-left: 1rem;
+.avatar-placeholder {
+  font-size: 4rem;
+  color: #66c0f4;
 }
 
-.fila {
+.upload-buttons {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
-}
-
-.columna p {
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-}
-
-.upload-section {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 1rem;
 }
 
-button.p-button-outlined {
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
+/* ===== DATOS SECTION ===== */
+.perfil-datos {
+  background: linear-gradient(135deg, #2a475e 0%, #1b2838 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  margin-bottom: 2rem;
 }
 
-.mi-boton-verde {
-  background-color: #28a745 !important; /* verde */
-  color: white !important; /* texto blanco */
-  border-color: #28a745 !important;
+.datos-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #66c0f4;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(102, 192, 244, 0.3);
 }
 
-.mi-boton-verde:hover {
-  background-color: #218838 !important;
-  border-color: #218838 !important;
+.datos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 
+.dato-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-/* Media queries para móviles */
+.dato-item label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8f98a0;
+}
+
+.dato-value {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  color: #c7d5e0;
+  font-size: 1rem;
+  border: 1px solid rgba(102, 192, 244, 0.2);
+  transition: all 0.3s ease;
+}
+
+.dato-value:hover {
+  border-color: rgba(102, 192, 244, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ===== BOTONES ===== */
+.boton-volver {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #1b2838 0%, #2a475e 100%);
+  color: #66c0f4;
+  border: 2px solid #66c0f4;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.boton-volver span {
+  color: #66c0f4;
+  font-weight: 600;
+}
+
+.boton-volver i {
+  color: #66c0f4;
+  font-size: 1.1rem;
+}
+
+.boton-volver:hover {
+  background: linear-gradient(90deg, #66c0f4 0%, #4a9fd8 100%);
+  color: #1b2838;
+  border-color: #66c0f4;
+  box-shadow: 0 6px 20px rgba(102, 192, 244, 0.4);
+  transform: translateY(-2px);
+}
+
+.boton-volver:hover span {
+  color: #1b2838;
+}
+
+.boton-volver:hover i {
+  color: #1b2838;
+}
+
+/* ===== PRIMENG FILE UPLOAD OVERRIDE ===== */
+::ng-deep .upload-btn .p-button {
+  background: linear-gradient(90deg, #1b2838 0%, #2a475e 100%) !important;
+  color: #66c0f4 !important;
+  border: 2px solid #66c0f4 !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+::ng-deep .upload-btn .p-button:hover {
+  background: linear-gradient(90deg, #66c0f4 0%, #4a9fd8 100%) !important;
+  color: #1b2838 !important;
+  border-color: #66c0f4 !important;
+  box-shadow: 0 6px 20px rgba(102, 192, 244, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+::ng-deep .upload-btn .p-button .p-button-icon {
+  color: inherit !important;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .perfil-card {
-    flex-direction: column;
-    align-items: center;
+  .perfil-title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .perfil-avatar-section {
+    padding: 2rem 1rem;
+  }
+
+  .perfil-avatar {
+    width: 150px;
+    height: 150px;
+    border-width: 3px;
+  }
+
+  .avatar-placeholder {
+    font-size: 3rem;
   }
 
   .perfil-datos {
-    margin-left: 0;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem;
   }
 
-  .fila {
+  .datos-title {
+    font-size: 1.2rem;
+  }
+
+  .datos-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .upload-buttons {
     flex-direction: column;
-    gap: 0.5rem;
+    width: 100%;
   }
 
-  .columna p {
-    font-size: 0.9rem;
+  ::ng-deep .upload-btn .p-button {
+    width: 100% !important;
+  }
+
+  .boton-volver {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .perfil-title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
   }
 
   .perfil-avatar {
     width: 120px;
     height: 120px;
   }
-}
 
-@media (max-width: 480px) {
+  .avatar-placeholder {
+    font-size: 2.5rem;
+  }
+
   .perfil-datos {
-    padding: 0.8rem 1rem;
-    width: 90%;
+    padding: 1rem;
   }
 
-  .columna p {
-    font-size: 0.85rem;
+  .datos-title {
+    font-size: 1rem;
   }
 
-  .perfil-avatar {
-    width: 100px;
-    height: 100px;
+  .dato-item label {
+    font-size: 0.75rem;
   }
 
-  .upload-section {
-    flex-direction: column;
-    gap: 0.5rem;
+  .dato-value {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
   }
 
-  button.p-button-outlined {
-    font-size: 0.85rem;
-    padding: 0.4rem 0.8rem;
+  ::ng-deep .upload-btn .p-button {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  .boton-volver {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
   }
 }

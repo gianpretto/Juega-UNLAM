@@ -1,64 +1,82 @@
-<div
-  class="perfil-container"
-  [ngStyle]="{
-    'background-image': imagenFondo ? 'url(' + imagenFondo + ')' : 'none'
-  }"
->
-  <div class="perfil-card">
-    <div class="perfil-avatar">
-      <img
-        *ngIf="imagenPerfil"
-        [src]="imagenPerfil"
-        alt="Perfil"
-        class="avatar-img"
-      />
-    </div>
+<div class="perfil-container">
+  <div class="perfil-header">
+    <h1 class="perfil-title">MI PERFIL</h1>
+  </div>
 
-    <div  *ngIf="usuario != null"  class="perfil-datos">
-      <div class="fila">
-        <div class="columna">
-          <p><strong>Nombre:</strong> {{usuario.nombre}}</p>
-          <p><strong>Email:</strong> {{usuario.email}}</p>
-        </div>
-        <div class="columna">
-          <p><strong>Apellido:</strong> {{usuario.apellido}}</p>
-          <p><strong>Dirección:</strong> {{usuario.direccion}}</p>
-        </div>
+  <div class="perfil-content">
+    <!-- Avatar y fondo -->
+    <div class="perfil-avatar-section" [ngStyle]="{'background-image': imagenFondo ? 'url(' + imagenFondo + ')' : 'none'}">
+      <div class="perfil-avatar">
+        @if (imagenPerfil) {
+          <img
+            [src]="imagenPerfil"
+            alt="Perfil"
+            class="avatar-img"
+          />
+        }
+        @if (!imagenPerfil) {
+          <i class="pi pi-user avatar-placeholder"></i>
+        }
+      </div>
+      
+      <div class="upload-buttons">
+        <p-fileUpload
+          mode="basic"
+          name="perfil"
+          chooseLabel="Cambiar Avatar"
+          accept="image/*"
+          (onSelect)="onPerfilUpload($event)"
+          auto="true"
+          customUpload="true"
+          styleClass="upload-btn"
+        ></p-fileUpload>
+
+        <p-fileUpload
+          mode="basic"
+          name="fondo"
+          chooseLabel="Cambiar Fondo"
+          accept="image/*"
+          (onSelect)="onFondoUpload($event)"
+          auto="true"
+          customUpload="true"
+          styleClass="upload-btn"
+        ></p-fileUpload>
       </div>
     </div>
 
+    <!-- Datos del usuario -->
+    @if (usuario != null) {
+      <div class="perfil-datos">
+        <h2 class="datos-title">INFORMACIÓN DE LA CUENTA</h2>
+        
+        <div class="datos-grid">
+          <div class="dato-item">
+            <label>Nombre</label>
+            <div class="dato-value">{{usuario.nombre}}</div>
+          </div>
+          
+          <div class="dato-item">
+            <label>Apellido</label>
+            <div class="dato-value">{{usuario.apellido}}</div>
+          </div>
+          
+          <div class="dato-item">
+            <label>Email</label>
+            <div class="dato-value">{{usuario.email}}</div>
+          </div>
+          
+          <div class="dato-item">
+            <label>Dirección</label>
+            <div class="dato-value">{{usuario.direccion || 'No especificada'}}</div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Botón volver -->
+    <button class="boton-volver" (click)="navigateToCatalogo()">
+      <i class="pi pi-arrow-left"></i>
+      <span>Volver al Catálogo</span>
+    </button>
   </div>
-
-  <div class="upload-section">
-    <p-fileUpload
-      mode="basic"
-      name="perfil"
-      chooseLabel="Cambiar perfil"
-      accept="image/*"
-      (onSelect)="onPerfilUpload($event)"
-      auto="true"
-      customUpload="true"
-    ></p-fileUpload>
-
-    <p-fileUpload
-      mode="basic"
-      name="fondo"
-      chooseLabel="Cambiar fondo"
-      accept="image/*"
-      (onSelect)="onFondoUpload($event)"
-      auto="true"
-      customUpload="true"
-    ></p-fileUpload>
-  </div>
-<button
-pButton
-      class="p-button-outlined p-button-lg mt-3 mi-boton-verde"
-        icon="pi pi-arrow-left"
-      label="Volver al Catálogo"
-  (click)="navigateToCatalogo()"
->
-  
-  Volver al Catálogo
-</button>
-
 </div>
