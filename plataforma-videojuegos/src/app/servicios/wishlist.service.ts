@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Wishlist } from '@general/models/wishlist.model';
+import { Wishlist } from '@interfaces/wishlist.interface';
 import { Observable } from 'rxjs';
 import { environment } from '@evironment/environment';
-import { Juego } from '@general/models';    
+import { Juego } from '@interfaces/juego.interface';    
 
 
 

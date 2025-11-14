@@ -1,13 +1,11 @@
 <header class="steam-header">
   <nav class="header-container">
-    <!-- Logo -->
     <div class="header-logo">
       <a routerLink="/catalogo" class="logo-link">
         <img src="assets/images/juegaunlam.png" alt="Juega UNLaM" class="logo-img">
       </a>
     </div>
 
-    <!-- Navigation Menu -->
     <div class="header-nav">
       <ul class="nav-menu">
         <li class="nav-item">
@@ -31,16 +29,13 @@
       </ul>
     </div>
 
-    <!-- User Section -->
     @if (currentUser$ | async; as user) {
       <div class="header-user">
-        <!-- Balance -->
         <div class="user-balance">
           <i class="pi pi-wallet balance-icon"></i>
           <span class="balance-amount">${{ user.saldo }}</span>
         </div>
 
-        <!-- User Menu -->
         <div class="user-menu">
           <div class="user-info">
             <div class="user-avatar">
@@ -66,13 +61,11 @@
       </div>
     }
 
-    <!-- Mobile Menu Toggle -->
     <button class="mobile-toggle" (click)="toggleMobileMenu()">
       <i class="pi" [ngClass]="mobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
     </button>
   </nav>
 
-  <!-- Mobile Navigation -->
   <div class="mobile-nav" [class.open]="mobileMenuOpen">
     <ul class="mobile-menu">
       <li class="mobile-item">

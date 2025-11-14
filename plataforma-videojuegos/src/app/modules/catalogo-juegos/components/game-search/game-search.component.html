@@ -1,9 +1,7 @@
 <div class="search-container">
     <span class="p-input-icon-left search-wrapper">
-        <!-- Icono de búsqueda -->
         <i class="pi pi-search search-icon"></i>
 
-        <!-- Input de búsqueda -->
         <input
             pInputText
             type="text"
@@ -14,7 +12,6 @@
             [disabled]="disabled"
         />
 
-        <!-- Botón de limpiar (aparece solo si hay texto) -->
         <button
             *ngIf="hasSearchTerm()"
             class="clear-button"

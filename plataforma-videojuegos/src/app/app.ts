@@ -16,7 +16,6 @@ export class App {
 
   constructor(private usuarioService: UsuarioService) {
     this.isLoggedIn$ = this.usuarioService.isLoggedIn$;
-    // inicializar estado y restaurar usuario completo desde sessionStorage (SSR-safe dentro del servicio)
     this.usuarioService.restoreFromSession();
   }
 }

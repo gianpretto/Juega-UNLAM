@@ -1,15 +1,12 @@
 <div class="register-page">
   <div class="register-container">
-    <!-- Header -->
     <div class="register-header">
       <i class="pi pi-user-plus register-icon"></i>
       <h1 class="register-title">CREAR CUENTA</h1>
       <p class="register-subtitle">Únete a la comunidad de Juega UNLAM</p>
     </div>
 
-    <!-- Formulario -->
     <form (ngSubmit)="onSubmit()" class="register-form">
-      <!-- Nombre y Apellido en grid -->
       <div class="form-row">
         <div class="form-group">
           <label for="nombre" class="form-label">
@@ -46,7 +43,6 @@
         </div>
       </div>
 
-      <!-- Email -->
       <div class="form-group">
         <label for="email" class="form-label">
           <i class="pi pi-envelope"></i>
@@ -64,25 +60,23 @@
         />
       </div>
 
-      <!-- Dirección -->
       <div class="form-group">
         <label for="direccion" class="form-label">
           <i class="pi pi-map-marker"></i>
           Dirección
         </label>
-        <input 
-          id="direccion" 
-          type="text" 
-          pInputText 
-          [(ngModel)]="direccion" 
-          name="direccion" 
-          required 
-          class="form-input"
-          placeholder="Tu dirección"
-        />
+      <input 
+  id="direccion" 
+  type="text" 
+  pInputText 
+  [(ngModel)]="direccion" 
+  name="direccion" 
+  required 
+  class="form-input"
+  placeholder="Tu dirección"
+/>
       </div>
 
-      <!-- Contraseña -->
       <div class="form-group">
         <label for="contraseña" class="form-label">
           <i class="pi pi-lock"></i>
@@ -93,14 +87,13 @@
           type="password" 
           pInputText 
           [(ngModel)]="password" 
-          name="contraseña" 
+          name="password" 
           required 
           class="form-input"
           placeholder="Crea una contraseña segura"
         />
       </div>
 
-      <!-- Botón de Registro -->
       <div class="form-actions">
         <button pButton type="submit" class="btn-primary">
           <i class="pi pi-check"></i>
@@ -109,7 +102,13 @@
       </div>
     </form>
 
-    <!-- Footer -->
+    <div  class="error-message" 
+  *ngIf="mensajeError"
+>
+  {{ mensajeError }}
+</div>
+
+
     <div class="register-footer">
       <p>¿Ya tienes cuenta? <a href="/iniciar-sesion">Iniciar Sesión</a></p>
     </div>

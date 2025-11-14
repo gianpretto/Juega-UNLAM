@@ -1,15 +1,12 @@
 <div class="opciones-container mt-5">
-  <!-- Imagen del juego -->
   <img [src]="imagen" alt="{{juego.nombre}}" class="game-cover-image" />
 
   <div class="opciones-content d-flex flex-column gap-3">
-    <!-- Precio -->
     <div class="price-section">
       <span class="price-label">Precio</span>
       <span class="price-value">{{juego.precio | currency:'USD':'code'}}</span>
     </div>
 
-    <!-- Botones de acción -->
     <ng-container *ngIf="juegoComprado; else noComprado">
       <button class="btn btn-success btn-lg w-100 rounded" (click)="irABiblioteca()">
         Ver en biblioteca
@@ -30,5 +27,8 @@
   </div>
   <div class="mensaje-carrito" *ngIf="mensajeCarrito">
   {{ mensajeCarrito }}
+</div>
+<div class="mensaje-wishlist" *ngIf="mensajeWishlist">
+  {{ mensajeWishlist }}
 </div>
 </div>

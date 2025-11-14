@@ -1,12 +1,10 @@
 <div class="filters-container">
-    <!-- Título de la sección -->
     <div class="filters-header">
         <h3 class="filters-title">
             <i class="pi pi-filter"></i>
             Filtros
         </h3>
 
-        <!-- Botón de limpiar filtros -->
         <button
             *ngIf="hasActiveFilters()"
             class="clear-filters-button"
@@ -19,9 +17,7 @@
         </button>
     </div>
 
-    <!-- Contenedor de filtros -->
     <div class="filters-grid">
-        <!-- Filtro de ordenamiento -->
         <div class="filter-item">
             <label class="filter-label" for="sortSelect">
                 <i class="pi pi-sort-alt"></i>
@@ -44,7 +40,6 @@
             </div>
         </div>
 
-        <!-- Filtro de género -->
         <div class="filter-item">
             <label class="filter-label" for="genreSelect">
                 <i class="pi pi-tags"></i>
@@ -67,7 +62,6 @@
             </div>
         </div>
 
-        <!-- Filtro de plataforma -->
         <div class="filter-item">
             <label class="filter-label" for="platformSelect">
                 <i class="pi pi-desktop"></i>
@@ -91,7 +85,6 @@
         </div>
     </div>
 
-    <!-- Indicador de filtros activos -->
     <div *ngIf="hasActiveFilters()" class="active-filters-info">
         <i class="pi pi-info-circle"></i>
         <span>{{ getActiveFiltersCount() }} filtro(s) activo(s)</span>

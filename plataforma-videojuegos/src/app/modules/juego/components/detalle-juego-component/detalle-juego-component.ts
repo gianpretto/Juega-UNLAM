@@ -23,14 +23,11 @@ export class DetalleJuegoComponent implements OnInit {
   imagenes: string[] = [];
   
   ngOnInit(): void {
-    console.log("ESTE ES EL JUEGO: ",this.juego);
     if(this.juego){
-      console.log(this.juego);
     this.obtenerImagenesDeUnJuego(this.juego.id);
     }
   }
   
-  // Usar la primera imagen disponible o la imagen seleccionada
   imagenAMostrar = computed(() =>{
     return this.imagenActual() || this.imagenes[0] || '';
   })
@@ -42,23 +39,14 @@ export class DetalleJuegoComponent implements OnInit {
   obtenerImagenesDeUnJuego(id:number){
     this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
       next : (data) => {
-        console.log("LAS IMAGENES:",data)
-        // Obtener TODAS las imágenes, priorizando la imagen principal (isMain: true)
         const imagenPrincipal = data.find((img: { url: string, isMain: boolean }) => img.isMain === true);
         const imagenesSecundarias = data.filter((img: { url: string, isMain: boolean }) => img.isMain === false);
         
-        // Poner la imagen principal primero, luego las secundarias
         this.imagenes = [
           ...(imagenPrincipal ? [imagenPrincipal.url] : []),
           ...imagenesSecundarias.map((img: { url: string }) => img.url)
         ];
-      },
-      error : (data) => {
-        console.log("ERROR AL TREAR LAS IMAGENES",data)
-      },
-      complete : () => {
-        console.log("IMAGENES TRAIDAS")
-      },
+      }
     });
   }
 

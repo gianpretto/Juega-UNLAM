@@ -1,5 +1,4 @@
 <div class="catalogo-container">
-  <!-- HEADER -->
   <div class="catalogo-header flex justify-content-between align-items-center">
     <div class="title-container">
       <h1 class="catalogo-title flex align-items-center gap-2">
@@ -19,20 +18,17 @@
         </span>
       </div>
 
-      <!-- Carrito -->
       <app-carrito-component></app-carrito-component>
     </div>
 
   </div>
  
-  <!-- BUSCADOR -->
   <app-game-search
     [placeholder]="'Buscar juegos por título...'"
     [disabled]="loading"
     (onSearch)="handleSearch($event)"
   ></app-game-search>
 
-  <!-- FILTROS -->
   <app-game-filters
     [filters]="filters"
     [sortOptions]="sortOptions"
@@ -44,7 +40,6 @@
     (onClearFilters)="clearFilters()"
   ></app-game-filters>
 
-  <!-- GRILLA -->
   <app-game-grid
     [juegos]="filteredJuegos"
     [loading]="loading"

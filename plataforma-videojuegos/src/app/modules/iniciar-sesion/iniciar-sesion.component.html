@@ -1,15 +1,12 @@
 <div class="login-page">
   <div class="login-container">
-    <!-- Header -->
     <div class="login-header">
       <i class="pi pi-gamepad login-icon"></i>
       <h1 class="login-title">INICIAR SESIÓN</h1>
       <p class="login-subtitle">Accede a tu cuenta de Juega UNLAM</p>
     </div>
 
-    <!-- Formulario -->
     <form (ngSubmit)="onSubmit()" class="login-form">
-      <!-- Email -->
       <div class="form-group">
         <label for="email" class="form-label">
           <i class="pi pi-envelope"></i>
@@ -27,7 +24,6 @@
         />
       </div>
 
-      <!-- Contraseña -->
       <div class="form-group">
         <label for="contraseña" class="form-label">
           <i class="pi pi-lock"></i>
@@ -45,7 +41,6 @@
         />
       </div>
 
-      <!-- Botones -->
       <div class="form-actions">
         <button pButton type="submit" class="btn-primary">
           <i class="pi pi-sign-in"></i>
@@ -63,9 +58,10 @@
       </div>
     </form>
 
-    <!-- Footer -->
-    <div class="login-footer">
-      <p>¿Olvidaste tu contraseña? <a href="#">Recuperar</a></p>
-    </div>
+    <div *ngIf="mensajeError" class="login-error mt-3">
+  {{ mensajeError }}
+</div>
+
+  
   </div>
 </div>

@@ -73,16 +73,12 @@ export class UsuarioService {
     }
 
     const id = sessionStorage.getItem('idUsuario');
-    // Actualizar estado interno por si se consultó desde otro sitio
     const has = id ? true : false;
     this._isLoggedIn.next(has);
     return id ? parseInt(id, 10) : null;
   }
 
-  /**
-   * Intenta restaurar el usuario completo desde sessionStorage (si hay id)
-   * Hace una llamada al backend para obtener los datos del usuario y los expone en currentUser$.
-   */
+ 
   restoreFromSession(): void {
     const id = this.obtenerUsuarioDeSesion();
     if (!id) return;
@@ -122,7 +118,6 @@ export class UsuarioService {
     return this.http.put<{ saldo: number }>(`${environment.BACKEND_URL}/usuarios/${id}/descontar-saldo`, { monto })
       .pipe(
         map(res => {
-          // Actualizamos el saldo del currentUser
           const user = this._currentUser.value;
           if (user) {
             this._currentUser.next({ ...user, saldo: res.saldo });
@@ -137,7 +132,7 @@ export class UsuarioService {
     const usuarioId = this.obtenerUsuarioDeSesion();
     if (!usuarioId) return throwError(() => new Error('No hay usuario logueado'));
 
-    const juegosIds = juegos.map(j => j.id); // siempre enviamos un array
+    const juegosIds = juegos.map(j => j.id); 
     return this.http.post(`${environment.BACKEND_URL}/usuario-juego/agregar`, {
       usuarioId,
       juegos: juegosIds

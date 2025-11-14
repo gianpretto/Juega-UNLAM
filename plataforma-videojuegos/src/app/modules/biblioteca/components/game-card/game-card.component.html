@@ -1,7 +1,6 @@
 <div class="game-card" (click)="handleCardClick($event)">
 
     <div class="game-image-container">
-        <!-- Imagen del juego o placeholder -->
         <img 
             *ngIf="juego.mainImagenId && !imageError" 
             [src]="getImageUrl()" 
@@ -15,7 +14,6 @@
             <p>{{ juego.nombre }}</p>
         </div>
 
-        <!-- Overlay con SOLO el botón de ver detalles -->
         <div class="game-overlay">
             <div class="overlay-actions">
                 <button
@@ -32,7 +30,6 @@
         </div>
     </div>
 
-    <!-- Información del juego: Solo nombre y descripción -->
     <div class="game-info">
         <h3
             class="game-title"
@@ -42,7 +39,6 @@
             {{ juego.nombre }}
         </h3>
 
-        <!-- Descripción corta -->
         <p class="game-description" *ngIf="juego.descripcion">
             {{ getShortDescription() }}
         </p>

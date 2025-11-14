@@ -31,14 +31,11 @@ export class JuegoComponent implements OnInit {
     listarJuego(id: number){
         this.juegoService.getJuegoById(id).subscribe({
           next: (data) => {
-            console.log("TRAJE EL JUEGO", data);
             this.juego = data;
           },
           error: (data) => {
-            console.log("ERROR AL TRAER EL JUEGO",data);
           },
           complete: () => {
-            console.log("JUEGO TRAIDO CON EXITO");
           }
         });
     }

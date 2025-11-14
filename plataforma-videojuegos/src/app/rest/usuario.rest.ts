@@ -7,7 +7,7 @@ import { Carrito } from "@interfaces/carrito.interface";
 export interface UsuarioRest {
     id: number;
     email: string;
-    password?: string;      // opcional, depende si el backend lo envía o no
+    password?: string;     
     nombre?: string;
     apellido?: string;
     direccion?: string;

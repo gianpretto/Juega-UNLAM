@@ -1,9 +1,8 @@
-/* 🎮 GAME CARD ESTILO STEAM - BIBLIOTECA */
 .game-card {
     background: linear-gradient(135deg, rgba(27, 40, 56, 0.6) 0%, rgba(23, 26, 33, 0.8) 100%);
     border: 1px solid rgba(102, 192, 244, 0.2);
     border-radius: 8px;
-    overflow: visible; /* ← Cambiado para que la imagen no se recorte */
+    overflow: visible; 
     transition: all 0.3s ease;
     cursor: pointer;
     height: 100%;
@@ -21,14 +20,13 @@
         0 0 20px rgba(102, 192, 244, 0.2);
 }
 
-/* 🖼️ Contenedor de imagen mejorado */
 .game-image-container {
     position: relative;
     width: 100%;
     height: 240px;
-    overflow: hidden; /* ← Overflow solo en el contenedor de imagen */
+    overflow: hidden; 
     background: linear-gradient(135deg, #1b2838 0%, #0d1116 100%);
-    border-radius: 8px 8px 0 0; /* ← Border radius solo arriba */
+    border-radius: 8px 8px 0 0;
 }
 
 .game-image {
@@ -39,7 +37,7 @@
     transition: transform 0.4s ease, opacity 0.3s ease;
     display: block;
     z-index: 1;
-    border-radius: 8px 8px 0 0; /* ← Border radius para la imagen también */
+    border-radius: 8px 8px 0 0; 
 }
 
 .game-card:hover .game-image {
@@ -47,7 +45,6 @@
     opacity: 0.9;
 }
 
-/* ✨ Overlay mejorado con gradiente sutil */
 .game-overlay {
     position: absolute;
     top: 0;
@@ -84,7 +81,6 @@
     transform: translateY(0);
 }
 
-/* 🔘 Botones de acción estilo Steam */
 .action-button {
     width: 3.5rem;
     height: 3.5rem;
@@ -118,7 +114,6 @@
     transform: scale(1.05);
 }
 
-/* Estados especiales de botones */
 .favorite-active {
     background: linear-gradient(135deg, #ff4757 0%, #e84118 100%) !important;
     animation: heartBeat 0.3s ease;
@@ -144,7 +139,6 @@
     }
 }
 
-/* Badge de rating */
 .rating-badge {
     position: absolute;
     top: 0.75rem;
@@ -170,7 +164,6 @@
     font-size: 0.95rem;
 }
 
-/* Badge de precio */
 .price-badge {
     position: absolute;
     top: 0.75rem;
@@ -192,7 +185,6 @@
     letter-spacing: 0.5px;
 }
 
-/* Badge de juego adquirido */
 .owned-badge {
     position: absolute;
     top: 0.75rem;
@@ -216,7 +208,6 @@
     font-size: 0.9rem;
 }
 
-/* 📦 Placeholder de imagen mejorado */
 .game-placeholder {
     width: 100%;
     height: 100%;
@@ -253,7 +244,6 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* 📝 Información del juego */
 .game-info {
     padding: 1.25rem;
     flex: 1;
@@ -261,7 +251,7 @@
     flex-direction: column;
     gap: 0.75rem;
     background: linear-gradient(180deg, rgba(13, 17, 22, 0.4) 0%, rgba(13, 17, 22, 0.7) 100%);
-    border-radius: 0 0 8px 8px; /* ← Border radius solo abajo */
+    border-radius: 0 0 8px 8px;
 }
 
 .game-title {
@@ -295,7 +285,6 @@
     font-size: 0.95rem;
 }
 
-/* 📄 Descripción del juego */
 .game-description {
     font-size: 0.9rem;
     color: #8f98a0;
@@ -309,7 +298,6 @@
     -webkit-box-orient: vertical;
 }
 
-/* Géneros como texto */
 .game-genres-text {
     display: flex;
     align-items: center;
@@ -327,7 +315,6 @@
     flex-shrink: 0;
 }
 
-/* Plataformas */
 .game-platforms {
     display: flex;
     flex-wrap: wrap;
@@ -359,7 +346,6 @@
     font-size: 1rem;
 }
 
-/* Géneros como tags */
 .game-genres {
     display: flex;
     flex-wrap: wrap;
@@ -384,7 +370,6 @@
     border-color: #4a90e2;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .game-image-container {
         height: 180px;
@@ -471,7 +456,6 @@
     }
 }
 
-/* Animación de carga de imagen */
 .game-image {
     animation: imageLoad 0.5s ease-in-out;
 }

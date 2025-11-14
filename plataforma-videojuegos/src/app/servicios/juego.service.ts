@@ -5,7 +5,6 @@ import { Imagen } from '@interfaces/image.interface';
 import { Review } from '@interfaces/review.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@evironment/environment';
-import { JuegoMapper } from '@mapper/juego.mapper';
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 
@@ -37,25 +36,21 @@ export class JuegoService {
   }
   
     saveTermInSession(term: string): void {
-      //localStorage.setItem('searchTerm', term);
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('searchTerm', term);
       }
     }
     saveGenreInSession(genre: string): void {
-      //localStorage.setItem('genre', genre);
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('genre', genre);
       }
     }
     savePlatformInSession(platform: string): void {
-      //localStorage.setItem('platform', platform);
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('platform', platform);
       }
     }
     saveSortInSession(sort: string): void {
-      //localStorage.setItem('sort', sort);
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
         sessionStorage.setItem('sort', sort);
       }
@@ -68,7 +63,6 @@ export class JuegoService {
       let platform = '';
       let sort = '';
 
-      // Proteger contra SSR
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
         term = sessionStorage.getItem('searchTerm') || '';
         genre = sessionStorage.getItem('genre') || '';

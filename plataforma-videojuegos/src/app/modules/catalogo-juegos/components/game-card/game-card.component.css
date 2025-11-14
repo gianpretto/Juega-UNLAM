@@ -17,7 +17,6 @@
     box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3);
 }
 
-/* Contenedor de imagen */
 .game-image-container {
     position: relative;
     width: 100%;
@@ -65,7 +64,6 @@
     transform: scale(1.1);
 }
 
-/* Overlay con botones de acción */
 .game-overlay {
     position: absolute;
     top: 0;
@@ -96,7 +94,6 @@
     transform: translateY(0);
 }
 
-/* Botones de acción */
 .action-button {
     width: 3rem;
     height: 3rem;
@@ -117,7 +114,6 @@
     transform: scale(0.95);
 }
 
-/* Estados especiales de botones */
 .favorite-active {
     background: linear-gradient(135deg, #ff4757 0%, #e84118 100%) !important;
     animation: heartBeat 0.3s ease;
@@ -143,7 +139,6 @@
     }
 }
 
-/* Badge de rating */
 .rating-badge {
     position: absolute;
     top: 0.75rem;
@@ -169,7 +164,6 @@
     font-size: 0.95rem;
 }
 
-/* Badge de precio */
 .price-badge {
     position: absolute;
     top: 0.75rem;
@@ -191,7 +185,6 @@
     letter-spacing: 0.5px;
 }
 
-/* Información del juego */
 .game-info {
     padding: 1rem;
     flex: 1;
@@ -229,7 +222,6 @@
     font-size: 0.95rem;
 }
 
-/* Descripción del juego */
 .game-description {
     font-size: 0.85rem;
     color: #999;
@@ -243,7 +235,6 @@
     -webkit-box-orient: vertical;
 }
 
-/* Géneros como texto */
 .game-genres-text {
     display: flex;
     align-items: center;
@@ -261,7 +252,6 @@
     flex-shrink: 0;
 }
 
-/* Plataformas */
 .game-platforms {
     display: flex;
     flex-wrap: wrap;
@@ -293,7 +283,6 @@
     font-size: 1rem;
 }
 
-/* Géneros como tags */
 .game-genres {
     display: flex;
     flex-wrap: wrap;
@@ -318,7 +307,6 @@
     border-color: #4a90e2;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .game-image-container {
         height: 180px;
@@ -405,7 +393,6 @@
     }
 }
 
-/* Animación de carga de imagen */
 .game-image {
     animation: imageLoad 0.5s ease-in-out;
 }

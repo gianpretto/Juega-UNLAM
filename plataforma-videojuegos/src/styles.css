@@ -1,18 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
 
-
-/* Importar PrimeIcons - Necesario para que se muestren los iconos */
 @import 'primeicons/primeicons.css';
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
-/* Reset y estilos base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 🎮 TEMA OSCURO ESTILO STEAM */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: linear-gradient(180deg, #1b2838 0%, #171a21 50%, #0d1116 100%);
@@ -22,7 +17,6 @@ body {
     min-height: 100vh;
 }
 
-/* Scrollbar personalizada estilo Steam */
 ::-webkit-scrollbar {
     width: 14px;
 }
