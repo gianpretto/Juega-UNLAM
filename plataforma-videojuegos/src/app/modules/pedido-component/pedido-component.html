@@ -9,7 +9,7 @@
        }">
     {{ mensaje }}
 
-    <!-- Botón adicional cuando la compra fue exitosa -->
+    <!-- Boton de cuando la compra fue exitosa -->
     <div *ngIf="mensaje.includes('éxito')" class="mt-3">
       <button class="btn btn-primary" (click)="irACatalogo()">Seguir navegando 🎮</button>
     </div>

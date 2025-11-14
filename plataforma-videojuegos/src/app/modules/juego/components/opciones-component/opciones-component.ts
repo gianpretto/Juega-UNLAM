@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 
 export class OpcionesComponent implements OnInit {
   juegoComprado: boolean = false;
-
+  mensajeCarrito: string = '';
   ngOnInit(): void {
     this.obtenerImagenDePortada();
     this.verificarJuegoComprado();
@@ -28,7 +28,7 @@ export class OpcionesComponent implements OnInit {
 
   @Input() juego!: Juego;
 
-  constructor(private wishlistService: WishlistService, private bibliotecaService: BibliotecaService,  private router: Router) { }
+  constructor(private wishlistService: WishlistService, private bibliotecaService: BibliotecaService, private router: Router) { }
 
   carritoService = inject(CarritoService);
 
@@ -51,7 +51,7 @@ export class OpcionesComponent implements OnInit {
 
   agregarAWishlist(juegoId: number) {
     if (!juegoId) {
-      console.warn('⚠️ No se pudo agregar a la wishlist: juegoId indefinido');
+      console.warn('No se pudo agregar a la wishlist: juegoId indefinido');
       return;
     }
     if (!this.juegoComprado) {
@@ -66,7 +66,18 @@ export class OpcionesComponent implements OnInit {
     }
   }
   agregarAlCarrito() {
-    if (!this.juegoComprado) this.carritoService.agregarJuego(this.juego);
+    if (this.juegoComprado) return;
+
+    const agregado = this.carritoService.agregarJuego(this.juego);
+
+    if (!agregado) {
+      this.mensajeCarrito = "✔️ Producto ya agregado al carrito";
+
+      // borra el mensaje después de 2 segundos
+      setTimeout(() => this.mensajeCarrito = '', 2000);
+
+      return;
+    }
   }
   verificarJuegoComprado() {
     this.bibliotecaService.estaComprado(this.juego.id).subscribe({
@@ -76,6 +87,6 @@ export class OpcionesComponent implements OnInit {
   }
 
   irABiblioteca() {
-  this.router.navigate(['/mi-biblioteca']);
-}
+    this.router.navigate(['/mi-biblioteca']);
+  }
 }

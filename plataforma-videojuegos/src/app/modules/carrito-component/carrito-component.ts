@@ -20,7 +20,7 @@ export class CarritoComponent implements OnInit {
   router = inject(Router);
 
   ngOnInit() {
-    this.carritoService.cargarCarrito(); // 👈 carga desde la BD
+    this.carritoService.cargarCarrito();
     this.carritoService.carrito$.subscribe(juegos => {
       this.juegos = juegos;
       this.total = this.carritoService.obtenerTotal();

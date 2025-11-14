@@ -28,12 +28,11 @@ export class CarritoService {
     const usuarioId = sessionStorage.getItem('idUsuario');
     if (!usuarioId) return;
 
-    // ✅ Verificar si ya está en el carrito actual
+    //Verificar si ya está en el carrito actual
     const carritoActual = this.carritoSubject.value;
     const yaEnCarrito = carritoActual.some(j => j.id === juego.id);
     if (yaEnCarrito) {
-      console.warn('El juego ya está en el carrito.');
-      return;
+      return false;
     }
 
     this.http.post<Juego[]>(`${environment.BACKEND_URL}/carrito/${usuarioId}/agregar`, { juegoId: juego.id })
@@ -41,14 +40,14 @@ export class CarritoService {
         next: (juegos) => this.carritoSubject.next(juegos),
         error: (err) => console.error('Error al agregar al carrito:', err)
       });
-
+    return true;
   }
 
   eliminarJuego(juego: Juego) {
     const usuarioId = sessionStorage.getItem('idUsuario');
     if (!usuarioId) return;
 
-    // Usamos body porque Express espera recibir el juegoId en el body
+    //Usamos body porque Express espera recibir el juegoId en el body
     this.http.delete<Juego[]>(`${environment.BACKEND_URL}/carrito/${usuarioId}/eliminar/${juego.id}`)
       .subscribe({
         next: (juegos) => this.carritoSubject.next(juegos),

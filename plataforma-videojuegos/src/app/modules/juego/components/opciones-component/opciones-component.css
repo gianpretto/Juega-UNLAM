@@ -169,3 +169,13 @@
     font-size: 1rem;
   }
 }
+.mensaje-carrito {
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: #2b2b2b;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: center;
+  width: fit-content;
+}
