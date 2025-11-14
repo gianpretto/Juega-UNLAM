@@ -1,17 +1,11 @@
 <div class="biblioteca-container">
-    <!-- Header de la biblioteca -->
     <div class="biblioteca-header">
         <div class="title-container">
             <h1 class="biblioteca-title">
                 <i class="pi pi-bookmark"></i>
                 Mi Biblioteca
             </h1>
-            <p class="biblioteca-subtitle">Tus juegos guardados</p>
-            <!-- Badge de ID de usuario (temporal para debug) -->
-            <span class="user-id-badge">
-                <i class="pi pi-user"></i>
-                Usuario ID: {{ currentUserId }}
-            </span>
+            <p class="biblioteca-subtitle">Tus juegos guardados</p>   
         </div>
 
         <div class="header-stats" *ngIf="juegos.length > 0">
@@ -22,14 +16,12 @@
         </div>
     </div>
 
-    <!-- Componente de búsqueda -->
     <app-game-search
         [placeholder]="'Buscar en tu biblioteca...'"
         [disabled]="loading"
         (onSearch)="handleSearch($event)"
     ></app-game-search>
 
-    <!-- Componente de grilla de juegos -->
     <app-game-grid
         [juegos]="filteredJuegos"
         [loading]="loading"
@@ -37,7 +29,6 @@
         (onGameClick)="handleGameClick($event)"
     ></app-game-grid>
 
-    <!-- Botón de recargar (solo si hay error) -->
     <div class="error-container" *ngIf="errorMessage">
         <div class="error-content">
             <i class="pi pi-exclamation-circle error-icon"></i>
