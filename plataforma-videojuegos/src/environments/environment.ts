@@ -1,6 +1,7 @@
+// environment.ts
+// src/environments/environment.ts
 export const environment = {
-
-  apiUrl: 'https://api.rawg.io/api/',
-  rawgApiKey: '8b9b1e5d7c064041ab1b99c6d79b0975',
-  BACKEND_URL : 'http://localhost:3000'
+  apiUrl: '',                // si lo usabas, dejalo
+  rawgApiKey: '',
+  BACKEND_URL: 'http://localhost:3000'  // backend Express
 };

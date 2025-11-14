@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { Juego } from '@interfaces/juego.interface';
+import { CardVM } from '../../../../servicios/juego.service';
 
 /**
  * Componente presentacional para mostrar una tarjeta individual de juego
@@ -19,7 +20,7 @@ export class GameCardComponent {
   /**
    * Datos del juego a mostrar
    */
-  @Input() juego!: Juego;
+  @Input() juego!: CardVM | any;
 
   /**
    * Indica si el juego está en la biblioteca del usuario

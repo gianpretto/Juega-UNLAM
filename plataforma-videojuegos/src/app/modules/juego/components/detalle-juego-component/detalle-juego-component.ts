@@ -35,11 +35,19 @@ export class DetalleJuegoComponent implements OnInit {
     this.imagenActual.set(imagen);
   }
 
+
   obtenerImagenesDeUnJuego(id:number){
     this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
-      next : (data) => {
-        console.log("LAS IMAGENES:",data)
-        this.imagenes = data.map((img: { url: string }) => img.url);
+      next : (data: string[] | { url: string }[]) => {
+        console.log("LAS IMAGENES:", data);
+        // data puede ser string[] o { url: string }[]; normalizamos a string[]
+        if (Array.isArray(data)) {
+          this.imagenes = (data as any[]).map(img => {
+            return typeof img === 'string' ? img : (img?.url ?? '');
+          }).filter(Boolean);
+        } else {
+          this.imagenes = [];
+        }
       },
       error : (data) => {
         console.log("ERROR AL TREAR LAS IMAGENES",data)
@@ -49,6 +57,7 @@ export class DetalleJuegoComponent implements OnInit {
       },
     });
   }
+
 
   responsiveOptions = [
     {

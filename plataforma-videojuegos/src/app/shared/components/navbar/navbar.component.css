@@ -1,1 +1,18 @@
-:host ::ng-deep .p-menubar { border: none; border-radius: 0; }
+:host {
+  display: block;
+}
+
+/* Menú dark, sin borde ni “franja” abajo */
+:host ::ng-deep .p-menubar {
+  background: #111111 !important;     /* mismo tono que el header */
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Quitar cualquier borde inferior interno */
+:host ::ng-deep .p-menubar-root-list {
+  border: none !important;
+}

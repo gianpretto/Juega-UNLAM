@@ -1,14 +1,12 @@
 <div class="game-card" (click)="handleCardClick($event)">
 
     <div class="game-image-container">
-        <!--TODO:HAY QUE FIXEAR EL .TS PARA QUE FUNCIONE
         <img
-            [src]="getGameImage()"
-            [alt]="juego.nombre"
-            class="game-image"
-            loading="lazy"
-        />
-        -->
+  [src]="juego.coverUrl ?? juego.imagen ?? juego.image ?? ''"
+  [alt]="juego.nombre"
+  class="game-image"
+  loading="lazy"
+/>
 
 
         <div class="game-overlay">
