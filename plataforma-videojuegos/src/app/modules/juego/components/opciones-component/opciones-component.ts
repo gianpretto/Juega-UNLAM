@@ -74,7 +74,7 @@ export class OpcionesComponent implements OnInit {
       this.mensajeCarrito = "✔️ Producto ya agregado al carrito";
 
       // borra el mensaje después de 2 segundos
-      setTimeout(() => this.mensajeCarrito = '', 2000);
+      setTimeout(() => this.mensajeCarrito = '', 4000);
 
       return;
     }

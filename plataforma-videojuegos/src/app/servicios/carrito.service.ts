@@ -11,8 +11,6 @@ export class CarritoService {
 
   http = inject(HttpClient);
 
-  constructor() { }
-
   cargarCarrito() {
     const usuarioId = sessionStorage.getItem('idUsuario');
     if (!usuarioId) return;
@@ -53,7 +51,6 @@ export class CarritoService {
         next: (juegos) => this.carritoSubject.next(juegos),
         error: (err) => console.error('Error al eliminar juego del carrito:', err)
       });
-
   }
 
   vaciarCarrito() {

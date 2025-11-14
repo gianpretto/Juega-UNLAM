@@ -27,10 +27,6 @@ export class CarritoComponent implements OnInit {
     });
   }
 
-  toggleCarrito() {
-    this.mostrarCarrito = !this.mostrarCarrito;
-  }
-
   eliminar(juego: Juego) {
     this.carritoService.eliminarJuego(juego);
   }
