@@ -115,7 +115,7 @@ export class CatalogoJuegosComponent implements OnInit {
           descripcion: item.descripcion ?? item.description ?? '',
           released: item.released ?? item.release_date ?? '',
           rating: item.rating ?? item.score ?? 0
-        })) as Juego[];
+        })) as JuegoPlataformaGenero[];
 
         // Usar una copia para el listado filtrado
         this.filteredJuegos = [...this.juegos];

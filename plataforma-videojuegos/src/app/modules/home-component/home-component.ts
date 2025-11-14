@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 
-import { JuegoService, CardVM } from '../../servicios/juego.service';
+import { JuegoService } from '../../servicios/juego.service';
 import { GameCardComponent } from '../../modules/biblioteca/components/game-card/game-card.component';
 import { forkJoin } from 'rxjs';
 
