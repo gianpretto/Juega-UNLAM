@@ -5,10 +5,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { Juego } from '@interfaces/juego.interface';
 import { environment } from '@evironment/environment';
 
-/**
- * Componente presentacional para mostrar una tarjeta individual de juego
- * Es completamente "tonto" - solo recibe datos y emite eventos
- */
 @Component({
   selector: 'app-game-card',
   standalone: true,
@@ -17,24 +13,13 @@ import { environment } from '@evironment/environment';
   styleUrl: './game-card.component.css'
 })
 export class GameCardComponent {
-  /**
-   * Datos del juego a mostrar
-   */
+
   @Input() juego!: Juego;
 
-  /**
-   * Indica si el juego está en la biblioteca del usuario
-   */
   @Input() isInBiblio: boolean = false;
 
-  /**
-   * Indica si el juego está marcado como favorito
-   */
   @Input() isFavorite: boolean = false;
 
-  /**
-   * URL de imagen placeholder si no hay imagen
-   */
   @Input() placeholderImage: string = 'assets/placeholder.png';
 
   /**
@@ -42,9 +27,6 @@ export class GameCardComponent {
    */
   imageError: boolean = false;
 
-  /**
-   * Evento emitido cuando se hace click en la card
-   */
   @Output() onClick = new EventEmitter<void>();
 
 
@@ -100,9 +82,6 @@ export class GameCardComponent {
     });
   }
 
-  /**
-   * Obtiene la URL de la imagen del juego
-   */
   getImageUrl(): string {
     // Prioridad 1: Usar mainImagen.url si existe (desde el backend)
     if (this.juego.mainImagen?.url) {

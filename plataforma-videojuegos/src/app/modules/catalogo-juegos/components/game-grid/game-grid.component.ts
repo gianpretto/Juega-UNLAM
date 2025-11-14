@@ -3,10 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Juego } from '@interfaces/juego.interface';
 import { GameCardComponent } from '@modules/catalogo-juegos/components/game-card/game-card.component';
 
-/**
- * Componente presentacional para mostrar una grilla de juegos
- * Recibe la lista de juegos y la organiza en un layout responsivo
- */
 @Component({
   selector: 'app-game-grid',
   standalone: true,

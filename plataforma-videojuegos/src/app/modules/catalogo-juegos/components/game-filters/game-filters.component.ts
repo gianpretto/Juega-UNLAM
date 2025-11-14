@@ -4,11 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { GameFilter } from '@interfaces/game-filter.interface';
 import { FilterOption } from '@interfaces/filter-options.interface';
 
-/**
- * Componente presentacional para los filtros de juegos
- * Emite eventos al componente padre cuando cambian los filtros
- * NOTA: Usa <select> nativos en lugar de PrimeNG Dropdown
- */
 @Component({
   selector: 'app-game-filters',
   standalone: true,
@@ -17,9 +12,7 @@ import { FilterOption } from '@interfaces/filter-options.interface';
   styleUrl: './game-filters.component.css'
 })
 export class GameFiltersComponent implements OnChanges {
-  /**
-   * Filtros actuales recibidos del componente padre
-   */
+
   @Input() filters: GameFilter = {
     ordenamiento: '',
     genero: '',
@@ -28,16 +21,13 @@ export class GameFiltersComponent implements OnChanges {
 
   @Input() selectedOptions: FilterOption[] = [];
 
-  /**
-   * También aceptamos 'defaultOptions' desde el padre (selectedOptions)
-   * y las mapeamos a los filtros internos para que los <select> muestren
-   * el valor recibido al inicializar el componente.
-   */
+
   ngOnChanges(changes: SimpleChanges): void {
   if (changes['selectedOptions'] && Array.isArray(this.selectedOptions)) {
-    const sortOpt = this.selectedOptions.find(o => o.name === 'sort');
-    const genreOpt = this.selectedOptions.find(o => o.name === 'genre');
-    const platformOpt = this.selectedOptions.find(o => o.name === 'platform');
+    console.log("EN GAME FILTERS TS SELECTED OPTIONS TIENE: ", this.selectedOptions)
+    const sortOpt = this.selectedOptions.find(o => o.name === 'ordenamientoSeleccionado');
+    const genreOpt = this.selectedOptions.find(o => o.name === 'generoSeleccionado');
+    const platformOpt = this.selectedOptions.find(o => o.name === 'plataformaSeleccionada');
 
     this.filters.ordenamiento = sortOpt?.value || '';
     this.filters.genero = genreOpt?.value || '';
@@ -45,71 +35,38 @@ export class GameFiltersComponent implements OnChanges {
   }
 }
 
-
-  /**
-   * Opciones disponibles para el dropdown de ordenamiento
-   */
   @Input() sortOptions: { label: string; value: string }[] = [];
 
-  /**
-   * Opciones disponibles para el dropdown de géneros
-   */
   @Input() genreOptions: { label: string; value: string }[] = [];
 
-  /**
-   * Opciones disponibles para el dropdown de plataformas
-   */
   @Input() platformOptions: { label: string; value: string }[] = [];
 
-  /**
-   * Indica si los filtros están deshabilitados (ej: mientras se cargan datos)
-   */
   @Input() disabled: boolean = false;
 
-  /**
-   * Evento emitido cuando cambia cualquier filtro
-   */
+
   @Output() onFilterChange = new EventEmitter<GameFilter>();
 
-  /**
-   * Evento emitido cuando se limpian todos los filtros
-   */
   @Output() onClearFilters = new EventEmitter<void>();
 
-  /**
-   * Maneja el cambio en el filtro de ordenamiento
-   */
   onSortChange(value: string): void {
     this.filters.ordenamiento = value;
     this.emitFilterChange();
   }
 
-  /**
-   * Maneja el cambio en el filtro de género
-   */
   onGenreChange(value: string): void {
     this.filters.genero = value;
     this.emitFilterChange();
   }
 
-  /**
-   * Maneja el cambio en el filtro de plataforma
-   */
   onPlatformChange(value: string): void {
     this.filters.plataforma = value;
     this.emitFilterChange();
   }
 
-  /**
-   * Emite el evento de cambio de filtros
-   */
   private emitFilterChange(): void {
     this.onFilterChange.emit({ ...this.filters });
   }
 
-  /**
-   * Limpia todos los filtros
-   */
   clearAllFilters(): void {
     this.filters = {
       ordenamiento: '',
@@ -119,16 +76,10 @@ export class GameFiltersComponent implements OnChanges {
     this.onClearFilters.emit();
   }
 
-  /**
-   * Verifica si hay algún filtro activo
-   */
   hasActiveFilters(): boolean {
     return !!(this.filters.ordenamiento || this.filters.genero || this.filters.plataforma);
   }
 
-  /**
-   * Cuenta cuántos filtros están activos
-   */
   getActiveFiltersCount(): number {
     let count = 0;
     if (this.filters.ordenamiento) count++;

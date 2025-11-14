@@ -77,16 +77,6 @@ export class CatalogoJuegosComponent implements OnInit {
     this.cargarPlataformas();
     this.cargarGeneros();
 	  this.cargarJuegos();
-    this.filtrosSeleccionados = this.juegoService.obtenerOpcionesDeFiltradoEnSesion();
-	  const tieneFiltrosActivos = this.filtrosSeleccionados.some(opt => opt.value !== '');
-
-	if(tieneFiltrosActivos){
-	this.nombreBuscado = this.filtrosSeleccionados.find(o => o.name === "nombreSeleccionado")?.value || '';
-	this.generoSeleccionado = this.filtrosSeleccionados.find(o => o.name === "generoSeleccionado")?.value || '';
-	this.plataformaSeleccionada = this.filtrosSeleccionados.find(o => o.name === "platformaSeleccionada")?.value || '';
-	this.ordenamientoSeleccionado = this.filtrosSeleccionados.find(o => o.name === "ordenamientoSeleccionado")?.value || '';
-	this.aplicarFiltros();
-	}
   }
 
     cargarPlataformas(){
@@ -122,7 +112,7 @@ export class CatalogoJuegosComponent implements OnInit {
   cargarJuegos(): void {
     this.loading = true;
     this.errorMessage = '';
-
+    
     this.juegoService.getJuegos().subscribe({
       next: (data) => {
         console.log('Juegos cargados:', data.length);
@@ -130,7 +120,18 @@ export class CatalogoJuegosComponent implements OnInit {
         this.juegosFiltrados = data;
         this.loading = false;
 
-        this.extraerOpcionesDeFiltrado();
+        this.extraerOpcionesDeFiltrado()
+
+        this.filtrosSeleccionados = this.juegoService.obtenerOpcionesDeFiltradoEnSesion();
+        const tieneFiltrosActivos = this.filtrosSeleccionados.some(opt => opt.value !== '');
+
+        if (tieneFiltrosActivos) {
+          this.nombreBuscado = this.filtrosSeleccionados.find(o => o.name === "nombreSeleccionado")?.value || '';
+          this.generoSeleccionado = this.filtrosSeleccionados.find(o => o.name === "generoSeleccionado")?.value || '';
+          this.plataformaSeleccionada = this.filtrosSeleccionados.find(o => o.name === "plataformaSeleccionada")?.value || '';
+          this.ordenamientoSeleccionado = this.filtrosSeleccionados.find(o => o.name === "ordenamientoSeleccionado")?.value || '';
+          this.aplicarFiltros();
+        }
       },
       error: (error) => {
         console.error('Error al cargar juegos:', error);
@@ -184,6 +185,7 @@ export class CatalogoJuegosComponent implements OnInit {
     }
 
     if (this.generoSeleccionado) {
+      console.log("LO QUE SELECCIONE DE GENERO: ",this.generoSeleccionado)
 		this.juegoService.guardarGeneroEnSesion(this.generoSeleccionado);
       result = result.filter(juego => Array.isArray(juego.genero) &&
         juego?.genero.some(g => g.nombre?.toLocaleLowerCase() == this.generoSeleccionado.toLocaleLowerCase())

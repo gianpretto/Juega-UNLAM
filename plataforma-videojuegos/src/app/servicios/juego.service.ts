@@ -66,26 +66,26 @@ export class JuegoService {
 
       // Proteger contra SSR
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-        term = sessionStorage.getItem('searchTerm') || '';
-        genre = sessionStorage.getItem('genre') || '';
-        platform = sessionStorage.getItem('platform') || '';
-        sort = sessionStorage.getItem('sort') || '';
+        term = sessionStorage.getItem('nombreSeleccionado') || '';
+        genre = sessionStorage.getItem('generoSeleccionado') || '';
+        platform = sessionStorage.getItem('plataformaSeleccionada') || '';
+        sort = sessionStorage.getItem('ordenamientoSeleccionado') || '';
       }
 
       return [{
-        name : "term",
+        name : "nombreSeleccionado",
         value : term
       },
       {
-        name : "genre",
+        name : "generoSeleccionado",
         value : genre
       },
       {
-        name : "platform",
+        name : "plataformaSeleccionada",
         value : platform
       },
       {
-        name : "sort",
+        name : "ordenamientoSeleccionado",
         value : sort
       }
     ];
@@ -94,7 +94,15 @@ export class JuegoService {
   
     clearFilters(){
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-        sessionStorage.clear();
+        const keepKey = 'idUsuario';
+        const keysToRemove: string[] = [];
+        for (let i = 0; i < sessionStorage.length; i++) {
+          const key = sessionStorage.key(i);
+          if (key && key !== keepKey) {
+            keysToRemove.push(key);
+          }
+        }
+        keysToRemove.forEach(k => sessionStorage.removeItem(k));
       }
     }
 
