@@ -25,32 +25,27 @@
 
   </div>
  
-  <!-- BUSCADOR -->
   <app-game-search
     [placeholder]="'Buscar juegos por título...'"
     [disabled]="loading"
     (onSearch)="handleSearch($event)"
   ></app-game-search>
 
-  <!-- FILTROS -->
   <app-game-filters
-    [filters]="filters"
-    [sortOptions]="sortOptions"
-    [genreOptions]="genreOptions"
-    [selectedOptions]="selectedOptions"
-    [platformOptions]="platformOptions"
+    [filters]="filtros"
+    [sortOptions]="opcionesDeOrdenamiento"
+    [genreOptions]="opcionesDeGenero"
+    [selectedOptions]="filtrosSeleccionados"
+    [platformOptions]="opcionesDePlataforma"
     [disabled]="loading"
     (onFilterChange)="handleFilterChange($event)"
-    (onClearFilters)="clearFilters()"
+    (onClearFilters)="borrarFiltros()"
   ></app-game-filters>
 
-  <!-- GRILLA -->
   <app-game-grid
-    [juegos]="filteredJuegos"
+    [juegos]="juegosFiltrados"
     [loading]="loading"
     [emptyMessage]="getEmptyMessage()"
-    (onGameClick)="handleGameClick($event)"
-    (onAddToBiblio)="handleAddToBiblio($event)"
-    (onToggleFavorite)="handleToggleFavorite($event)"
+    (onGameClick)="verDetalle($event)"
   ></app-game-grid>
 </div>

@@ -31,11 +31,11 @@
                 <select
                     id="sortSelect"
                     class="filter-select"
-                    [(ngModel)]="filters.sortBy"
-                    (change)="onSortChange(filters.sortBy)"
+                    [(ngModel)]="filters.ordenamiento"
+                    (change)="onSortChange(filters.ordenamiento)"
                     [disabled]="disabled"
                 >
-                    <option *ngIf="!filters.sortBy" value="">Selecciona ordenamiento</option>
+                    <option *ngIf="!filters.ordenamiento" value="">Selecciona ordenamiento</option>
                     <option *ngFor="let option of sortOptions" [value]="option.value">
                         {{ option.label }}
                     </option>

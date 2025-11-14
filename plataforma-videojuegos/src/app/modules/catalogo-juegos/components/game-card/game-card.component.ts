@@ -47,15 +47,7 @@ export class GameCardComponent {
    */
   @Output() onClick = new EventEmitter<void>();
 
-  /**
-   * Evento emitido cuando se agrega a la biblioteca
-   */
-  @Output() onAddToBiblio = new EventEmitter<void>();
 
-  /**
-   * Evento emitido cuando se marca/desmarca como favorito
-   */
-  @Output() onToggleFavorite = new EventEmitter<void>();
 
   /**
    * Maneja el click en la card completa
@@ -68,21 +60,6 @@ export class GameCardComponent {
     }
   }
 
-  /**
-   * Maneja el click en el botón de agregar a biblioteca
-   */
-  handleAddToBiblio(event: Event): void {
-    event.stopPropagation();
-    this.onAddToBiblio.emit();
-  }
-
-  /**
-   * Maneja el click en el botón de favoritos
-   */
-  handleToggleFavorite(event: Event): void {
-    event.stopPropagation();
-    this.onToggleFavorite.emit();
-  }
 
   /**
    * Obtiene el icono correspondiente a una plataforma

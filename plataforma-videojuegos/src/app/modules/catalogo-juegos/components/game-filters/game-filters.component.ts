@@ -21,7 +21,7 @@ export class GameFiltersComponent implements OnChanges {
    * Filtros actuales recibidos del componente padre
    */
   @Input() filters: GameFilter = {
-    sortBy: '',
+    ordenamiento: '',
     genero: '',
     plataforma: ''
   };
@@ -39,7 +39,7 @@ export class GameFiltersComponent implements OnChanges {
     const genreOpt = this.selectedOptions.find(o => o.name === 'genre');
     const platformOpt = this.selectedOptions.find(o => o.name === 'platform');
 
-    this.filters.sortBy = sortOpt?.value || '';
+    this.filters.ordenamiento = sortOpt?.value || '';
     this.filters.genero = genreOpt?.value || '';
     this.filters.plataforma = platformOpt?.value || '';
   }
@@ -80,7 +80,7 @@ export class GameFiltersComponent implements OnChanges {
    * Maneja el cambio en el filtro de ordenamiento
    */
   onSortChange(value: string): void {
-    this.filters.sortBy = value;
+    this.filters.ordenamiento = value;
     this.emitFilterChange();
   }
 
@@ -112,7 +112,7 @@ export class GameFiltersComponent implements OnChanges {
    */
   clearAllFilters(): void {
     this.filters = {
-      sortBy: '',
+      ordenamiento: '',
       genero: '',
       plataforma: ''
     };
@@ -123,7 +123,7 @@ export class GameFiltersComponent implements OnChanges {
    * Verifica si hay algún filtro activo
    */
   hasActiveFilters(): boolean {
-    return !!(this.filters.sortBy || this.filters.genero || this.filters.plataforma);
+    return !!(this.filters.ordenamiento || this.filters.genero || this.filters.plataforma);
   }
 
   /**
@@ -131,7 +131,7 @@ export class GameFiltersComponent implements OnChanges {
    */
   getActiveFiltersCount(): number {
     let count = 0;
-    if (this.filters.sortBy) count++;
+    if (this.filters.ordenamiento) count++;
     if (this.filters.genero) count++;
     if (this.filters.plataforma) count++;
     return count;

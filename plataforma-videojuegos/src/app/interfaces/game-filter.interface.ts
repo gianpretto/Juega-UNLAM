@@ -1,5 +1,5 @@
 
 export interface GameFilter {
-  sortBy: string;
+  ordenamiento: string;
   genero: string;
   plataforma: string;  }

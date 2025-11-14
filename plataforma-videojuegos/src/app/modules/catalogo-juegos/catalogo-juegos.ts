@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { Juego } from "@interfaces/juego.interface";
 import { GameFilter } from "@interfaces/game-filter.interface";
 import { JuegoService } from "@servicios/juego.service";
-import { BibliotecaService } from "@servicios/biblioteca.service";
 
 // Componentes hijos
 import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
@@ -36,65 +35,87 @@ import { JuegoPlataformaGenero } from "@general/interfaces/juego-plafatorma-gene
 export class CatalogoJuegosComponent implements OnInit {
 
   router = inject(Router);
+  private juegoService = inject(JuegoService);
+  private generoService = inject(GeneroService);
+  private plataformaService = inject(PlataformaService);
+
+
+
   juegos: JuegoPlataformaGenero[] = [];
-  filteredJuegos: JuegoPlataformaGenero[] = [];
-  selectedOptions: FilterOption[] = [];
+  juegosFiltrados: JuegoPlataformaGenero[] = [];
+  filtrosSeleccionados: FilterOption[] = [];
   generos:Genero[] =[];
   plataformas:Plataforma[] =[];
   loading: boolean = true;
   errorMessage: string = '';
-  searchTerm: string = '';
-  availableGenres: string[] = [];
-  availablePlatforms: string[] = [];
+  nombreBuscado: string = '';
+  generosDisponibles: string[] = [];
+  plataformasDisponibles: string[] = [];
 
-  filters: GameFilter = {
-    sortBy: '',
+  filtros: GameFilter = {
+    ordenamiento: '',
     genero: '',
     plataforma: ''
   };
 
 
-  sortOptions: { label: string; value: string }[] = [
+  opcionesDeOrdenamiento: { label: string; value: string }[] = [
     { label: 'Nombre A-Z', value: 'name-asc' },
     { label: 'Nombre Z-A', value: 'name-desc' }
   ];
 
-
-  genreOptions: { label: string; value: string }[] = [];
-
-  
-  platformOptions: { label: string; value: string }[] = [];
-
-
-  selectedGenre: string = '';
+  opcionesDeGenero: { label: string; value: string }[] = [];
+  opcionesDePlataforma: { label: string; value: string }[] = [];
+  generoSeleccionado: string = '';
+  plataformaSeleccionada: string = '';
+  ordenamientoSeleccionado: string = '';
 
 
-  selectedPlatform: string = '';
-
-  selectedSort: string = '';
-
- 
-  private juegoService = inject(JuegoService);
-  private bibliotecaService = inject(BibliotecaService);
-  private generoService = inject(GeneroService);
-  private plataformaService = inject(PlataformaService);
 
   
   ngOnInit(): void {
-    console.log("🎮 Catálogo de Juegos inicializado");
     this.cargarPlataformas();
     this.cargarGeneros();
 	  this.cargarJuegos();
-    this.selectedOptions = this.juegoService.getSessionFilteredGames();
-	const hasActiveFilters = this.selectedOptions.some(opt => opt.value !== '');
+    this.filtrosSeleccionados = this.juegoService.obtenerOpcionesDeFiltradoEnSesion();
+	  const tieneFiltrosActivos = this.filtrosSeleccionados.some(opt => opt.value !== '');
 
-	if(hasActiveFilters){
-	this.searchTerm = this.selectedOptions.find(o => o.name === "term")?.value || '';
-	this.selectedGenre = this.selectedOptions.find(o => o.name === "genre")?.value || '';
-	this.selectedPlatform = this.selectedOptions.find(o => o.name === "platform")?.value || '';
-	this.selectedSort = this.selectedOptions.find(o => o.name === "sort")?.value || '';
-	this.applyFilters();
+	if(tieneFiltrosActivos){
+	this.nombreBuscado = this.filtrosSeleccionados.find(o => o.name === "nombreSeleccionado")?.value || '';
+	this.generoSeleccionado = this.filtrosSeleccionados.find(o => o.name === "generoSeleccionado")?.value || '';
+	this.plataformaSeleccionada = this.filtrosSeleccionados.find(o => o.name === "platformaSeleccionada")?.value || '';
+	this.ordenamientoSeleccionado = this.filtrosSeleccionados.find(o => o.name === "ordenamientoSeleccionado")?.value || '';
+	this.aplicarFiltros();
 	}
+  }
+
+    cargarPlataformas(){
+    this.plataformaService.obtenerPlataformas().subscribe({
+      next : (data) => {
+        this.plataformas = data;
+      },
+      error : (data) => {
+        console.log("ERROR AL TRAER LAS PLATAFORMAS PARA FILTRO")
+      },
+      complete : () =>{
+        console.log("PLATAFORMAS TRAIDAS EN CATALOGO PARA FILTRO")
+      }
+    })
+  }
+
+  
+  cargarGeneros(){
+    this.generoService.obtenerGeneros().subscribe({
+      next : (data) => {
+        this.generos = data;
+      },
+      error : (data) => {
+        console.log("ERROR AL TRAER LOS GENEROS PARA FILTRO")
+      },
+      complete : () =>{
+        console.log("GENEROS TRAIDOS EN CATALOGO PARA FILTRO")
+      }
+    })
   }
 
 
@@ -104,24 +125,22 @@ export class CatalogoJuegosComponent implements OnInit {
 
     this.juegoService.getJuegos().subscribe({
       next: (data) => {
-        console.log('✅ Juegos cargados:', data.length);
+        console.log('Juegos cargados:', data.length);
         this.juegos = data;
-        this.filteredJuegos = data;
+        this.juegosFiltrados = data;
         this.loading = false;
 
-        // Extraer opciones de filtros
-        this.extractFilterOptions();
+        this.extraerOpcionesDeFiltrado();
       },
       error: (error) => {
-        console.error('❌ Error al cargar juegos:', error);
+        console.error('Error al cargar juegos:', error);
         this.errorMessage = 'Error al cargar el catálogo de juegos. Por favor, intenta de nuevo.';
         this.loading = false;
       }
     });
   }
 
-
-  private extractFilterOptions(): void {
+    private extraerOpcionesDeFiltrado(): void {
     
     const genresSet = new Set<string>();
     this.generos.forEach(g => {
@@ -129,8 +148,8 @@ export class CatalogoJuegosComponent implements OnInit {
         genresSet.add(g.nombre);
       }
     });
-    this.availableGenres = Array.from(genresSet).sort();
-    this.genreOptions = this.availableGenres.map(genre => ({
+    this.generosDisponibles = Array.from(genresSet).sort();
+    this.opcionesDeGenero = this.generosDisponibles.map(genre => ({
       label: genre,
       value: genre
     }));
@@ -141,196 +160,55 @@ export class CatalogoJuegosComponent implements OnInit {
         platformsSet.add(g.nombre);
       }
     })
-    this.availablePlatforms = Array.from(platformsSet).sort();
-    this.platformOptions = this.availablePlatforms.map(platform => ({
+    this.plataformasDisponibles = Array.from(platformsSet).sort();
+    this.opcionesDePlataforma = this.plataformasDisponibles.map(platform => ({
       label: platform,
       value: platform
     }));
-
-    console.log('📊 Filtros disponibles:', {
-      genres: this.availableGenres.length,
-      platforms: this.availablePlatforms.length
-    });
     
   }
 
-  cargarPlataformas(){
-    this.plataformaService.obtenerPlataformas().subscribe({
-      next : (data) => {
-        this.plataformas = data;
-      },
-      error : (data) => {
-        console.log("ERRO AL TRAER LAS PLATAFORMAS")
-      },
-      complete : () =>{
-        console.log("PLATAFORMAS TRAIDAS")
-      }
-    })
-  }
-  cargarGeneros(){
-    this.generoService.obtenerGeneros().subscribe({
-      next : (data) => {
-        this.generos = data;
-      },
-      error : (data) => {
-        console.log("ERROR AL TRAER LOS GENEROS")
-      },
-      complete : () =>{
-        console.log("GENEROS TRAIDOS")
-      }
-    })
-  }
 
-  handleSearch(searchTerm: string): void {
-    console.log('🔍 Búsqueda:', searchTerm);
-    this.searchTerm = searchTerm;
-    this.applyFilters();
-  }
-
-  navigateToWishlist(): void {
-  this.router.navigate(['/wishlist']);
-  }
-
-
-  /**
-   * Maneja cambios en los filtros del componente hijo
-   * @param filters - Objeto con género, plataforma y ordenamiento
-   */
-  handleFilterChange(filters: GameFilter): void {
-    console.log('🎛️ Filtros cambiados:', filters);
-
-    this.filters = filters;
-    this.selectedSort = filters.sortBy;
-    this.selectedGenre = filters.genero;
-    this.selectedPlatform = filters.plataforma;
-
-    this.applyFilters();
-  }
-
-  /**
-   * Maneja el clic en una tarjeta de juego
-   * @param juego - Juego seleccionado
-   */
-  viewDetails(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.nombre);
-    // TODO: Navegar a página de detalles
-    // this.router.navigate(['/juegos', juego.id]);
-  }
-
-  /**
-   * Maneja la acción de agregar juego a biblioteca
-   * @param juego - Juego a agregar
-   */
-  addToLibrary(juego: Juego): void {
-    console.log('➕ Agregar a biblioteca:', juego.nombre);
-    // TODO: Implementar lógica con BibliotecaService
-    alert(`"${juego.nombre}" se agregará a tu biblioteca (pendiente de implementar)`);
-  }
-
-  /**
-   * Limpia todos los filtros activos
-   */
-  clearFilters(): void {
-    console.log('🗑️ Limpiar filtros');
-	this.juegoService.clearFilters();
-    this.searchTerm = '';
-    this.selectedGenre = '';
-    this.selectedPlatform = '';
-    this.selectedSort = '';
-    this.filters = {
-      sortBy: '',
-      genero: '',
-      plataforma: ''
-    };
-    this.applyFilters();
-  }
-
-  /**
-   * Maneja el clic en una tarjeta de juego
-   * @param juego - Juego seleccionado
-   */
-  handleGameClick(juego: Juego): void {
-    console.log('👁️ Ver detalles de:', juego.nombre);
-    this.router.navigate(['/juego', juego.id]);
-  }
-
-  /**
-   * Maneja la acción de agregar juego a biblioteca
-   * @param juego - Juego a agregar
-   */
-  handleAddToBiblio(juego: Juego): void {
-    console.log('➕ Agregar a biblioteca:', juego.nombre);
-
-    this.bibliotecaService.agregarJuego(juego).subscribe({
-      next: () => {
-        alert(`✅ "${juego.nombre}" se agregó a tu biblioteca!`);
-      },
-      error: (error: any) => {
-        console.error('Error al agregar:', error);
-        alert('❌ Error al agregar el juego. Por favor, intenta de nuevo.');
-      }
-    });
-  }
-
-  /**
-   * Maneja la acción de marcar como favorito
-   * @param juego - Juego a marcar/desmarcar
-   */
-  handleToggleFavorite(juego: Juego): void {
-    console.log('❤️ Toggle favorito:', juego.nombre);
-    // TODO: Implementar lógica de favoritos
-    alert(`"${juego.nombre}" favorito toggled (pendiente de implementar)`);
-  }
-
-  private applyFilters(): void {
+  
+  private aplicarFiltros(): void {
 
     
     let result = [...this.juegos];
 
-
-    // 1. Aplicar búsqueda por texto
-    if (this.searchTerm.trim()) {
-      const term = this.searchTerm.toLowerCase();
-      this.juegoService.saveTermInSession(term);
+    if (this.nombreBuscado.trim()) {
+      const term = this.nombreBuscado.toLowerCase();
+      this.juegoService.guardarBusquedaEnSesion(term);
       result = result.filter(juego =>
         juego.nombre ? juego.nombre.toLowerCase().includes(term) : false
       );
     }
 
-    
-    // 2. Filtrar por género
-    if (this.selectedGenre) {
-      console.log("NOMBRE DE GENERO SELECCIONADO:",this.selectedGenre);
-		this.juegoService.saveGenreInSession(this.selectedGenre);
+    if (this.generoSeleccionado) {
+		this.juegoService.guardarGeneroEnSesion(this.generoSeleccionado);
       result = result.filter(juego => Array.isArray(juego.genero) &&
-        juego?.genero.some(g => g.nombre?.toLocaleLowerCase() == this.selectedGenre.toLocaleLowerCase())
+        juego?.genero.some(g => g.nombre?.toLocaleLowerCase() == this.generoSeleccionado.toLocaleLowerCase())
       );
     }
     
-    
-    // 3. Filtrar por plataforma
-    if (this.selectedPlatform) {
-            console.log("NOMBRE DE PLATAFORMA SELECCIONADA:",this.selectedPlatform);
-		this.juegoService.savePlatformInSession(this.selectedPlatform);
+    if (this.plataformaSeleccionada) {
+		this.juegoService.guardarPlataformaEnSesion(this.plataformaSeleccionada);
       result = result.filter(juego => Array.isArray(juego.plataforma) &&
-        juego.plataforma.some(p => p.nombre?.toLocaleLowerCase() == this.selectedPlatform.toLocaleLowerCase()));
+        juego.plataforma.some(p => p.nombre?.toLocaleLowerCase() == this.plataformaSeleccionada.toLocaleLowerCase()));
     }
     
-
-    // 4. Aplicar ordenamiento
-    if (this.selectedSort) {
-		this.juegoService.saveSortInSession(this.selectedSort);
-      result = this.sortByName(result, this.selectedSort);
+    if (this.ordenamientoSeleccionado) {
+		this.juegoService.guardarOrdenamientoEnSesion(this.ordenamientoSeleccionado);
+      result = this.ordenarPorNombre(result, this.ordenamientoSeleccionado);
     }
 
-    this.filteredJuegos = result;
+    this.juegosFiltrados = result;
 
-    console.log(`📋 Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
+    console.log(`Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
     
   }
 
-  private sortByName(games: JuegoPlataformaGenero[], sortType: string): JuegoPlataformaGenero[] {
-    const sorted = [...games];
+    private ordenarPorNombre(juegos: JuegoPlataformaGenero[], sortType: string): JuegoPlataformaGenero[] {
+    const sorted = [...juegos];
     
     switch (sortType) {
       case 'name-asc':
@@ -344,46 +222,79 @@ export class CatalogoJuegosComponent implements OnInit {
     }
   }
 
-  // ========================================
-  // MÉTODOS PÚBLICOS - UTILIDADES
-  // ========================================
 
-  /**
-   * Cuenta cuántos filtros están activos
-   * @returns Número de filtros activos
-   */
+
+  //TODO:FUNCIONES PARA EVENTOS
+
+  handleSearch(nombreBuscado: string): void {
+    this.nombreBuscado = nombreBuscado;
+    this.aplicarFiltros();
+  }
+
+
+  handleFilterChange(filtros: GameFilter): void {
+    this.filtros = filtros;
+    this.ordenamientoSeleccionado = filtros.ordenamiento;
+    this.generoSeleccionado = filtros.genero;
+    this.plataformaSeleccionada = filtros.plataforma;
+
+    this.aplicarFiltros();
+  }
+
+  borrarFiltros(): void {
+	this.juegoService.clearFilters();
+    this.nombreBuscado = '';
+    this.generoSeleccionado = '';
+    this.plataformaSeleccionada = '';
+    this.ordenamientoSeleccionado = '';
+    this.filtros = {
+      ordenamiento: '',
+      genero: '',
+      plataforma: ''
+    };
+    this.aplicarFiltros();
+  }
+
+  //PARA EL HIJO
   getActiveFiltersCount(): number {
     let count = 0;
-    if (this.selectedGenre) count++;
-    if (this.selectedPlatform) count++;
-    if (this.selectedSort) count++;
-    if (this.searchTerm.trim()) count++;
+    if (this.generoSeleccionado) count++;
+    if (this.plataformaSeleccionada) count++;
+    if (this.ordenamientoSeleccionado) count++;
+    if (this.nombreBuscado.trim()) count++;
     return count;
   }
 
-  /**
-   * Verifica si hay filtros activos
-   * @returns true si hay algún filtro activo
-   */
-  hasActiveFilters(): boolean {
+
+  tieneFiltrosActivos(): boolean {
     return this.getActiveFiltersCount() > 0;
   }
 
-  /**
-   * Recarga el catálogo completo
-   */
   reloadCatalog(): void {
-    this.clearFilters();
+    this.borrarFiltros();
     this.cargarJuegos();
   }
 
 
   getEmptyMessage(): string {
-    if (this.hasActiveFilters()) {
+    if (this.tieneFiltrosActivos()) {
       return 'No se encontraron juegos con los filtros aplicados';
     }
     return 'No se encontraron juegos';
   }
+
+
+  //TODO:PARA NAVEGAR ENTRE PAGINAS
+
+  navigateToWishlist(): void {
+  this.router.navigate(['/wishlist']);
+  }
+
+
+  verDetalle(juego: Juego): void {
+    this.router.navigate(['/juego', juego.id]);
+  }
+
 
   navigateToProfile(): void {
     this.router.navigate(['/usuario-perfil']);

@@ -15,67 +15,22 @@ import { GameCardComponent } from '@modules/catalogo-juegos/components/game-card
   styleUrl: './game-grid.component.css'
 })
 export class GameGridComponent {
-  /**
-   * Lista de juegos a mostrar en la grilla
-   */
+
   @Input() juegos: Juego[] = [];
-
-  /**
-   * Indica si los juegos se están cargando
-   */
   @Input() loading: boolean = false;
-
-  /**
-   * Mensaje personalizado cuando no hay juegos
-   */
   @Input() emptyMessage: string = 'No se encontraron juegos';
-
-  /**
-   * Evento emitido cuando se hace click en un juego
-   */
   @Output() onGameClick = new EventEmitter<Juego>();
 
-  /**
-   * Evento emitido cuando se agrega un juego a la biblioteca
-   */
-  @Output() onAddToBiblio = new EventEmitter<Juego>();
 
-  /**
-   * Evento emitido cuando se marca un juego como favorito
-   */
-  @Output() onToggleFavorite = new EventEmitter<Juego>();
-
-  /**
-   * Maneja el click en un juego
-   */
   handleGameClick(juego: Juego): void {
     this.onGameClick.emit(juego);
   }
 
-  /**
-   * Maneja la acción de agregar a biblioteca
-   */
-  handleAddToBiblio(juego: Juego): void {
-    this.onAddToBiblio.emit(juego);
-  }
 
-  /**
-   * Maneja la acción de marcar como favorito
-   */
-  handleToggleFavorite(juego: Juego): void {
-    this.onToggleFavorite.emit(juego);
-  }
-
-  /**
-   * Verifica si hay juegos para mostrar
-   */
   hasJuegos(): boolean {
     return this.juegos && this.juegos.length > 0;
   }
-
-  /**
-   * Obtiene el número total de juegos
-   */
+  
   getJuegosCount(): number {
     return this.juegos ? this.juegos.length : 0;
   }

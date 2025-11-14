@@ -36,33 +36,29 @@ export class JuegoService {
     return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/juego/reviews/${id}`);
   }
   
-    saveTermInSession(term: string): void {
-      //localStorage.setItem('searchTerm', term);
+    guardarBusquedaEnSesion(term: string): void {
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-        sessionStorage.setItem('searchTerm', term);
+        sessionStorage.setItem('nombreSeleccionado', term);
       }
     }
-    saveGenreInSession(genre: string): void {
-      //localStorage.setItem('genre', genre);
+    guardarGeneroEnSesion(genre: string): void {
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-        sessionStorage.setItem('genre', genre);
+        sessionStorage.setItem('generoSeleccionado', genre);
       }
     }
-    savePlatformInSession(platform: string): void {
-      //localStorage.setItem('platform', platform);
+    guardarPlataformaEnSesion(platform: string): void {
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-        sessionStorage.setItem('platform', platform);
+        sessionStorage.setItem('plataformaSeleccionada', platform);
       }
     }
-    saveSortInSession(sort: string): void {
-      //localStorage.setItem('sort', sort);
+    guardarOrdenamientoEnSesion(sort: string): void {
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-        sessionStorage.setItem('sort', sort);
+        sessionStorage.setItem('ordenamientoSeleccionado', sort);
       }
     }
   
   
-    getSessionFilteredGames(): FilterOption[]{
+    obtenerOpcionesDeFiltradoEnSesion(): FilterOption[]{
       let term = '';
       let genre = '';
       let platform = '';
