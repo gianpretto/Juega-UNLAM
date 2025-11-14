@@ -5,6 +5,16 @@ import { NoAuthGuard } from './servicios/noAuthGuard';
 
 export const routes: Routes = [
     {
+        path: '',
+        redirectTo: 'inicio',
+        pathMatch: 'full'
+    },
+    {
+    path: 'inicio', 
+    component: InicioComponent,
+    canActivate: [NoAuthGuard]
+    },
+    {
         path: 'home',
         loadComponent: () => import('@modules/home-component/home-component')
         .then(c => c.HomeComponent)
@@ -14,16 +24,6 @@ export const routes: Routes = [
         loadComponent: () => import('@modules/juego/juego-component')
         .then(c => c.JuegoComponent),
       canActivate: [AuthGuard]
-    },
-    {
-        path: '',
-        redirectTo: 'inicio',
-        pathMatch: 'full'
-    },
-    {
-    path: 'inicio', 
-    component: InicioComponent,
-    canActivate: [NoAuthGuard]
     },
     {
       path: 'catalogo',
