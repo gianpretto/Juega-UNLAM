@@ -24,12 +24,12 @@ export class ValoracionesComponent implements OnInit {
 
     listarReviews(){
       this.juegoService.obtenerReviewsDeUnJuego(this.juego.id).subscribe({
-        next : (data) => {
-          this.reviews = data.map((review: Review) => ({
-        ...review,
-        expandida: false
-      }));
-        },
+      next : (data) => {
+        this.reviews = data.map((review) => ({
+          ...review,
+          expandida: false
+        })) as Review[];
+      },
         error : (data) => {
           console.log("ERROR AL TRAER LAS REVIEWS",data);
         },

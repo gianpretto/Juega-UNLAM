@@ -13,9 +13,15 @@ import { InicioComponent } from '@general/modules/inicio-component/inicio.compon
 import { NoAuthGuard } from './servicios/noAuthGuard';
 
 export const routes: Routes = [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
     {
         path: 'home',
-        component : HomeComponent
+        component : HomeComponent,
+        canActivate: [AuthGuard]
     },
     
     {
@@ -32,7 +38,7 @@ export const routes: Routes = [
     path: 'inicio', 
     component: InicioComponent,
     canActivate: [NoAuthGuard]
-},
+    },
     {
       path: 'catalogo',
       component: CatalogoJuegosComponent,
@@ -74,7 +80,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'home'
     },
 
   ]

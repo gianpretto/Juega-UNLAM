@@ -1,0 +1,336 @@
+/* Fondo general del home */
+:host {
+  display: block;
+  background: #0b0d0f;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+  color: #e8e8e8;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Evitar fondos blancos heredados */
+section,
+.container-xxl {
+  background: transparent !important;
+}
+
+/* HERO */
+.home-hero {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: relative;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-overlay {
+  width: 100%;
+  padding: 3rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 45%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  border-radius: inherit;
+}
+
+/* Chip arriba del título, muy Xbox */
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9ef6d0;
+  border: 1px solid rgba(158, 246, 208, 0.5);
+  margin-bottom: 0.75rem;
+}
+
+.hero-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: #d0d0d0;
+  max-width: 36rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-cta {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* SECCIONES */
+.home-section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Cabecera estilo Xbox: título + subtítulo + link derecha */
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.section-subtitle {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  color: #a5a5a5;
+}
+
+/* Botón “Ver todas” tipo link */
+.section-link {
+  color: #9ef6d0 !important;
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* Carruseles */
+.home-carousel ::ng-deep .p-carousel-item {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.home-carousel ::ng-deep .p-carousel-item:hover {
+  transform: translateY(-4px);
+}
+
+.home-carousel ::ng-deep .p-carousel-prev,
+.home-carousel ::ng-deep .p-carousel-next {
+  scale: 1.2;
+  color: #9ef6d0 !important;
+}
+
+/* === MOSAICO ESTILO XBOX ====================================== */
+
+.xbox-mosaic {
+  display: grid;
+  grid-template-columns: 2fr 1.4fr;
+  grid-template-rows: 260px 260px;
+  gap: 2px;                 /* pequeña “línea” entre bloques, como Xbox */
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Layout usando grid areas */
+.xm-hero   { grid-row: 1 / span 2; grid-column: 1 / 2; }
+.xm-text   { grid-row: 1 / 2;      grid-column: 2 / 3; }
+.xm-banner { grid-row: 2 / 3;      grid-column: 2 / 3; }
+
+.xm-item {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Imágenes full cover */
+.xm-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.xm-item:hover img {
+  transform: scale(1.04);
+}
+
+/* Bloque verde de texto */
+.xm-green {
+  background: #107c10; /* Xbox green */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem;
+}
+
+/* Hero grande */
+.xm-hero {
+  background: #000;
+  color: #fff;
+}
+
+.xm-hero-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 30%,
+    rgba(0, 0, 0, 0.2) 80%,
+    transparent 100%
+  );
+  pointer-events: none; /* para que los clicks pasen al enlace si quisieras */
+}
+
+/* Labels y textos */
+.xm-label {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 2px;
+  margin-bottom: 0.8rem;
+}
+
+.xm-label-yellow {
+  background: #ffd600;
+  color: #000;
+}
+
+.xm-hero-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.xm-hero-desc {
+  margin: 0 0 1.2rem;
+  font-size: 1rem;
+  max-width: 420px;
+  color: #e3e3e3;
+}
+
+.xm-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.xm-desc {
+  margin: 0 0 1.3rem;
+  font-size: 1rem;
+  color: #e3e3e3;
+}
+
+.xm-cta {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+  padding-bottom: 0.1rem;
+  width: fit-content;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.xm-cta:hover {
+  color: #d4ffd4;
+  border-color: #d4ffd4;
+}
+
+/* Banner inferior derecha */
+.xm-banner {
+  background: #050508;
+}
+
+/* RESPONSIVE: apilar en mobile */
+@media (max-width: 992px) {
+  .xbox-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .xm-hero,
+  .xm-text,
+  .xm-banner {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .xm-hero {
+    height: 260px;
+  }
+
+  .xm-text {
+    padding: 2rem;
+  }
+
+  .xm-banner {
+    height: 220px;
+  }
+}
+.xm-green {
+  background: #1e242b;  /* gris azulado elegante */
+  color: #ffffff;
+}
+.xm-label-yellow {
+  background: #00e78a; /* acento verde suave */
+  color: #000;
+}
+
+
+/* Layout interno: texto + imagen */
+.xm-text-inner {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.xm-text-copy {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.xm-text-cover {
+  width: 40%;
+  min-width: 160px;
+  max-width: 260px;
+  overflow: hidden;
+}
+
+.xm-text-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Responsive: en mobile apilamos */
+@media (max-width: 992px) {
+  .xm-text-inner {
+    flex-direction: column;
+  }
+
+  .xm-text-cover {
+    width: 100%;
+    max-width: none;
+    height: 180px;
+  }
+}

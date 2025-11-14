@@ -105,8 +105,20 @@ export class CatalogoJuegosComponent implements OnInit {
     this.juegoService.getJuegos().subscribe({
       next: (data) => {
         console.log('✅ Juegos cargados:', data.length);
-        this.juegos = data;
-        this.filteredJuegos = data;
+        // Mapear los elementos recibidos (CardVM) al shape esperado por Juego,
+        // proporcionando valores por defecto para las propiedades faltantes.
+        this.juegos = (data as any[]).map((item: any) => ({
+          // Mantener todas las propiedades originales cuando existan
+          ...item,
+          // Asegurar las propiedades requeridas por la interfaz Juego
+          subtitulo: item.subtitulo ?? '',
+          descripcion: item.descripcion ?? item.description ?? '',
+          released: item.released ?? item.release_date ?? '',
+          rating: item.rating ?? item.score ?? 0
+        })) as Juego[];
+
+        // Usar una copia para el listado filtrado
+        this.filteredJuegos = [...this.juegos];
         this.loading = false;
 
         // Extraer opciones de filtros

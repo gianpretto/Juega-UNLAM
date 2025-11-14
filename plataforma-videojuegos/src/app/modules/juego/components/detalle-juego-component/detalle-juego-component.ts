@@ -39,6 +39,7 @@ export class DetalleJuegoComponent implements OnInit {
     this.imagenActual.set(imagen);
   }
 
+
   obtenerImagenesDeUnJuego(id:number){
     this.juegoService.obtenerImagenesDeUnJuego(this.juego.id).subscribe({
       next : (data) => {
@@ -61,6 +62,7 @@ export class DetalleJuegoComponent implements OnInit {
       },
     });
   }
+
 
   responsiveOptions = [
     {

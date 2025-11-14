@@ -1,3 +1,180 @@
-<p>home-component works!</p>
+<!-- HERO -->
+<section class="home-hero container-xxl my-4">
+  <p-carousel
+    [value]="heroSlides"
+    [numVisible]="1"
+    [numScroll]="1"
+    [circular]="true"
+    [autoplayInterval]="6000"
+    class="hero-carousel"
+  >
+    <ng-template let-s pTemplate="item">
+      <div class="hero-slide" [style.background-image]="'url(' + s.img + ')'">
+        <div class="hero-overlay">
+          <div class="hero-tag">Catálogo de juegos</div>
+          <h1 class="hero-title">{{ s.title }}</h1>
+          <p class="hero-sub">
+            Ofertas especiales, lanzamientos recientes y los títulos más jugados.
+          </p>
 
-<p-button label="VER DETALLE DEL JUEGO" [routerLink]="['/juego/1']" class="bg-info"  severity="success" />
+          <a
+            [routerLink]="s.cta.link"
+            pButton
+            class="p-button-lg hero-cta"
+            [label]="s.cta.text"
+          ></a>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- Ofertas -->
+<section class="home-section container-xxl my-5">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Ofertas destacadas</h2>
+      <p class="section-subtitle">Descuentos por tiempo limitado en grandes títulos.</p>
+    </div>
+    <button
+      pButton
+      label="Ver todas"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+      [queryParams]="{ soloOfertas: true }"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="ofertas"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- Destacados -->
+<section class="home-section container-xxl my-5">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Recomendados</h2>
+      <p class="section-subtitle">Selección curada de títulos que no te podés perder.</p>
+    </div>
+    <button
+      pButton
+      label="Explorar juegos"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="destacados"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- Más populares -->
+<section class="home-section container-xxl my-5">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Más populares</h2>
+      <p class="section-subtitle">Lo que más se está jugando en la plataforma.</p>
+    </div>
+    <button
+      pButton
+      label="Ver catálogo completo"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="populares"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<section class="xbox-mosaic container-xxl my-5" *ngIf="heroMosaic">
+
+  <!-- HERO grande -->
+  <div class="xm-item xm-hero" [routerLink]="['/detalle-juego', heroMosaic.id]">
+    <div class="xm-hero-overlay">
+      <div class="xm-label xm-label-yellow">
+        {{ heroMosaic.descuento * 100 | number:'1.0-0' }}% OFF
+      </div>
+
+      <h2 class="xm-hero-title">{{ heroMosaic.nombre }}</h2>
+
+      <p class="xm-hero-desc">
+        Ahora a ${{ heroMosaic.finalPrice }} — Antes ${{ heroMosaic.precio }}
+      </p>
+
+      <a class="xm-cta" [routerLink]="['/detalle-juego', heroMosaic.id]">
+        Ver juego →
+      </a>
+    </div>
+
+    <img [src]="heroMosaic.imagen" [alt]="heroMosaic.nombre" />
+  </div>
+
+  <!-- TEXTO verde + IMAGEN -->
+  <div class="xm-item xm-text xm-green" *ngIf="mosaicText">
+    <div class="xm-text-inner">
+      <div class="xm-text-copy">
+        <div class="xm-label xm-label-yellow">
+          En oferta
+        </div>
+
+        <h3 class="xm-title">{{ mosaicText.nombre }}</h3>
+
+        <p class="xm-desc">
+          Antes ${{ mosaicText.precio }} — Ahora ${{ mosaicText.finalPrice }}.
+          Descuento del {{ mosaicText.descuento * 100 | number:'1.0-0' }}%.
+        </p>
+
+        <a class="xm-cta" [routerLink]="['/detalle-juego', mosaicText.id]">
+          Ver oferta →
+        </a>
+      </div>
+
+      <div class="xm-text-cover" *ngIf="mosaicText.imagen || heroMosaic?.imagen">
+        <img
+          [src]="mosaicText.imagen || heroMosaic?.imagen"
+          [alt]="mosaicText.nombre"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNER inferior -->
+  <div class="xm-item xm-banner" *ngIf="mosaicBanner" [routerLink]="['/detalle-juego', mosaicBanner.id]">
+    <img [src]="mosaicBanner.imagen" [alt]="mosaicBanner.nombre" />
+  </div>
+
+</section>
