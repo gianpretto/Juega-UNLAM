@@ -1,13 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './modules/home-component/home-component';
-import { CatalogoJuegosComponent } from '@modules/catalogo-juegos/catalogo-juegos';
-import { MiBibliotecaComponent } from '@modules/biblioteca/mi-biblioteca';
-import { RegistroComponent } from '@modules/registro/registro.component';
-import { IniciarSesionComponent } from '@modules/iniciar-sesion/iniciar-sesion.component';
-import { UsuarioPerfilComponent } from '@modules/usuario-perfil/usuario-perfil.component';
-import { WishlistComponent } from '@modules/wishlist/wishlist.component';
-import { JuegoComponent } from '@modules/juego/juego-component';
-import { PedidoComponent } from './modules/pedido-component/pedido-component';
 import { AuthGuard } from './servicios/authGuard';
 import { InicioComponent } from '@general/modules/inicio-component/inicio.component';
 import { NoAuthGuard } from './servicios/noAuthGuard';
@@ -15,12 +6,13 @@ import { NoAuthGuard } from './servicios/noAuthGuard';
 export const routes: Routes = [
     {
         path: 'home',
-        component : HomeComponent
+        loadComponent: () => import('@modules/home-component/home-component')
+        .then(c => c.HomeComponent)
     },
-    
     {
         path: 'juego/:id',
-        component : JuegoComponent,
+        loadComponent: () => import('@modules/juego/juego-component')
+        .then(c => c.JuegoComponent),
       canActivate: [AuthGuard]
     },
     {
@@ -32,51 +24,48 @@ export const routes: Routes = [
     path: 'inicio', 
     component: InicioComponent,
     canActivate: [NoAuthGuard]
-},
+    },
     {
       path: 'catalogo',
-      component: CatalogoJuegosComponent,
+      loadComponent: () => import('@modules/catalogo-juegos/catalogo-juegos')
+      .then(c => c.CatalogoJuegosComponent),
       canActivate: [AuthGuard]
-
     },
     {
       path: 'mi-biblioteca',
-      component: MiBibliotecaComponent,
+      loadComponent: () => import('@modules/biblioteca/mi-biblioteca')
+      .then(c => c.MiBibliotecaComponent),
       canActivate: [AuthGuard]
-          },
+    },
     {
       path: 'registro',
-      component: RegistroComponent,
+      loadComponent: () => import('@modules/registro/registro.component').then(c => c.RegistroComponent),
       canActivate: [NoAuthGuard]
-
     },
     {
       path: 'iniciar-sesion',
-      component: IniciarSesionComponent,
+      loadComponent: () => import('@modules/iniciar-sesion/iniciar-sesion.component').then(c => c.IniciarSesionComponent),
       canActivate: [NoAuthGuard]
-
     },
     {
       path: 'usuario-perfil',
-      component: UsuarioPerfilComponent,
+      loadComponent: () => import('@modules/usuario-perfil/usuario-perfil.component').then(c => c.UsuarioPerfilComponent),
       canActivate: [AuthGuard]
     },
     {
       path: 'wishlist',
-      component: WishlistComponent,
+      loadComponent: () => import('@modules/wishlist/wishlist.component').then(c => c.WishlistComponent),
       canActivate: [AuthGuard]
-
     },
     {
       path: 'pedido',
-      component: PedidoComponent,
+      loadComponent: () => import('@modules/pedido-component/pedido-component').then(c => c.PedidoComponent),
       canActivate: [AuthGuard]
     },
     {
         path: '**',
         redirectTo: ''
     },
-
   ]
 
 
