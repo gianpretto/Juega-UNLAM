@@ -1,26 +1,70 @@
-<div class="container my-4 d-flex flex-wrap justify-content-center gap-4">
-  @for (review of reviews; track $index) {
-    <div class="card review-card shadow-lg border-0 rounded-4 bg-dark text-white">
-      <div class="card-header bg-secondary bg-opacity-25 border-0 rounded-top-4">
-        <h5 class="mb-0">Reseña</h5>
-        <small class="text-muted text-white">{{ review.valoracion }}</small>
-      </div>
+<div class="container my-4">
+  <!-- Lista de reseñas existentes -->
+  <div class="d-flex flex-wrap justify-content-center gap-4">
+    @for (review of reviews; track $index) {
+      <div class="card review-card shadow-lg border-0 rounded-4 bg-dark text-white">
+        <div class="card-header bg-secondary bg-opacity-25 border-0 rounded-top-4">
+          <h5 class="mb-0">Reseña de {{ review.usuario?.nombre }} {{review.usuario?.apellido}}</h5>
+          <small class="text-muted text-white">{{ review.valoracion }}</small>
+        </div>
 
+        <div class="card-body">
+          <p class="card-text" [class.truncated]="!review.expandida">
+            {{ review.descripcion }}
+          </p>
+        </div>
+
+        <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center">
+          <button
+            class="btn btn-outline-light btn-sm"
+            (click)="toggleExpand(review)"
+          >
+            {{ review.expandida ? 'Ver menos' : 'Ver reseña completa' }}
+          </button>
+          <i class="pi pi-window-maximize fs-5 text-light"></i>
+        </div>
+      </div>
+    }
+  </div>
+  <br>
+  <!-- Formulario para crear reseña (solo si el juego está comprado) -->
+  @if (juegoComprado) {
+    <div class="card bg-dark text-white mb-5 border-success">
+      <div class="card-header bg-success bg-opacity-25 border-success">
+        <h5 class="mb-0">📝 Escribe tu reseña</h5>
+      </div>
       <div class="card-body">
-        <p class="card-text" [class.truncated]="!review.expandida">
-          {{ review.descripcion }}
-        </p>
-      </div>
+        <div class="mb-3">
+          <label for="resenaText" class="form-label">Tu reseña</label>
+          <textarea
+            id="resenaText"
+            class="form-control bg-secondary text-white border-success"
+            placeholder="Cuéntanos qué te pareció este juego..."
+            rows="4"
+            [(ngModel)]="nuevaResena"
+            [disabled]="enviandoResena"
+          ></textarea>
+        </div>
 
-      <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center">
+       
+
         <button
-          class="btn btn-outline-light btn-sm"
-          (click)="toggleExpand(review)"
+          class="btn btn-success"
+          (click)="enviarResena()"
+          [disabled]="enviandoResena"
         >
-          {{ review.expandida ? 'Ver menos' : 'Ver reseña completa' }}
+          {{ enviandoResena ? '⏳ Enviando...' : '✅ Enviar reseña' }}
         </button>
-        <i class="pi pi-window-maximize fs-5 text-light"></i>
       </div>
     </div>
+    <div *ngIf="mensajeReview" class="mt-2 text-success">
+  {{ mensajeReview }}
+</div>
+  } @else {
+    <div class="alert alert-info text-center mb-5">
+      <p class="mb-0">🔒 Compra este juego para escribir una reseña</p>
+    </div>
   }
+
+  
 </div>

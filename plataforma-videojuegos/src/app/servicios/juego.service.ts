@@ -35,6 +35,11 @@ export class JuegoService {
   obtenerReviewsDeUnJuego(id:number):Observable<Review[]>{
     return this.httpClient.get<Review[]>(`${environment.BACKEND_URL}/juego/reviews/${id}`);
   }
+
+  crearReview(review: Review): Observable<Review> {
+    
+    return this.httpClient.post<Review>(`${environment.BACKEND_URL}/juego/${review.juegoId}/review`, review);
+  }
   
     saveTermInSession(term: string): void {
       //localStorage.setItem('searchTerm', term);
