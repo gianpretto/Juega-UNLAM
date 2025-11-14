@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { Juego } from '@interfaces/juego.interface';
 import { environment } from '@evironment/environment';
+import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 
 /**
  * Componente presentacional para mostrar una tarjeta individual de juego en la biblioteca
@@ -20,7 +21,10 @@ export class GameCardComponent {
   /**
    * Datos del juego a mostrar
    */
-  @Input() juego!: Juego;
+  @Input() juego!: JuegoPlataformaGenero;
+
+  
+  @Output() verDetalle = new EventEmitter<number>();
 
   /**
    * URL de imagen placeholder si no hay imagen

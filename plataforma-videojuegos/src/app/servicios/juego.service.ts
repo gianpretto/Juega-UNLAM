@@ -6,7 +6,7 @@ import { Review } from '@interfaces/review.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@evironment/environment';
 import { JuegoMapper } from '@mapper/juego.mapper';
-import { CardVM } from '@interfaces/cardvm.interface';
+
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 
@@ -102,20 +102,6 @@ export class JuegoService {
         sessionStorage.clear();
       }
     }
-
-      getOfertas(limit = 8): Observable<CardVM[]> {
-    const params = new HttpParams().set('limit', String(limit));
-    return this.httpClient.get<any[]>(`${environment.BACKEND_URL}/offers`, { params }).pipe(
-      map(rows => rows.map(r => ({
-        id: r.id,
-        nombre: r.nombre ?? r.title,
-        precio: r.precio ?? r.originalPrice,
-        imagen: r.coverUrl ?? '',
-        descuento: r.discount ?? 0,
-        finalPrice: r.finalPrice ?? r.precio ?? r.originalPrice
-      } as CardVM)))
-    );
-  }
 
 
 }
