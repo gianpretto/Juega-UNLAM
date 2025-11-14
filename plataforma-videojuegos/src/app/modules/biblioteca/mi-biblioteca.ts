@@ -161,8 +161,7 @@ export class MiBibliotecaComponent implements OnInit {
    */
   handleGameClick(juego: Juego): void {
     console.log('👁️ Ver detalles de:', juego.nombre);
-    // TODO: Navegar a página de detalles
-    // this.router.navigate(['/juegos', juego.id]);
+    this.router.navigate(['/juego', juego.id]);
   }
 
   /**
