@@ -31,37 +31,7 @@
   </p-carousel>
 </section>
 
-<!-- MEJOR CALIFICADOS -->
-<section class="home-section container-xxl my-5" *ngIf="mejorCalificados.length">
-  <div class="section-header">
-    <div>
-      <h2 class="section-title">Mejor calificados</h2>
-      <p class="section-subtitle">
-        Juegos con las mejores valoraciones de la plataforma.
-      </p>
-    </div>
-    <button
-      pButton
-      label="Explorar catálogo"
-      class="p-button-text section-link"
-      [routerLink]="['/catalogo']"
-    ></button>
-  </div>
 
-  <p-carousel
-    [value]="mejorCalificados"
-    [numVisible]="5"
-    [numScroll]="5"
-    [responsiveOptions]="resp"
-    class="home-carousel"
-  >
-    <ng-template let-g pTemplate="item">
-      <div class="px-2" style="width:16rem">
-        <app-game-card [juego]="g" (verDetalle)="onVerDetalle($event)"></app-game-card>
-      </div>
-    </ng-template>
-  </p-carousel>
-</section>
 
 <!-- RPG Y FANTASÍA -->
 <section class="home-section container-xxl my-5" *ngIf="rpgFantasia.length">
@@ -76,7 +46,7 @@
       pButton
       label="Explorar catálogo"
       class="p-button-text section-link"
-      [routerLink]="['/catalogo']"
+      (click)="explorarGenero('RPG')"
     ></button>
   </div>
 
@@ -107,7 +77,7 @@
       pButton
       label="Explorar catálogo"
       class="p-button-text section-link"
-      [routerLink]="['/catalogo']"
+     (click)="explorarPlataforma('Nintendo Switch')"
     ></button>
   </div>
 
@@ -129,7 +99,7 @@
   </p-carousel>
 </section>
 <!-- =======================================================
-     ⭐ CARRUSEL — JUEGOS TRIPLE B
+     CARRUSEL — JUEGOS TRIPLE B
 ======================================================= -->
 <section class="home-section container-xxl my-5" *ngIf="tripleB.length">
   <div class="section-header">
@@ -165,4 +135,34 @@
     </ng-template>
   </p-carousel>
 </section>
-<app-carrito-component></app-carrito-component>
+<!-- MEJOR CALIFICADOS -->
+<section class="home-section container-xxl my-5" *ngIf="mejorCalificados.length">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Mejor calificados</h2>
+      <p class="section-subtitle">
+        Juegos con las mejores valoraciones de la plataforma.
+      </p>
+    </div>
+    <button
+      pButton
+      label="Explorar catálogo"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="mejorCalificados"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g" (verDetalle)="onVerDetalle($event)"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>

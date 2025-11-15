@@ -155,4 +155,24 @@ export class HomeComponent implements OnInit {
     if (j.rating && j.rating >= 8) return 'Muy valorado';
     return undefined;
   }
+
+  explorarGenero(genero: string): void {
+    if (typeof window !== 'undefined') {
+      this.js.clearFilters();
+      if (genero) {
+        this.js.guardarGeneroEnSesion(genero);
+      }
+    }
+    this.router.navigate(['/catalogo']);
+  }
+
+   explorarPlataforma(plataforma: string): void {
+    if (typeof window !== 'undefined') {
+      this.js.clearFilters();
+      if (plataforma) {
+        this.js.guardarPlataformaEnSesion(plataforma);
+      }
+    }
+    this.router.navigate(['/catalogo']);
+  }
 }
