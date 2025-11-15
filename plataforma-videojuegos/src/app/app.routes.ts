@@ -4,6 +4,11 @@ import { InicioComponent } from '@general/modules/inicio-component/inicio.compon
 import { NoAuthGuard } from './servicios/noAuthGuard';
 
 export const routes: Routes = [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
     {
         path: '',
         redirectTo: 'inicio',
@@ -64,7 +69,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'home'
     },
   ]
 

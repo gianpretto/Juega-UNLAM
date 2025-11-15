@@ -1,0 +1,333 @@
+/*  FONDO GENERAL DEL HOME - MISMA LÓGICA DEL CATÁLOGO */
+.home-hero,
+.home-section,
+.xbox-mosaic {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #c7d5e0;
+}
+
+/* ================================
+    HERO - CAROUSEL PRINCIPAL
+================================ */
+.hero-carousel .hero-slide {
+  position: relative;
+  height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.75));
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.hero-tag {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #66c0f4;
+  margin-bottom: 0.5rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 16px rgba(102,192,244,0.3);
+}
+
+.hero-sub {
+  font-size: 1.2rem;
+  color: #c7d5e0;
+  margin: 0.5rem 0 1rem;
+}
+
+.hero-cta {
+  margin-top: 1rem;
+  width: fit-content;
+}
+
+/* ================================
+    SECCIONES GENERALES
+================================ */
+.home-section {
+  background: rgba(13,17,22,0.6);
+  padding: 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  margin: 3rem auto;
+}
+
+/* Header de cada sección */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(102,192,244,0.2);
+  padding-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: #c7d5e0;
+  margin: 0.25rem 0 0;
+}
+
+/* ================================
+    CAROUSELS
+================================ */
+.home-carousel .p-carousel-item {
+  display: flex;
+  justify-content: center;
+}
+
+.home-carousel app-game-card {
+  width: 16rem;
+}
+
+.p-carousel-indicators button {
+  background-color: rgba(102,192,244,0.4) !important;
+}
+
+.p-carousel-indicators button.p-highlight {
+  background-color: #66c0f4 !important;
+}
+
+/* ================================
+   XBOX MOSAIC STYLE (STEAMIZED)
+================================ */
+.xbox-mosaic {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+}
+
+/* HERO grande */
+.xm-item.xm-hero {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0d1116;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+.xm-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay */
+.xm-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.85));
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Label % OFF */
+.xm-label {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  background: rgba(255,230,0,0.2);
+  color: #ffe600;
+  font-weight: 700;
+  width: fit-content;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+/* Título grande mosaico */
+.xm-hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+
+.xm-hero-desc {
+  margin-top: 0.5rem;
+  color: #c7d5e0;
+}
+
+/* CTA */
+.xm-cta {
+  margin-top: 1rem;
+  color: #66c0f4;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.xm-cta:hover {
+  text-decoration: underline;
+}
+
+/* TEXTO verde */
+.xm-text {
+  background: linear-gradient(135deg, rgba(0,175,90,0.2), rgba(0,120,60,0.2));
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.xm-text-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.xm-text-copy {
+  max-width: 60%;
+}
+
+.xm-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 1rem;
+}
+
+.xm-desc {
+  color: #c7d5e0;
+  margin-top: 0.5rem;
+}
+
+.xm-text-cover img {
+  height: 120px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* BANNER inferior */
+.xm-banner img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* === BOTÓN HERO "Ver detalle" – estilo Steam === */
+.hero-cta.p-button {
+  background: linear-gradient(135deg, #66c0f4 0%, #4a90e2 100%) !important;
+  border: 1px solid rgba(102, 192, 244, 0.6) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-cta.p-button:hover {
+  background: linear-gradient(135deg, #78c9f7 0%, #5a9bd8 100%) !important;
+  border-color: rgba(102, 192, 244, 0.9) !important;
+  transform: translateY(-2px);
+}
+
+/* === LINKS "Ver todos" / "Ver catálogo" – texto celeste Steam === */
+.section-link.p-button-text {
+  color: #66c0f4 !important;
+}
+
+.section-link.p-button-text:hover {
+  color: #78c9f7 !important;
+  text-decoration: underline;
+}
+
+/* === Puntos del carrusel (el que se ve verde en el medio) === */
+.p-carousel .p-carousel-indicator button {
+  background: #3b4754;               /* gris azul oscuro para los inactivos */
+}
+
+.p-carousel .p-carousel-indicator.p-highlight button {
+  background: #66c0f4;               /* celeste Steam para el activo */
+}
+
+
+/* ================================
+    RESPONSIVE
+================================ */
+@media (max-width: 992px) {
+  .xbox-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .xm-item.xm-hero {
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-carousel .hero-slide {
+    height: 300px;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .xm-text-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .xm-text-copy {
+    max-width: 100%;
+  }
+
+  .xm-text-cover img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Fade-in suave */
+.home-section,
+.hero-carousel,
+.xbox-mosaic {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

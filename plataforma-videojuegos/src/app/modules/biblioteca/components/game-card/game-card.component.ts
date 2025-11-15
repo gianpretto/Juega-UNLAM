@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { Juego } from '@interfaces/juego.interface';
 import { environment } from '@evironment/environment';
+import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 
 
 @Component({
@@ -14,8 +15,13 @@ import { environment } from '@evironment/environment';
   styleUrl: './game-card.component.css'
 })
 export class GameCardComponent {
+  /**
+   * Datos del juego a mostrar
+   */
+  @Input() juego!: JuegoPlataformaGenero;
 
-  @Input() juego!: Juego;
+  
+  @Output() verDetalle = new EventEmitter<number>();
 
   @Input() placeholderImage: string = 'assets/placeholder.png';
 

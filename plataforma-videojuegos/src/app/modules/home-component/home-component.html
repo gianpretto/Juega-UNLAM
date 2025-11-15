@@ -1,3 +1,167 @@
-<p>home-component works!</p>
+<!-- HERO DINÁMICO -->
+<section class="home-hero container-xxl my-4" *ngIf="heroSlides.length">
+  <p-carousel
+    [value]="heroSlides"
+    [numVisible]="1"
+    [numScroll]="1"
+    [circular]="true"
+    [autoplayInterval]="6000"
+    class="hero-carousel"
+  >
+    <ng-template let-s pTemplate="item">
+      <div class="hero-slide" [style.background-image]="'url(' + s.img + ')'">
+        <div class="hero-overlay">
+          <div class="hero-tag">
+            {{ s.badge || 'Catálogo de juegos' }}
+          </div>
+          <h1 class="hero-title">{{ s.title }}</h1>
+          <p class="hero-sub">
+            {{ s.subtitle }}
+          </p>
 
-<p-button label="VER DETALLE DEL JUEGO" [routerLink]="['/juego/1']" class="bg-info"  severity="success" />
+          <a
+            [routerLink]="s.cta.link"
+            pButton
+            class="p-button-lg hero-cta"
+            [label]="s.cta.text"
+          ></a>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- MEJOR CALIFICADOS -->
+<section class="home-section container-xxl my-5" *ngIf="mejorCalificados.length">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Mejor calificados</h2>
+      <p class="section-subtitle">
+        Juegos con las mejores valoraciones de la plataforma.
+      </p>
+    </div>
+    <button
+      pButton
+      label="Explorar catálogo"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="mejorCalificados"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g" (verDetalle)="onVerDetalle($event)"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+
+<!-- RPG Y FANTASÍA -->
+<section class="home-section container-xxl my-5" *ngIf="rpgFantasia.length">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">RPG y fantasía</h2>
+      <p class="section-subtitle">
+        Mundos enormes, decisiones difíciles y builds rotas.
+      </p>
+    </div>
+    <button
+      pButton
+      label="Explorar catálogo"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="rpgFantasia"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card [juego]="g" (verDetalle)="onVerDetalle($event)"></app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+<!-- JUEGOS DE NINTENDO -->
+<section class="home-section container-xxl my-5" *ngIf="porPlataforma.length">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Nintendo también acá</h2>
+      <p class="section-subtitle">
+        Tus juegos de Nintendo también en nuestra plataforma.
+      </p>
+    </div>
+    <button
+      pButton
+      label="Explorar catálogo"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="porPlataforma"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card
+          [juego]="g"
+          (verDetalle)="onVerDetalle($event)">
+        </app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>
+<!-- =======================================================
+     ⭐ CARRUSEL — JUEGOS TRIPLE B
+======================================================= -->
+<section class="home-section container-xxl my-5" *ngIf="tripleB.length">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">Juegos Triple B</h2>
+      <p class="section-subtitle">
+        Bueno, Bonito y Barato: diversión asegurada sin romper el bolsillo.
+      </p>
+    </div>
+
+    <button
+      pButton
+      label="Explorar catálogo"
+      class="p-button-text section-link"
+      [routerLink]="['/catalogo']"
+    ></button>
+  </div>
+
+  <p-carousel
+    [value]="tripleB"
+    [numVisible]="5"
+    [numScroll]="5"
+    [responsiveOptions]="resp"
+    class="home-carousel"
+  >
+    <ng-template let-g pTemplate="item">
+      <div class="px-2" style="width:16rem">
+        <app-game-card
+          [juego]="g"
+          (verDetalle)="onVerDetalle($event)">
+        </app-game-card>
+      </div>
+    </ng-template>
+  </p-carousel>
+</section>

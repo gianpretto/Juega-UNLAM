@@ -36,6 +36,7 @@ export class ValoracionesComponent implements OnInit {
 
     listarReviews(){
       this.juegoService.obtenerReviewsDeUnJuego(this.juego.id).subscribe({
+<<<<<<< HEAD
         next : (data) => {
           console.log("REVIEWS RECIBIDAS:",data);
           this.reviews = data.map((review: Review) => ({
@@ -43,6 +44,14 @@ export class ValoracionesComponent implements OnInit {
         expandida: false
       }));
         },
+=======
+      next : (data) => {
+        this.reviews = data.map((review) => ({
+          ...review,
+          expandida: false
+        })) as Review[];
+      },
+>>>>>>> origin/main.v5-gian
         error : (data) => {
           console.log("ERROR AL TRAER LAS REVIEWS",data);
         },

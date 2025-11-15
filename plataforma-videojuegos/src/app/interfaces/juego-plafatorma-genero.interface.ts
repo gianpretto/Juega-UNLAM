@@ -16,4 +16,6 @@ export interface JuegoPlataformaGenero{
     rating?: number;
     plataforma:Plataforma[];
     genero:Genero[];
+
+    
 }
