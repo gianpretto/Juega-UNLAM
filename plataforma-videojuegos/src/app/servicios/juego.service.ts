@@ -5,11 +5,6 @@ import { Imagen } from '@interfaces/image.interface';
 import { Review } from '@interfaces/review.interface';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@evironment/environment';
-<<<<<<< HEAD
-=======
-import { JuegoMapper } from '@mapper/juego.mapper';
-
->>>>>>> origin/main.v5-gian
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 

@@ -114,26 +114,8 @@ export class CatalogoJuegosComponent implements OnInit {
     
     this.juegoService.getJuegos().subscribe({
       next: (data) => {
-<<<<<<< HEAD
         this.juegos = data;
         this.juegosFiltrados = data;
-=======
-        console.log('✅ Juegos cargados:', data.length);
-        // Mapear los elementos recibidos (CardVM) al shape esperado por Juego,
-        // proporcionando valores por defecto para las propiedades faltantes.
-        this.juegos = (data as any[]).map((item: any) => ({
-          // Mantener todas las propiedades originales cuando existan
-          ...item,
-          // Asegurar las propiedades requeridas por la interfaz Juego
-          subtitulo: item.subtitulo ?? '',
-          descripcion: item.descripcion ?? item.description ?? '',
-          released: item.released ?? item.release_date ?? '',
-          rating: item.rating ?? item.score ?? 0
-        })) as JuegoPlataformaGenero[];
-
-        // Usar una copia para el listado filtrado
-        this.filteredJuegos = [...this.juegos];
->>>>>>> origin/main.v5-gian
         this.loading = false;
 
         this.extraerOpcionesDeFiltrado()
@@ -150,7 +132,7 @@ export class CatalogoJuegosComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error al cargar juegos:', error);
+        
         this.errorMessage = 'Error al cargar el catálogo de juegos. Por favor, intenta de nuevo.';
         this.loading = false;
       }

@@ -23,7 +23,6 @@ export class GameFiltersComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
   if (changes['selectedOptions'] && Array.isArray(this.selectedOptions)) {
-    console.log("EN GAME FILTERS TS SELECTED OPTIONS TIENE: ", this.selectedOptions)
     const sortOpt = this.selectedOptions.find(o => o.name === 'ordenamientoSeleccionado');
     const genreOpt = this.selectedOptions.find(o => o.name === 'generoSeleccionado');
     const platformOpt = this.selectedOptions.find(o => o.name === 'plataformaSeleccionada');
