@@ -11,7 +11,7 @@ export interface JuegoPlataformaGenero{
     imagenes: string;
     desarrolladorId?: number;
     mainImagenId?: number;
-    mainImagen?: Imagen;  // ← Objeto completo de la imagen principal
+    mainImagen?: Imagen;  
     released?: string;
     rating?: number;
     plataforma:Plataforma[];

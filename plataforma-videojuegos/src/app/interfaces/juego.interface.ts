@@ -5,15 +5,15 @@ import { JuegoGenero } from "./juego-genero.interface";
 export interface Juego {
     id: number;
     nombre: string;
-    subtitulo?: string;      // Opcional - puede no venir del backend
+    subtitulo?: string;      
     precio: number;
     descripcion: string;
     imagenes: string;
     desarrolladorId?: number;
     mainImagenId?: number;
-    mainImagen?: Imagen;     // ← Objeto completo de la imagen principal
-    released?: string;       // Opcional - puede no venir del backend
-    rating?: number;         // Opcional - puede no venir del backend
-    plataformas?: JuegoPlataforma[];  // ← Relación con plataformas (viene del backend biblioteca)
-    juego_generos?: JuegoGenero[];    // ← Relación con géneros (viene del backend biblioteca)
+    mainImagen?: Imagen;    
+    released?: string;       
+    rating?: number;       
+    plataformas?: JuegoPlataforma[]; 
+    juego_generos?: JuegoGenero[];   
 }

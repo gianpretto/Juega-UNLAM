@@ -2,7 +2,6 @@
     width: 100%;
 }
 
-/* Header de la grilla */
 .grid-header {
     display: flex;
     justify-content: space-between;
@@ -25,7 +24,6 @@
     font-size: 1.1rem;
 }
 
-/* Estado de carga */
 .loading-container {
     display: flex;
     justify-content: center;
@@ -52,7 +50,6 @@
     margin: 0;
 }
 
-/* Grilla de juegos */
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -71,7 +68,6 @@
     }
 }
 
-/* Estado vacío */
 .empty-state {
     display: flex;
     justify-content: center;
@@ -106,7 +102,6 @@
     line-height: 1.5;
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
     .games-grid {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -182,7 +177,6 @@
     }
 }
 
-/* Animación para las cards cuando aparecen */
 .games-grid app-game-card {
     animation: slideIn 0.4s ease-out forwards;
     opacity: 0;

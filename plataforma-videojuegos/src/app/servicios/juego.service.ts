@@ -5,7 +5,6 @@ import { Imagen } from '@interfaces/image.interface';
 import { Review } from '@interfaces/review.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@evironment/environment';
-import { JuegoMapper } from '@mapper/juego.mapper';
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { JuegoPlataformaGenero } from '@general/interfaces/juego-plafatorma-genero.interface';
 
@@ -69,7 +68,6 @@ export class JuegoService {
       let platform = '';
       let sort = '';
 
-      // Proteger contra SSR
       if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
         term = sessionStorage.getItem('nombreSeleccionado') || '';
         genre = sessionStorage.getItem('generoSeleccionado') || '';

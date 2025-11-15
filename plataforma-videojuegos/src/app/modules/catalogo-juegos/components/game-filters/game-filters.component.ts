@@ -12,7 +12,6 @@ import { FilterOption } from '@interfaces/filter-options.interface';
   styleUrl: './game-filters.component.css'
 })
 export class GameFiltersComponent implements OnChanges {
-
   @Input() filters: GameFilter = {
     ordenamiento: '',
     genero: '',

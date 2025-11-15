@@ -1,4 +1,3 @@
-/* ===== STEAM HEADER - PREMIUM DESIGN ===== */
 
 .steam-header {
   position: sticky;
@@ -10,7 +9,6 @@
   backdrop-filter: blur(10px);
 }
 
-/* ===== HEADER CONTAINER ===== */
 .header-container {
   display: flex;
   align-items: center;
@@ -21,7 +19,6 @@
   gap: 2rem;
 }
 
-/* ===== LOGO ===== */
 .header-logo {
   flex-shrink: 0;
 }
@@ -41,7 +38,6 @@
   filter: drop-shadow(0 2px 8px rgba(102, 192, 244, 0.3));
 }
 
-/* ===== NAVIGATION MENU ===== */
 .header-nav {
   flex: 1;
   display: flex;
@@ -112,14 +108,12 @@
   font-size: 1.1rem;
 }
 
-/* ===== USER SECTION ===== */
 .header-user {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
-/* Balance */
 .user-balance {
   display: flex;
   align-items: center;
@@ -149,7 +143,6 @@
   letter-spacing: 0.5px;
 }
 
-/* User Menu */
 .user-menu {
   position: relative;
 }
@@ -209,7 +202,6 @@
   line-height: 1.2;
 }
 
-/* Dropdown */
 .user-dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
@@ -266,7 +258,6 @@
   font-size: 1.1rem;
 }
 
-/* ===== MOBILE TOGGLE ===== */
 .mobile-toggle {
   display: none;
   padding: 0.5rem;
@@ -288,7 +279,6 @@
   display: block;
 }
 
-/* ===== MOBILE NAVIGATION ===== */
 .mobile-nav {
   display: none;
   max-height: 0;
@@ -386,7 +376,6 @@
   border-color: rgba(255, 107, 107, 0.5);
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .header-container {
     padding: 0.75rem 3%;

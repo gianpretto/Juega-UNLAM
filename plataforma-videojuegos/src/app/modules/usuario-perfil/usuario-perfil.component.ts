@@ -23,6 +23,7 @@ export class UsuarioPerfilComponent {
 
    imagenPerfil: string | ArrayBuffer | null = 'https://www.w3schools.com/howto/img_avatar.png';
   imagenFondo: string | ArrayBuffer | null = '';
+mensaje: string = '';
 
   private usuarioService = inject(UsuarioService);
   private router = inject(Router);
@@ -62,11 +63,10 @@ onPerfilUpload(event: any) {
       .subscribe({
         next: () => {
           this.imagenPerfil = perfilUrl;
-          alert('Imagen de perfil actualizada');
+          this.mostrarMensaje('¡Foto de perfil actualizada!');
         },
-        error: (err) => {
-          console.error('Error al actualizar imagen de perfil', err);
-          alert('Error al actualizar imagen de perfil');
+        error: () => {
+          this.mostrarMensaje('Error al actualizar foto de perfil');
         }
       });
   };
@@ -90,11 +90,10 @@ onFondoUpload(event: any) {
       .subscribe({
         next: () => {
           this.imagenFondo = fondoPerfilUrl;
-          alert('Fondo de perfil actualizado');
+          this.mostrarMensaje('¡Fondo de perfil actualizado!');
         },
-        error: (err) => {
-          console.error('Error al actualizar fondo de perfil', err);
-          alert('Error al actualizar fondo de perfil');
+        error: () => {
+          this.mostrarMensaje('Error al actualizar el fondo');
         }
       });
   };
@@ -103,6 +102,13 @@ onFondoUpload(event: any) {
 }
 
 
+mostrarMensaje(texto: string) {
+  this.mensaje = texto;
+
+  setTimeout(() => {
+    this.mensaje = '';
+  }, 2500);
+}
   navigateToCatalogo() {
     this.router.navigate(['/catalogo']);
 

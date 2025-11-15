@@ -4,11 +4,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { UsuarioService } from '@servicios/usuario.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [FormsModule, InputTextModule, ButtonModule],
+  imports: [FormsModule, InputTextModule, ButtonModule,CommonModule],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
 })
@@ -17,11 +18,23 @@ export class RegistroComponent {
   apellido = '';
   email = '';
   direccion = '';
-  password  = '';
+  password = '';
+
+  mensajeError: string = '';
 
   constructor(private usuarioService: UsuarioService, private router: Router) {}
+  mostrarError(msg: string) {
+  this.mensajeError = msg;
+
+  setTimeout(() => {
+    this.mensajeError = '';
+  }, 10000);
+}
 
  onSubmit() {
+
+ 
+
   this.usuarioService.createUsuario({
     nombre: this.nombre,
     apellido: this.apellido,
@@ -29,16 +42,18 @@ export class RegistroComponent {
     direccion: this.direccion,
     password: this.password
   }).subscribe({
-    next: (res) => {
-      console.log('Usuario registrado', res);
-                this.router.navigate(['/iniciar-sesion']);
-
+    next: () => {
+      this.router.navigate(['/iniciar-sesion']);
     },
     error: (err) => {
-      alert(err.error.message); 
+  const mensajes = err.error?.errors?.join(', ') || err.error?.message || "Error al registrar usuario";
+    this.mostrarError(mensajes);
+
     }
   });
 }
+
 }
+
 
 

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
   selector: 'app-game-search',
   standalone: true,
@@ -29,8 +30,7 @@ export class GameSearchComponent {
 
   @Output() onClear = new EventEmitter<void>();
 
-
-  /** Término de búsqueda actual */
+ 
   searchTerm: string = '';
 
 

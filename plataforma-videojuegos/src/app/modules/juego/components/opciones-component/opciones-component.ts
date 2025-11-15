@@ -31,6 +31,7 @@ export class OpcionesComponent implements OnInit {
   constructor(private wishlistService: WishlistService, private bibliotecaService: BibliotecaService, private router: Router) { }
 
   carritoService = inject(CarritoService);
+  mensajeWishlist: string = '';
 
 
   imagen: string = '';
@@ -48,23 +49,27 @@ export class OpcionesComponent implements OnInit {
     })
   }
 
-
-  agregarAWishlist(juegoId: number) {
-    if (!juegoId) {
-      console.warn('No se pudo agregar a la wishlist: juegoId indefinido');
-      return;
-    }
-    if (!this.juegoComprado) {
-      this.wishlistService.añadirAWishlist(juegoId).subscribe({
-        next: (data) => {
-          console.log('Juego agregado a la wishlist:', data);
-        },
-        error: (error) => {
-          alert('El juego ya está en tu wishlist');
-        }
-      });
-    }
+agregarAWishlist(juegoId: number) {
+  if (!juegoId) {
+    console.warn('No se pudo agregar a la wishlist: juegoId indefinido');
+    return;
   }
+
+  if (!this.juegoComprado) {
+    this.wishlistService.añadirAWishlist(juegoId).subscribe({
+      next: (data) => {
+        this.mensajeWishlist = "Añadido a tu lista de deseos";
+
+        setTimeout(() => this.mensajeWishlist = '', 2000);
+      },
+      error: (error) => {
+        this.mensajeWishlist = "⚠️ Ya agregaste este juego a tu lista de deseos";
+
+        setTimeout(() => this.mensajeWishlist = '', 2000);
+      }
+    });
+  }
+}
   agregarAlCarrito() {
     if (this.juegoComprado) return;
 
@@ -73,7 +78,7 @@ export class OpcionesComponent implements OnInit {
     if (!agregado) {
       this.mensajeCarrito = "✔️ Producto ya agregado al carrito";
 
-      // borra el mensaje después de 2 segundos
+      
       setTimeout(() => this.mensajeCarrito = '', 4000);
 
       return;

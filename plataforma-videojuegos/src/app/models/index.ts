@@ -1,8 +1,4 @@
-/**
- * Barrel file para exportar todos los modelos desde un solo lugar
- * Esto facilita las importaciones en otros archivos
- * Ejemplo: import { Juego, Desarrollador } from './models';
- */
+
 export * from '@interfaces/juego.interface';
 export * from './desarrollador.model';
 export * from './genero.model';

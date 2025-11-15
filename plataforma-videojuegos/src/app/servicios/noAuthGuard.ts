@@ -8,7 +8,7 @@ export class NoAuthGuard implements CanActivate {
   constructor(private usuarioService: UsuarioService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
-    const id = this.usuarioService.obtenerUsuarioDeSesion(); // síncrono
+    const id = this.usuarioService.obtenerUsuarioDeSesion(); 
     if (!id) return true;
     return this.router.createUrlTree(['/catalogo']);
   }

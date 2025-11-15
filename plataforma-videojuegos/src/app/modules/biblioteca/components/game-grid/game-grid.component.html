@@ -1,5 +1,4 @@
 <div class="game-grid-container">
-    <!-- Header con contador de juegos -->
     <div class="grid-header" *ngIf="hasJuegos() && !loading">
         <div class="results-count">
             <i class="pi pi-list"></i>
@@ -7,7 +6,6 @@
         </div>
     </div>
 
-    <!-- Estado de carga -->
     <div class="loading-container" *ngIf="loading">
         <div class="spinner-wrapper">
             <i class="pi pi-spin pi-spinner loading-spinner"></i>
@@ -15,7 +13,6 @@
         </div>
     </div>
 
-    <!-- Grilla de juegos -->
     <div class="games-grid" *ngIf="hasJuegos() && !loading">
         <app-game-card
             *ngFor="let juego of juegos; trackBy: trackByJuegoId"
@@ -26,7 +23,6 @@
         ></app-game-card>
     </div>
 
-    <!-- Estado vacío (sin resultados) -->
     <div class="empty-state" *ngIf="!hasJuegos() && !loading">
         <div class="empty-content">
             <i class="pi pi-inbox empty-icon"></i>

@@ -26,7 +26,6 @@ export class CarritoService {
     const usuarioId = sessionStorage.getItem('idUsuario');
     if (!usuarioId) return;
 
-    //Verificar si ya está en el carrito actual
     const carritoActual = this.carritoSubject.value;
     const yaEnCarrito = carritoActual.some(j => j.id === juego.id);
     if (yaEnCarrito) {
@@ -45,7 +44,6 @@ export class CarritoService {
     const usuarioId = sessionStorage.getItem('idUsuario');
     if (!usuarioId) return;
 
-    //Usamos body porque Express espera recibir el juegoId en el body
     this.http.delete<Juego[]>(`${environment.BACKEND_URL}/carrito/${usuarioId}/eliminar/${juego.id}`)
       .subscribe({
         next: (juegos) => this.carritoSubject.next(juegos),

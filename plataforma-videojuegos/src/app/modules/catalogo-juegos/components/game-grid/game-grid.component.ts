@@ -31,9 +31,6 @@ export class GameGridComponent {
     return this.juegos ? this.juegos.length : 0;
   }
 
-  /**
-   * Función trackBy para optimizar el renderizado de la lista
-   */
   trackByJuegoId(index: number, juego: Juego): number {
     return juego.id;
   }

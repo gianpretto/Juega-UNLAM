@@ -1,5 +1,4 @@
 <div class="wishlist-page">
-  <!-- HEADER -->
   <div class="wishlist-header">
     <div class="header-content">
       <div class="title-section">
@@ -31,7 +30,6 @@
     </div>
   </div>
 
-  <!-- LOADING -->
   @if (loading) {
     <div class="loading-state">
       <i class="pi pi-spin pi-spinner loading-icon"></i>
@@ -39,12 +37,10 @@
     </div>
   }
 
-  <!-- WISHLIST GRID -->
   @if (!loading && juegos.length > 0) {
     <div class="wishlist-grid">
       @for (juego of juegos; track juego.id) {
         <div class="wishlist-card">
-          <!-- Imagen -->
           <div class="card-image">
             <img [src]="getImageUrl(juego)" [alt]="juego.nombre" />
             <div class="image-overlay">
@@ -54,7 +50,6 @@
             </div>
           </div>
 
-          <!-- Info -->
           <div class="card-content">
             <h3 class="game-title">{{ juego.nombre }}</h3>
             
@@ -66,7 +61,6 @@
               <p class="game-description">{{ juego.descripcion }}</p>
             }
 
-            <!-- Footer -->
             <div class="card-footer">
               <div class="price-section">
                 <span class="price-label">Precio</span>
@@ -85,7 +79,6 @@
       }
     </div>
 
-    <!-- Botón Volver -->
     <div class="actions-section">
       <button class="btn-back" (click)="navigateToCatalogo()">
         <i class="pi pi-arrow-left"></i>
@@ -94,7 +87,6 @@
     </div>
   }
 
-  <!-- EMPTY STATE -->
   @if (!loading && juegos.length === 0) {
     <div class="empty-state">
       <div class="empty-icon">

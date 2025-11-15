@@ -4,39 +4,39 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-iniciar-sesion',
   standalone: true,
-  imports: [FormsModule, InputTextModule, ButtonModule],
+  imports: [FormsModule, InputTextModule, ButtonModule, CommonModule],
   templateUrl: './iniciar-sesion.component.html',
   styleUrls: ['./iniciar-sesion.component.css']
 })
 export class IniciarSesionComponent {
   email = '';
   password = '';
+  mensajeError: string = '';
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private router: Router
-  ) {}
+  constructor(private usuarioService: UsuarioService, private router: Router) {}
 
-   irARegistro() {
+  irARegistro() {
     this.router.navigate(['/registro']);
   }
 
-
   onSubmit() {
+    
     this.usuarioService.loginUsuario(this.email, this.password)
       .subscribe({
         next: (res) => {
-          console.log('Sesión iniciada:', res);
-          // Guardar el usuario completo y notificar al resto de la app
           this.usuarioService.setCurrentUser(res);
-          // 🔹 Redirigir al catálogo
           this.router.navigate(['/catalogo']);
         },
-        error: (err) => console.error('Error al iniciar sesión:', err)
+        error: (err) => {
+          const mensajes = err.error?.errors?.join(', ') || "Error al iniciar sesión";
+          this.mensajeError = mensajes;
+          setTimeout(() => this.mensajeError = '', 2000);
+        }
       });
   }
 }

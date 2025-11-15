@@ -26,7 +26,6 @@ export class PedidoComponent implements OnInit {
       this.juegos = juegos;
       this.total = this.carritoService.obtenerTotal();
     });
-    // Traer saldo del usuario
     this.usuarioService.getSaldoUsuario().subscribe({
       next: (saldo) => this.saldoUsuario = saldo,
       error: () => this.mensaje = 'No se pudo obtener el saldo del usuario.'
@@ -52,7 +51,6 @@ export class PedidoComponent implements OnInit {
       next: () => {
         this.saldoUsuario -= this.total;
 
-        // Registrar los juegos comprados (uno o varios)
         this.usuarioService.registrarJuegos(this.juegos).subscribe({
           next: () => {
             this.carritoService.vaciarCarrito();

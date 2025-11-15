@@ -16,7 +16,7 @@ export class UsuarioMapper {
             usuario_juegos: usuarioRest.usuario_juegos,
             wishlists: usuarioRest.wishlists,
             carritos: usuarioRest.carritos,
-            password: usuarioRest.password ?? '' // Asignar cadena vacía si es undefined
+            password: usuarioRest.password ?? '' 
         };
     }
 

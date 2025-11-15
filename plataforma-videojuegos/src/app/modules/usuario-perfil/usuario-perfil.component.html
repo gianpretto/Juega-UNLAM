@@ -4,7 +4,6 @@
   </div>
 
   <div class="perfil-content">
-    <!-- Avatar y fondo -->
     <div class="perfil-avatar-section" [ngStyle]="{'background-image': imagenFondo ? 'url(' + imagenFondo + ')' : 'none'}">
       <div class="perfil-avatar">
         @if (imagenPerfil) {
@@ -44,7 +43,6 @@
       </div>
     </div>
 
-    <!-- Datos del usuario -->
     @if (usuario != null) {
       <div class="perfil-datos">
         <h2 class="datos-title">INFORMACIÓN DE LA CUENTA</h2>
@@ -73,10 +71,14 @@
       </div>
     }
 
-    <!-- Botón volver -->
     <button class="boton-volver" (click)="navigateToCatalogo()">
       <i class="pi pi-arrow-left"></i>
       <span>Volver al Catálogo</span>
     </button>
   </div>
+<div class="mensaje-exito" *ngIf="mensaje">
+  {{ mensaje }}
+</div>
+
+
 </div>

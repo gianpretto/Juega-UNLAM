@@ -5,12 +5,11 @@ import { Juego } from "@interfaces/juego.interface";
 import { GameFilter } from "@interfaces/game-filter.interface";
 import { JuegoService } from "@servicios/juego.service";
 
-// Componentes hijos
 import { GameSearchComponent } from "@modules/catalogo-juegos/components/game-search/game-search.component";
 import { GameFiltersComponent } from "@modules/catalogo-juegos/components/game-filters/game-filters.component";
 import { GameGridComponent } from "@modules/catalogo-juegos/components/game-grid/game-grid.component";
 import { CarritoComponent } from "@modules/carrito-component/carrito-component";
-// INTERFACES
+
 import { FilterOption } from "@interfaces/filter-options.interface";
 import { Genero } from "@interfaces/genero.interface";
 import { GeneroService } from "@servicios/genero/genero.service";
@@ -115,7 +114,6 @@ export class CatalogoJuegosComponent implements OnInit {
     
     this.juegoService.getJuegos().subscribe({
       next: (data) => {
-        console.log('Juegos cargados:', data.length);
         this.juegos = data;
         this.juegosFiltrados = data;
         this.loading = false;
@@ -205,7 +203,6 @@ export class CatalogoJuegosComponent implements OnInit {
 
     this.juegosFiltrados = result;
 
-    console.log(`Filtros aplicados: ${result.length} de ${this.juegos.length} juegos`);
     
   }
 

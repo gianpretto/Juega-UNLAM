@@ -1,7 +1,6 @@
 <div class="game-card" (click)="handleCardClick($event)">
 
     <div class="game-image-container">
-        <!-- Imagen del juego o placeholder -->
         <img 
             *ngIf="juego.mainImagenId" 
             [src]="getImageUrl()" 
@@ -34,7 +33,6 @@
         </div>
 
 
-        <!-- Badge de rating solo si existe -->
         <div class="rating-badge" *ngIf="juego.rating">
             <i class="pi pi-star-fill"></i>
             <span>{{ juego.rating }}</span>
@@ -54,12 +52,10 @@
             {{ juego.nombre }}
         </h3>
 
-        <!-- Descripción corta -->
         <p class="game-description" *ngIf="juego.descripcion">
             {{ getShortDescription() }}
         </p>
 
-        <!-- Fecha de lanzamiento solo si existe -->
         <p class="game-release-date" *ngIf="juego.released">
             <i class="pi pi-calendar"></i>
             {{ getFormattedDate() }}

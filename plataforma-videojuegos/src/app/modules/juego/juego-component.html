@@ -1,30 +1,23 @@
-<!-- Mostrar contenido cuando el juego esté cargado -->
 @if (juego) {
 <div class="game-page">
-  <!-- Carrito Component -->
   <div class="carrito-section">
     <app-carrito-component></app-carrito-component>
   </div>
 
-  <!-- Header del Juego -->
   <div class="game-header">
     <h1 class="game-title">{{juego.nombre}}</h1>
   </div>
 
-  <!-- Contenido Principal Centralizado -->
   <div class="game-content-centered">
-    <!-- Imagen de Portada y Opciones de Compra -->
     <div class="game-purchase-section">
       <app-opciones-component [juego]="juego"></app-opciones-component>
     </div>
 
-    <!-- Detalle del Juego (Descripción) -->
     <div class="game-details-centered">
       <app-detalle-juego-component [juego]="juego"></app-detalle-juego-component>
     </div>
   </div>
 
-  <!-- Sección de Valoraciones -->
   <div class="reviews-section">
     <h2 class="reviews-title">
       <i class="pi pi-star"></i>

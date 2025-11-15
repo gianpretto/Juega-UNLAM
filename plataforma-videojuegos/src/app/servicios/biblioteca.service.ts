@@ -6,15 +6,6 @@ import { UsuarioJuego } from '@interfaces/usuario-juego.interface';
 import { environment } from '@evironment/environment';
 import { UsuarioService } from './usuario.service';
 
-/**
- * Servicio para manejar la biblioteca de juegos del usuario
- *
- * Buenas prácticas aplicadas:
- * - @Injectable con providedIn: 'root' para singleton
- * - inject() en lugar de constructor (Angular moderno)
- * - Manejo de errores centralizado
- * - Tipado fuerte con TypeScript
- */
 
 
 @Injectable({
@@ -26,19 +17,13 @@ export class BibliotecaService {
 
   private readonly baseApiUrl = `${environment.BACKEND_URL}/usuario-juego`;
 
-  // Almacenamiento temporal de favoritos en memoria
   private favoritosIds: Set<number> = new Set();
 
-  /**
-   * Obtiene todos los juegos de la biblioteca del usuario autenticado
-   * Si no se proporciona usuarioId, lo obtiene de la sesión
-   * @param usuarioId - ID del usuario (opcional, se obtiene de sesión si no se proporciona)
-   */
+
+  
   obtenerJuegos(usuarioId?: number): Observable<Juego[]> {
-    // Obtener ID de sesión si no se proporciona
     const id = usuarioId ?? this.usuarioService.obtenerUsuarioDeSesion();
 
-    // Validar que hay un usuario autenticado
     if (!id) {
       return throwError(() => new Error('Debes iniciar sesión para ver tu biblioteca'));
     }
@@ -46,18 +31,14 @@ export class BibliotecaService {
     const apiUrl = `${this.baseApiUrl}/usuario/${id}`;
     return this.http.get<UsuarioJuego[]>(apiUrl).pipe(
       map(usuarioJuegos => {
-        console.log(`📦 Usuario-Juegos recibidos para usuario ${id}:`, usuarioJuegos.length);
-        console.log('📸 Primer juego con imagen:', usuarioJuegos[0]?.juego?.mainImagen);
-        // Extraer solo el objeto juego de cada relación usuario-juego
+     
         return usuarioJuegos.map(uj => uj.juego);
       }),
       catchError(this.handleError)
     );
   }
 
-  /**
-   * Agrega un juego a la biblioteca
-   */
+
   agregarJuego(juego: Juego): Observable<void> {
     return this.http.post<void>(`${this.baseApiUrl}`, { juegoId: juego.id }).pipe(
       map(() => {
@@ -67,26 +48,18 @@ export class BibliotecaService {
     );
   }
 
-  /**
-   * Elimina un juego de la biblioteca
-   */
   eliminarJuego(juegoId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseApiUrl}/${juegoId}`).pipe(
       map(() => {
-        // También quitar de favoritos si estaba
         this.favoritosIds.delete(juegoId);
         this.guardarFavoritos();
-        console.log('🗑️ Juego eliminado de biblioteca');
       }),
       catchError(this.handleError)
     );
   }
 
-  /**
-   * Obtiene los IDs de juegos favoritos
-   */
+
   obtenerFavoritos(): Observable<number[]> {
-    // Proteger contra SSR - localStorage solo existe en el navegador
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       const stored = localStorage.getItem('biblioteca_favoritos');
       if (stored) {
@@ -98,31 +71,22 @@ export class BibliotecaService {
     return of(Array.from(this.favoritosIds)).pipe(delay(200));
   }
 
-  /**
-   * Agrega un juego a favoritos
-   */
+
   agregarAFavoritos(juegoId: number): Observable<void> {
     this.favoritosIds.add(juegoId);
     this.guardarFavoritos();
-    console.log('❤️ Agregado a favoritos');
     return of(void 0).pipe(delay(200));
   }
 
-  /**
-   * Quita un juego de favoritos
-   */
+  
   quitarDeFavoritos(juegoId: number): Observable<void> {
     this.favoritosIds.delete(juegoId);
     this.guardarFavoritos();
-    console.log('💔 Quitado de favoritos');
     return of(void 0).pipe(delay(200));
   }
 
-  /**
-   * Verifica si un juego ya está en la biblioteca
-   */
+
   estaEnBiblioteca(juegoId: number): Observable<boolean> {
-    // Proteger contra SSR
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       const stored = localStorage.getItem('biblioteca_juegos');
       if (stored) {
@@ -133,32 +97,19 @@ export class BibliotecaService {
     return of(false);
   }
 
-  /**
-   * Guarda favoritos en localStorage
-   */
+  
   private guardarFavoritos(): void {
-    // Proteger contra SSR
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       localStorage.setItem('biblioteca_favoritos', JSON.stringify(Array.from(this.favoritosIds)));
     }
   }
 
-  /**
-   * Obtiene un juego específico por ID
-   * @param id - ID del juego
-   * @returns Observable con el juego
-   */
   getJuegoById(id: number): Observable<Juego> {
     return this.http.get<Juego>(`${this.baseApiUrl}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  /**
-   * Busca juegos por nombre
-   * @param searchTerm - Término de búsqueda
-   * @returns Observable con juegos filtrados
-   */
   searchJuegos(searchTerm: string): Observable<Juego[]> {
     return this.http.get<Juego[]>(`${this.baseApiUrl}/search`, {
       params: { q: searchTerm }
@@ -167,20 +118,15 @@ export class BibliotecaService {
     );
   }
 
-  /**
-   * Manejo centralizado de errores HTTP
-   * @param error - Error HTTP
-   * @returns Observable con error formateado
-   */
+ 
   private handleError(error: any): Observable<never> {
-    console.error('Error en BibliotecaService:', error);
     return throwError(() => new Error('Error al cargar los juegos. Por favor, intenta nuevamente.'));
   }
 
   estaComprado(juegoId: number): Observable<boolean> {
     return this.obtenerJuegos().pipe(
       map(juegos => juegos.some(j => j.id === juegoId)),
-      catchError(() => of(false)) // si hay error, asumimos que no está comprado
+      catchError(() => of(false)) 
     );
   }
 
