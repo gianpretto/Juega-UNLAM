@@ -30,7 +30,7 @@ export class IniciarSesionComponent {
       .subscribe({
         next: (res) => {
           this.usuarioService.setCurrentUser(res);
-          this.router.navigate(['/catalogo']);
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           const mensajes = err.error?.errors?.join(', ') || "Error al iniciar sesión";

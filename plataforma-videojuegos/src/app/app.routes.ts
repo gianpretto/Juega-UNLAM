@@ -4,11 +4,7 @@ import { InicioComponent } from '@general/modules/inicio-component/inicio.compon
 import { NoAuthGuard } from './servicios/noAuthGuard';
 
 export const routes: Routes = [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-    },
+      
     {
         path: '',
         redirectTo: 'inicio',
@@ -22,7 +18,8 @@ export const routes: Routes = [
     {
         path: 'home',
         loadComponent: () => import('@modules/home-component/home-component')
-        .then(c => c.HomeComponent)
+        .then(c => c.HomeComponent),
+        canActivate: [AuthGuard]
     },
     {
         path: 'juego/:id',
@@ -69,7 +66,8 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'home'
+        redirectTo: 'inicio',
+        pathMatch: 'full'
     },
   ]
 
