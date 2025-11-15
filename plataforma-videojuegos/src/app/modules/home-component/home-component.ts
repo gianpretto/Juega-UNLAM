@@ -3,6 +3,7 @@ import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
+import { CarritoComponent } from "@modules/carrito-component/carrito-component";
 
 import { JuegoService } from '../../servicios/juego.service';
 import { GameCardComponent } from '../../modules/biblioteca/components/game-card/game-card.component';
@@ -22,7 +23,7 @@ interface HeroSlide {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgIf, RouterLink,CarouselModule, ButtonModule, GameCardComponent],
+  imports: [NgIf, RouterLink,CarouselModule, ButtonModule, GameCardComponent,CarritoComponent],
   templateUrl: './home-component.html',
   styleUrls: ['./home-component.css']
 })
